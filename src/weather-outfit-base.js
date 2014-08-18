@@ -30,7 +30,7 @@ function getForecast(coords, cb) {
   var forecast = getCacheEntry('weather_forecast', FORECAST_CACHE_MS);
 
   if (forecast && forecast.url == url)
-    return setTimeout(function() { cb(null, forecast.res); }, 0);
+    return cb(null, forecast.res);
 
   var req = new XMLHttpRequest();
   req.open('GET', url);
@@ -64,3 +64,41 @@ function getCurrentPositionForecast(cb) {
     cb(new Error('geolocation error'));
   });
 }
+
+window.addEventListener("DOMContentLoaded", function() {
+  var getTemplate = function(id, defaultValue) {
+    var template = document.getElementById(id);
+
+    if (template) return template;
+    template = document.createElement('div');
+    template.setAttribute('style', 'display: none');
+    template.setAttribute('id', id);
+    template.textContent = defaultValue;
+    document.body.appendChild(template);
+    return template;
+  };
+  var outfitTemplate = getTemplate('outfit-template', OUTFIT_HTML);
+  var errorTemplate = getTemplate('error-template', ERROR_HTML);
+  var outfit = document.getElementById('outfit');
+
+  if (!outfit) {
+    outfit = document.createElement('div');
+    outfit.setAttribute('id', 'outfit');
+    document.body.appendChild(outfit);
+  }
+
+  getCurrentPositionForecast(function(err, forecast) {
+    if (err) {
+      outfit.innerHTML = Mustache.render(errorTemplate.textContent, err);
+      return;
+    }
+    outfit.innerHTML = Mustache.render(outfitTemplate.textContent, {
+      city: forecast.city.name,
+      forecast: typeof(window.getForecastWords) == 'function'
+                ? getForecastWords(forecast.list) : '???',
+      outfit: typeof(window.getForecastOutfit) == 'function'
+              ? getForecastOutfit(forecast.list) : null
+    });
+    console.log(forecast);
+  });
+});
