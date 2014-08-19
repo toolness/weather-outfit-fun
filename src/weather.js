@@ -47,7 +47,7 @@ function getForecast(coords, cb) {
   var qs = '?lat=' + coords.latitude + '&lon=' + coords.longitude;
   var cacheKey = 'weather_forecast' + qs;
   var url = 'http://api.openweathermap.org/data/2.5/forecast' + qs;
-  var forecast = getCacheEntry(cacheKey, FORECAST_CACHE_MS);
+  var forecast = Cache.get(cacheKey, FORECAST_CACHE_MS);
 
   if (forecast)
     return cb(null, simplifyForecast(forecast));
@@ -61,21 +61,21 @@ function getForecast(coords, cb) {
     var res = JSON.parse(req.responseText);
     if (res.cod != 200)
       return cb(new Error(res.message));
-    setCacheEntry(cacheKey, res);
+    Cache.set(cacheKey, res);
     cb(null, simplifyForecast(res));
   };
   req.send(null);
 }
 
 function getCurrentPositionForecast(cb) {
-  var coords = getCacheEntry('weather_coords', GEO_CACHE_MS);
+  var coords = Cache.get('weather_coords', GEO_CACHE_MS);
   if (coords) return getForecast(coords, cb);
   navigator.geolocation.getCurrentPosition(function(pos) {
     coords = {
       latitude: pos.coords.latitude.toFixed(3),
       longitude: pos.coords.longitude.toFixed(3)
     };
-    setCacheEntry('weather_coords', coords);
+    Cache.set('weather_coords', coords);
     getForecast(coords, cb);
   }, function(err) {
     cb(new Error('geolocation error'));
