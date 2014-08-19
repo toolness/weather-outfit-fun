@@ -5,6 +5,6 @@
 <script src="weather-outfit.js"></script>
 <script>
 function getForecastWords(forecast) {
-  return forecast.weather;
+  return Math.round(forecast.temp) + '\u00b0F and ' + forecast.weather;
 }
 </script>
