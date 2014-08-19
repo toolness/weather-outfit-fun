@@ -68,11 +68,12 @@ function simplifyForecast(res) {
 
 function getForecast(coords, cb) {
   var qs = '?lat=' + coords.latitude + '&lon=' + coords.longitude;
+  var cacheKey = 'weather_forecast' + qs;
   var url = 'http://api.openweathermap.org/data/2.5/forecast' + qs;
-  var forecast = getCacheEntry('weather_forecast', FORECAST_CACHE_MS);
+  var forecast = getCacheEntry(cacheKey, FORECAST_CACHE_MS);
 
-  if (forecast && forecast.url == url)
-    return cb(null, simplifyForecast(forecast.res));
+  if (forecast)
+    return cb(null, simplifyForecast(forecast));
 
   var req = new XMLHttpRequest();
   req.open('GET', url);
@@ -83,10 +84,7 @@ function getForecast(coords, cb) {
     var res = JSON.parse(req.responseText);
     if (res.cod != 200)
       return cb(new Error(res.message));
-    setCacheEntry('weather_forecast', {
-      url: url,
-      res: res
-    });
+    setCacheEntry(cacheKey, res);
     cb(null, simplifyForecast(res));
   };
   req.send(null);
