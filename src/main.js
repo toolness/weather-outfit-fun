@@ -24,16 +24,14 @@ var router = new Router();
 var StartView = Backbone.View.extend({
   events: {
     'click button[role=action-geolocate]': 'geolocateOutfit',
-    'keydown input[name=city]': 'onCityKey',
+    'keydown input[name=city]': 'cityOutfit',
     'click button[role=action-city]': 'cityOutfit'
   },
   geolocateOutfit: function(event) {
     router.navigate('/outfit', {trigger: true});
   },
-  onCityKey: function(event) {
-    if (event.which == 13) this.cityOutfit(event);
-  },
   cityOutfit: function(event) {
+    if (event.type == 'keydown' && event.which != 13) return;
     var city = this.$el.find('input[name=city]').val();
     if (!city) return;
     router.navigate('/outfit/' + encodeURI(city), {trigger: true});
