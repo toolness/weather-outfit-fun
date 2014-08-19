@@ -43,8 +43,10 @@ function simplifyForecast(res) {
   return first;
 }
 
-function getForecast(coords, cb) {
-  var qs = '?lat=' + coords.latitude + '&lon=' + coords.longitude;
+function getForecast(where, cb) {
+  var qs = typeof(where) == 'string'
+           ? '?q=' + encodeURIComponent(where)
+           : '?lat=' + where.latitude + '&lon=' + where.longitude;
   var cacheKey = 'weather_forecast' + qs;
   var url = 'http://api.openweathermap.org/data/2.5/forecast' + qs;
   var forecast = Cache.get(cacheKey, FORECAST_CACHE_MS);

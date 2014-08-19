@@ -1,7 +1,8 @@
 var Router = Backbone.Router.extend({
   routes: {
     '': 'start',
-    'outfit': 'outfit'
+    'outfit': 'outfit',
+    'outfit/:city': 'outfit'
   },
   setMainView: function(view) {
     if (this.mainView)
@@ -13,21 +14,31 @@ var Router = Backbone.Router.extend({
   start: function() {
     this.setMainView(new StartView()).render();
   },
-  outfit: function() {
-    this.setMainView(new OutfitView()).start();
+  outfit: function(city) {
+    this.setMainView(new OutfitView()).start(city);
   }
 });
 
 var StartView = Backbone.View.extend({
+  events: {
+    'submit form': 'cityOutfit'
+  },
+  cityOutfit: function(event) {
+    event.preventDefault();
+    var city = $('input[name=city]', event.target).val();
+    window.location.hash = '#/outfit/' + encodeURI(city);
+  },
   render: function() {
     this.$el.html(START_HTML);
   }
 });
 
 var OutfitView = Backbone.View.extend({
-  start: function() {
+  start: function(city) {
     this.$el.html(LOADING_HTML);
-    getCurrentPositionForecast(function(err, forecast) {
+    var find = city ? getForecast.bind(null, city)
+                    : getCurrentPositionForecast;
+    find(function(err, forecast) {
       if (err)
         return Template.render(this.$el, 'error-template', err);
       Template.render(this.$el, 'outfit-template', {
