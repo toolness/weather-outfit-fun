@@ -1,29 +1,6 @@
 var GEO_CACHE_MS = 1000 * 60 * 10;
 var FORECAST_CACHE_MS = 1000 * 60 * 60;
 
-function getCacheEntry(key, maxAge) {
-  var val = sessionStorage[key];
-  var now = Date.now();
-
-  try {
-    val = JSON.parse(val);
-    if (now - val.timestamp < maxAge)
-      return val.value;
-  } catch (e) {
-    return;
-  }
-}
-
-function setCacheEntry(key, value) {
-  try {
-    sessionStorage[key] = JSON.stringify({
-      timestamp: Date.now(),
-      value: value
-    });
-    console.log('setCacheEntry', key);
-  } catch (e) {}
-}
-
 function kelvinToFarenheit(k) {
   return k * (9/5) - 459.67;
 }
@@ -104,41 +81,3 @@ function getCurrentPositionForecast(cb) {
     cb(new Error('geolocation error'));
   });
 }
-
-function setTemplateDefault(id, defaultValue) {
-  if ($('#' + id).length) return;
-
-  $('<div style="display: none"></div>')
-    .attr('id', id)
-    .text(defaultValue)
-    .appendTo('body');
-}
-
-$.fn.extend({
-  render: function(templateId, ctx) {
-    this.html(_.template($('#' + templateId).text(), ctx));
-  }
-});
-
-$(function() {
-  var outfit = $('#outfit');
-
-  if (!outfit.length)
-    outfit = $('<div id="outfit"></div>').appendTo('body');
-
-  setTemplateDefault('outfit-template', OUTFIT_HTML);
-  setTemplateDefault('error-template', ERROR_HTML);
-
-  getCurrentPositionForecast(function(err, forecast) {
-    if (err)
-      return outfit.render('error-template', err);
-    outfit.render('outfit-template', {
-      city: forecast.city,
-      forecast: typeof(window.getForecastWords) == 'function'
-                ? getForecastWords(forecast) : '???',
-      outfit: typeof(window.getForecastOutfit) == 'function'
-              ? getForecastOutfit(forecast) : null
-    });
-    console.log(forecast);
-  });
-});
