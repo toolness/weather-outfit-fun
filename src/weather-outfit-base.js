@@ -105,37 +105,34 @@ function getCurrentPositionForecast(cb) {
   });
 }
 
-window.addEventListener("DOMContentLoaded", function() {
-  var getTemplate = function(id, defaultValue) {
-    var template = document.getElementById(id);
+function setTemplateDefault(id, defaultValue) {
+  if ($('#' + id).length) return;
 
-    if (template) return template;
-    template = document.createElement('div');
-    template.setAttribute('style', 'display: none');
-    template.setAttribute('id', id);
-    template.textContent = defaultValue;
-    document.body.appendChild(template);
-    return template;
-  };
-  var render = function(template, ctx) {
-    return _.template(template.textContent, ctx);
-  };
-  var outfitTemplate = getTemplate('outfit-template', OUTFIT_HTML);
-  var errorTemplate = getTemplate('error-template', ERROR_HTML);
-  var outfit = document.getElementById('outfit');
+  $('<div style="display: none"></div>')
+    .attr('id', id)
+    .text(defaultValue)
+    .appendTo('body');
+}
 
-  if (!outfit) {
-    outfit = document.createElement('div');
-    outfit.setAttribute('id', 'outfit');
-    document.body.appendChild(outfit);
+$.fn.extend({
+  render: function(templateId, ctx) {
+    this.html(_.template($('#' + templateId).text(), ctx));
   }
+});
+
+$(function() {
+  var outfit = $('#outfit');
+
+  if (!outfit.length)
+    outfit = $('<div id="outfit"></div>').appendTo('body');
+
+  setTemplateDefault('outfit-template', OUTFIT_HTML);
+  setTemplateDefault('error-template', ERROR_HTML);
 
   getCurrentPositionForecast(function(err, forecast) {
-    if (err) {
-      outfit.innerHTML = render(errorTemplate, err);
-      return;
-    }
-    outfit.innerHTML = render(outfitTemplate, {
+    if (err)
+      return outfit.render('error-template', err);
+    outfit.render('outfit-template', {
       city: forecast.city,
       forecast: typeof(window.getForecastWords) == 'function'
                 ? getForecastWords(forecast) : '???',
