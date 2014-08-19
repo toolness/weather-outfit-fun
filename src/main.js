@@ -4,13 +4,13 @@ $(function() {
   if (!outfit.length)
     outfit = $('<div id="outfit"></div>').appendTo('body');
 
-  setTemplateDefault('outfit-template', OUTFIT_HTML);
-  setTemplateDefault('error-template', ERROR_HTML);
+  Template.setDefault('outfit-template', OUTFIT_HTML);
+  Template.setDefault('error-template', ERROR_HTML);
 
   getCurrentPositionForecast(function(err, forecast) {
     if (err)
-      return outfit.render('error-template', err);
-    outfit.render('outfit-template', {
+      return Template.render(outfit, 'error-template', err);
+    Template.render(outfit, 'outfit-template', {
       city: forecast.city,
       forecast: typeof(window.getForecastWords) == 'function'
                 ? getForecastWords(forecast) : '???',
