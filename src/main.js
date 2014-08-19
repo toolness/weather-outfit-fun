@@ -19,14 +19,24 @@ var Router = Backbone.Router.extend({
   }
 });
 
+var router = new Router();
+
 var StartView = Backbone.View.extend({
   events: {
-    'submit form': 'cityOutfit'
+    'click button[role=action-geolocate]': 'geolocateOutfit',
+    'keydown input[name=city]': 'onCityKey',
+    'click button[role=action-city]': 'cityOutfit'
+  },
+  geolocateOutfit: function(event) {
+    router.navigate('/outfit', {trigger: true});
+  },
+  onCityKey: function(event) {
+    if (event.which == 13) this.cityOutfit(event);
   },
   cityOutfit: function(event) {
-    event.preventDefault();
-    var city = $('input[name=city]', event.target).val();
-    window.location.hash = '#/outfit/' + encodeURI(city);
+    var city = this.$el.find('input[name=city]').val();
+    if (!city) return;
+    router.navigate('/outfit/' + encodeURI(city), {trigger: true});
   },
   render: function() {
     this.$el.html(START_HTML);
@@ -34,6 +44,12 @@ var StartView = Backbone.View.extend({
 });
 
 var OutfitView = Backbone.View.extend({
+  events: {
+    'click button[role=action-restart]': 'restart'
+  },
+  restart: function(event) {
+    router.navigate('', {trigger: true});
+  },
   start: function(city) {
     this.$el.html(LOADING_HTML);
     var find = city ? getForecast.bind(null, city)
@@ -54,8 +70,6 @@ var OutfitView = Backbone.View.extend({
 });
 
 $(function() {
-  var router = new Router();
-
   Template.setDefault('outfit-template', OUTFIT_HTML);
   Template.setDefault('error-template', ERROR_HTML);
 
