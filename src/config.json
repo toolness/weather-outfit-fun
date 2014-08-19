@@ -1,0 +1,10 @@
+{
+  "define": {
+    "OUTFIT_HTML": "outfit.html",
+    "ERROR_HTML": "error.html"
+  },
+  "include": [
+     "mustache.js",
+     "weather-outfit-base.js"
+  ]
+}

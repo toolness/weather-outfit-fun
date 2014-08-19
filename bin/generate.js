@@ -39,10 +39,12 @@ function buildJs() {
           JSON.stringify(readFile(filename)) + ';');
   }
 
-  define('OUTFIT_HTML', 'outfit.html'),
-  define('ERROR_HTML', 'error.html'),
-  include('mustache.js'),
-  include('weather-outfit-base.js')
+  var config = JSON.parse(readFile('config.json'));
+
+  Object.keys(config.define).forEach(function(varname) {
+    define(varname, config.define[varname]);
+  });
+  config.include.forEach(include);
 
   fs.writeFileSync(OUTPUT_FILE, lines.join('\n'));
   fs.writeFileSync(MAP_FILE, map.toString());
