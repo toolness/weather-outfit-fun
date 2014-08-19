@@ -117,6 +117,9 @@ window.addEventListener("DOMContentLoaded", function() {
     document.body.appendChild(template);
     return template;
   };
+  var render = function(template, ctx) {
+    return _.template(template.textContent, ctx);
+  };
   var outfitTemplate = getTemplate('outfit-template', OUTFIT_HTML);
   var errorTemplate = getTemplate('error-template', ERROR_HTML);
   var outfit = document.getElementById('outfit');
@@ -129,10 +132,10 @@ window.addEventListener("DOMContentLoaded", function() {
 
   getCurrentPositionForecast(function(err, forecast) {
     if (err) {
-      outfit.innerHTML = Mustache.render(errorTemplate.textContent, err);
+      outfit.innerHTML = render(errorTemplate, err);
       return;
     }
-    outfit.innerHTML = Mustache.render(outfitTemplate.textContent, {
+    outfit.innerHTML = render(outfitTemplate, {
       city: forecast.city,
       forecast: typeof(window.getForecastWords) == 'function'
                 ? getForecastWords(forecast) : '???',

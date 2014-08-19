@@ -1,8 +1,8 @@
-<p>It's going to be <span class="forecast">{{forecast}}</span> in {{city}} today.</p>
+<p>It's going to be <span class="forecast"><%- forecast %></span> in <%- city %> today.</p>
 
-{{#outfit}}
+<% if (outfit) { %>
 <p>Here are some clothes you might wear:</p>
-<p><img class="outfit" src="{{outfit}}"></p>
-{{/outfit}}
+<p><img class="outfit" src="<%- outfit %>"></p>
+<% } %>
 
 <p><small>This page uses <a href="http://en.wikipedia.org/wiki/W3C_Geolocation_API">geolocation</a> to determine your location.</small></p>

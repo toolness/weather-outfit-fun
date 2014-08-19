@@ -4,7 +4,9 @@
     "ERROR_HTML": "error.html"
   },
   "include": [
-     "mustache.js",
+     "jquery.js",
+     "underscore.js",
+     "backbone.js",
      "weather-outfit-base.js"
   ]
 }
