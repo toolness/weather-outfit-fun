@@ -1,12 +1,12 @@
 {
   "define": {
-    "OUTFIT_HTML": "outfit.html",
-    "ERROR_HTML": "error.html"
+    "OUTFIT_HTML": "html/outfit.html",
+    "ERROR_HTML": "html/error.html"
   },
   "include": [
-     "jquery.js",
-     "underscore.js",
-     "backbone.js",
+     "vendor/jquery.js",
+     "vendor/underscore.js",
+     "vendor/backbone.js",
      "weather-outfit-base.js"
   ]
 }
