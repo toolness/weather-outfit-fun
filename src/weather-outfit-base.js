@@ -24,13 +24,55 @@ function setCacheEntry(key, value) {
   } catch (e) {}
 }
 
+function kelvinToFarenheit(k) {
+  return k * (9/5) - 459.67;
+}
+
+// http://openweathermap.org/weather-conditions
+function iconToWeather(icon) {
+  icon = icon.slice(0, -1);
+  if (icon == '01') return 'clear';
+  if (icon == '02' || icon == '03') return 'partly cloudy';
+  if (icon == '04') return 'mostly cloudy';
+  if (icon == '09' || icon == '10') return 'raining';
+  if (icon == '11') return 'thunderstorming';
+  if (icon == '13') return 'snowing';
+  if (icon == '50') return 'misty';
+  return 'unknown';
+}
+
+function simplifyForecast(res) {
+  function simplifyItem(item) {
+    return {
+      city: res.city.name,
+      date: new Date(item.dt * 1000),
+      humidity: item.main.humidity,
+      temp: kelvinToFarenheit(item.main.temp),
+      weather: iconToWeather(item.weather[0].icon)
+    };
+  }
+
+  var first, latest;
+
+  for (var i = 0; i < res.list.length; i++) {
+    var item = simplifyItem(res.list[i]);
+    if (!first)
+      first = item;
+    if (latest)
+      latest.next = item;
+    latest = item;
+  }
+
+  return first;
+}
+
 function getForecast(coords, cb) {
-  var url = 'http://api.openweathermap.org/data/2.5/forecast?lat=' +
-            coords.latitude + '&lon=' + coords.longitude;
+  var qs = '?lat=' + coords.latitude + '&lon=' + coords.longitude;
+  var url = 'http://api.openweathermap.org/data/2.5/forecast' + qs;
   var forecast = getCacheEntry('weather_forecast', FORECAST_CACHE_MS);
 
   if (forecast && forecast.url == url)
-    return cb(null, forecast.res);
+    return cb(null, simplifyForecast(forecast.res));
 
   var req = new XMLHttpRequest();
   req.open('GET', url);
@@ -45,7 +87,7 @@ function getForecast(coords, cb) {
       url: url,
       res: res
     });
-    cb(null, res);
+    cb(null, simplifyForecast(res));
   };
   req.send(null);
 }
@@ -93,11 +135,11 @@ window.addEventListener("DOMContentLoaded", function() {
       return;
     }
     outfit.innerHTML = Mustache.render(outfitTemplate.textContent, {
-      city: forecast.city.name,
+      city: forecast.city,
       forecast: typeof(window.getForecastWords) == 'function'
-                ? getForecastWords(forecast.list) : '???',
+                ? getForecastWords(forecast) : '???',
       outfit: typeof(window.getForecastOutfit) == 'function'
-              ? getForecastOutfit(forecast.list) : null
+              ? getForecastOutfit(forecast) : null
     });
     console.log(forecast);
   });
