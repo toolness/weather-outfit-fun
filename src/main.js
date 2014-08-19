@@ -4,6 +4,19 @@ var Router = Backbone.Router.extend({
     'outfit': 'outfit',
     'outfit/:city': 'outfit'
   },
+  navigate: function(fragment, options) {
+    Cache.set('weather_lastfragment', fragment);
+    return Backbone.Router.prototype.navigate.call(this, fragment, options);
+  },
+  // If we're in a live-reload editor like JSBin or Thimble, keep track
+  // of the fragment between page reloads and restore it so the user
+  // doesn't have to constantly re-navigate to the fragment they're
+  // working on whenever they change something.
+  loadLastFragment: function() {
+    if (window.parent !== window && !window.location.hash &&
+      Cache.get('weather_lastfragment'))
+    router.navigate(Cache.get('weather_lastfragment'), {trigger: true});
+  },
   setMainView: function(view) {
     if (this.mainView)
       this.mainView.remove();
@@ -72,4 +85,5 @@ $(function() {
   Template.setDefault('error-template', ERROR_HTML);
 
   Backbone.history.start();
+  router.loadLastFragment();
 });

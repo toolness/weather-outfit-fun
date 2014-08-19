@@ -1,11 +1,12 @@
 var Cache = {
+  DEFAULT_MAX_AGE: 1000 * 60 * 60,
   get: function getCacheEntry(key, maxAge) {
     var val = sessionStorage[key];
     var now = Date.now();
 
     try {
       val = JSON.parse(val);
-      if (now - val.timestamp < maxAge)
+      if (now - val.timestamp < (maxAge || Cache.DEFAULT_MAX_AGE))
         return val.value;
     } catch (e) {
       return;
