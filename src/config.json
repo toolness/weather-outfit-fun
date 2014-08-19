@@ -1,5 +1,7 @@
 {
   "define": {
+    "START_HTML": "html/start.html",
+    "LOADING_HTML": "html/loading.html",
     "OUTFIT_HTML": "html/outfit.html",
     "ERROR_HTML": "html/error.html"
   },
