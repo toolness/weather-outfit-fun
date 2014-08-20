@@ -22,6 +22,7 @@ button, input {
   margin: 0;
   display: block;
   width: 100%;
+  font-size: 14px;
 }
 
 .input-btn-combo {
