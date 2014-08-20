@@ -65,6 +65,23 @@ overwhelming the user with unfamiliar/irrelevant details will be hard.
 should be possible to dynamically construct an outfit using a Canvas object.
 This may also require an asynchronous callback.
 
+## Development
+
+To start the development server:
+
+```
+git clone https://github.com/toolness/weather-outfit-fun.git
+cd weather-outfit-fun
+npm install
+node bin/server.js
+```
+
+Then visit http://localhost:3000.
+
+This development server will regenerate `weather-outfit.js` and its
+source map each time they're requested, by examining `src/config.json`
+and using it to concatenate the source files it specifies.
+
 ## Deployment
 
 To deploy to an HTML page that only includes absolute links to
