@@ -36,7 +36,7 @@ function buildJs() {
 
   function define(variable, filename) {
     write('var ' + variable + ' = ' +
-          JSON.stringify(readFile(filename)) + ';');
+          JSON.stringify(readFile(filename).replace(/\r\n/g, "\n")) + ';');
   }
 
   var config = JSON.parse(readFile('config.json'));
