@@ -43,13 +43,15 @@ comprise the core "business logic" of the app:
 **getForecastWords**(*forecast*)
 
 This function returns a string describing the forecasted weather
-conditions, e.g. `"37F and cloudy"`.
+conditions, e.g. `"37F and cloudy"`. Alternatively, it can return a
+jQuery instance or DOM node.
 
 **getForecastOutfit**(*forecast*)
 
 This function returns a URL string that points to an image of a
 suggested outfit to wear based on the given forecast, e.g. 
-`"http://example.org/summer-outfit.jpg"`.
+`"http://example.org/summer-outfit.jpg"`. Alternatively, it can return
+a jQuery instance or DOM node.
 
 ## Limitations
 
@@ -61,10 +63,6 @@ more of this will be easy in JS Bin, which allows for multiple
 hide-able panes of HTML/JS/CSS, but it will be difficult for Thimble, which
 only has a single pane with no collapsable parts. This means that not
 overwhelming the user with unfamiliar/irrelevant details will be hard.
-
-`getForecastOutfit` can currently only return a URL to an image, but it
-should be possible to dynamically construct an outfit using a Canvas object.
-This may also require an asynchronous callback.
 
 ## Development
 

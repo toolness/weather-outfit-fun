@@ -94,9 +94,16 @@ var OutfitView = Backbone.View.extend({
 
       Template.render(this.$el, 'outfit-template', {
         city: forecast.city,
-        forecastWords: forecastWords,
-        forecastOutfit: forecastOutfit
+        forecastWords: typeof(forecastWords) == 'string' && forecastWords,
+        outfitURL: typeof(forecastOutfit) == 'string' && forecastOutfit
       });
+
+      if (forecastWords instanceof Node || forecastWords instanceof $)
+        this.$el.find('.forecastWords').empty().append(forecastWords);
+
+      if (forecastOutfit instanceof Node || forecastOutfit instanceof $)
+        this.$el.find('.forecastOutfit').empty().append(forecastOutfit);
+
       console.log(forecast);
     }.bind(this));
   }
