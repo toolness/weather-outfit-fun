@@ -12832,6 +12832,23 @@ var OutfitView = Backbone.View.extend({
   }
 });
 
+window.addEventListener('error', function(err) {
+  var extra = (/\.js$/i.test(event.filename))
+              ? ' of <code>' + _.escape(event.filename) + '</code>'
+              : '';
+
+  $('<div></div>')
+    .html('<strong>Alas, a JavaScript error occurred.</strong><br>' +
+          '<code>' + _.escape(event.message) + '</code> at line ' +
+          event.lineno + extra)
+    .css({
+      color: 'white',
+      backgroundColor: 'salmon',
+      padding: '4px'
+    })
+    .prependTo('body');
+});
+
 $(function() {
   Template.setDefault('outfit-template', OUTFIT_HTML);
   Template.setDefault('error-template', ERROR_HTML);
