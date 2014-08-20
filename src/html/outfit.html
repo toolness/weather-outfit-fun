@@ -1,8 +1,8 @@
-<p>It's going to be <span class="forecast"><%- forecast %></span> in <%- city %> today.</p>
+<p>It's going to be <span class="forecast">{{forecast}}</span> in {{city}} today.</p>
 
-<% if (outfit) { %>
+{{#outfit}}
 <p>Here are some clothes you might wear:</p>
-<p><img class="outfit" src="<%- outfit %>"></p>
-<% } %>
+<p><img class="outfit" src="{{outfit}}"></p>
+{{/outfit}}
 
 <p><button role="action-restart">Pick a different city</button></p>

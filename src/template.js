@@ -8,6 +8,6 @@ var Template = {
       .appendTo('body');
   },
   render: function renderTemplate(target, templateId, ctx) {
-    target.html(_.template($('#' + templateId).text(), ctx));
+    target.html(Mustache.render($('#' + templateId).text(), ctx));
   }
 };

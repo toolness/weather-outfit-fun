@@ -9,6 +9,7 @@
      "vendor/jquery.js",
      "vendor/underscore.js",
      "vendor/backbone.js",
+     "vendor/mustache.js",
      "cache.js",
      "weather.js",
      "template.js",
