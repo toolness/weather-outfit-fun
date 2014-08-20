@@ -1,0 +1,22 @@
+{
+  "name": "weather-outfit-fun",
+  "version": "0.0.1",
+  "description": "Potential hour of code activity: make an app that shows you an outfit to wear based on the weather forecast.",
+  "dependencies": {
+    "express": "~4.8.5",
+    "source-map": "~0.1.38"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/toolness/weather-outfit-fun.git"
+  },
+  "author": "Atul Varma",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/toolness/weather-outfit-fun/issues"
+  }
+}
