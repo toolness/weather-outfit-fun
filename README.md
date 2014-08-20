@@ -55,7 +55,11 @@ suggested outfit to wear based on the given forecast, e.g.
 The current implementation is only localized to English and Farenheit,
 and there's no easy way to use Celsius or another language.
 
-It's not easy to change the HTML, templates, or CSS for the app.
+It's not easy to change the HTML, templates, or CSS for the app. Exposing
+more of this will be easy in JS Bin, which allows for multiple
+hide-able panes of HTML/JS/CSS, but it will be difficult for Thimble, which
+only has a single pane with no collapsable parts. This means that not
+overwhelming the user with unfamiliar/irrelevant details will be hard.
 
 `getForecastOutfit` can currently only return a URL to an image, but it
 should be possible to dynamically construct an outfit using a Canvas object.
