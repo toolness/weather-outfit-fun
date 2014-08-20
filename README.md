@@ -3,6 +3,9 @@ a JavaScript-based app that presents the user with an outfit they
 can wear based on the weather forecast from [OpenWeatherMap][].
 It's intended for potential use in the [hour of code][].
 
+Unlike [teeny-quiz-fun][], this activity has been designed for learners
+with no prior exposure to HTML or CSS, and focuses solely on JavaScript.
+
 Affordances have been added that make it easier to debug the
 app's code in a live-reload environment like [Thimble][] and
 [JS Bin][].
@@ -75,5 +78,6 @@ can supply it as an argument to the export script, e.g.
 
   [OpenWeatherMap]: http://openweathermap.org/
   [hour of code]: http://csedweek.org/
+  [teeny-quiz-fun]: https://github.com/toolness/teeny-quiz-fun
   [Thimble]: https://thimble.webmaker.org/
   [JS Bin]: http://jsbin.com/
