@@ -29,7 +29,8 @@ properties:
 * `next` is an optional property that points to another `forecast`
   object, which represents the forecast 3 hours from `date`. If no such
   forecast exists, this value will be undefined.
-* `temp` is a number representing the temperature in Fahrenheit.
+* `temp` is an object representing the temperature in different units.
+  Use `temp.c` for celsius, `temp.f` for fahrenheit, and `temp.k` for kelvin.
 * `weather` is a string describing the weather conditions. It is
   one of `"clear"`, `"partly cloudy"`, `"mostly cloudy"`,
   `"raining"`, `"thunderstorming"`, `"snowing"`, and `"misty"`.
@@ -52,8 +53,8 @@ suggested outfit to wear based on the given forecast, e.g.
 
 ## Limitations
 
-The current implementation is only localized to English and Fahrenheit,
-and there's no easy way to use Celsius or another language.
+The current implementation is only localized to English and there's no easy
+way to use another language.
 
 It's not easy to change the HTML, templates, or CSS for the app. Exposing
 more of this will be easy in JS Bin, which allows for multiple

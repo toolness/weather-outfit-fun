@@ -1,6 +1,10 @@
 var GEO_CACHE_MS = 1000 * 60 * 10;
 var FORECAST_CACHE_MS = 1000 * 60 * 60;
 
+function kelvinToCelsius(k) {
+  return k - 273.15;
+}
+
 function kelvinToFarenheit(k) {
   return k * (9/5) - 459.67;
 }
@@ -24,7 +28,11 @@ function simplifyForecast(res) {
       city: res.city.name,
       date: new Date(item.dt * 1000),
       humidity: item.main.humidity,
-      temp: kelvinToFarenheit(item.main.temp),
+      temp: {
+        k: item.main.temp,
+        c: kelvinToCelsius(item.main.temp),
+        f: kelvinToFarenheit(item.main.temp)
+      },
       weather: iconToWeather(item.weather[0].icon)
     };
   }
