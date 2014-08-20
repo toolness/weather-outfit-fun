@@ -1,13 +1,16 @@
 This is a simple web page that guides learners towards making
 a JavaScript-based app that presents the user with an outfit they
-can wear based on the weather forecast. It's intended for
-potential use in the [hour of code][].
+can wear based on the weather forecast from [OpenWeatherMap][].
+It's intended for potential use in the [hour of code][].
 
 Affordances have been added that make it easier to debug the
 app's code in a live-reload environment like [Thimble][] and
 [JS Bin][].
 
 ## API
+
+For a very simple example of a minimalistic implementation of the API
+endpoints, see `index.html`.
 
 ### Data Types
 
@@ -70,6 +73,7 @@ the default of `http://toolness.github.io/weather-outfit-fun/`, you
 can supply it as an argument to the export script, e.g.
 `node bin/export.js http://example.org/weather-outfit/`.
 
+  [OpenWeatherMap]: http://openweathermap.org/
   [hour of code]: http://csedweek.org/
   [Thimble]: https://thimble.webmaker.org/
   [JS Bin]: http://jsbin.com/
