@@ -1,7 +1,7 @@
 //# sourceMappingURL=weather-outfit.js.map
 var START_HTML = "<p>What's the weather like in your area?</p>\n\n<button role=\"action-geolocate\">Use geolocation</button>\n<p><center>or</center></p>\n<div class=\"input-btn-combo\"><input type=\"text\" name=\"city\" placeholder=\"enter a city name, e.g. Chicago\"><button role=\"action-city\">Go</button></div>\n";
 var LOADING_HTML = "<!-- http://commons.wikimedia.org/wiki/File:Chromiumthrobber.svg -->\n<svg width=\"16\" height=\"16\" viewBox=\"0 0 300 300\"\nxmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n  <path d=\"M 150,0\n  a 150,150 0 0,1 106.066,256.066\n  l -35.355,-35.355\n  a -100,-100 0 0,0 -70.711,-170.711 z\"\n  fill=\"black\">\n    <animateTransform attributeName=\"transform\" attributeType=\"XML\"\n    type=\"rotate\" from=\"0 150 150\" to=\"360 150 150\"\n    begin=\"0s\" dur=\"1s\" fill=\"freeze\" repeatCount=\"indefinite\" />\n  </path>\n</svg> Loading&hellip;\n";
-var OUTFIT_HTML = "<p>It's going to be <span class=\"forecastWords\">{{forecastWords}}</span> in {{city}} today.</p>\n\n{{#forecastOutfit}}\n<p>Here are some clothes you might wear:</p>\n<p><img class=\"forecastOutfit\" src=\"{{forecastOutfit}}\"></p>\n{{/forecastOutfit}}\n\n<p><button role=\"action-restart\">Pick a different city</button></p>\n\n<p><small>Weather data provided by\n  <a href=\"http://openweathermap.org/\">OpenWeatherMap</a>.</small></p>\n";
+var OUTFIT_HTML = "<p>It's going to be <span class=\"forecastWords\">{{forecastWords}}</span> in {{city}} today.</p>\n\n<p>Here are some clothes you might wear:</p>\n<p class=\"forecastOutfit\">{{#outfitURL}}<img src=\"{{outfitURL}}\">{{/outfitURL}}</p>\n\n<p><button role=\"action-restart\">Pick a different city</button></p>\n\n<p><small>Weather data provided by\n  <a href=\"http://openweathermap.org/\">OpenWeatherMap</a>.</small></p>\n";
 var ERROR_HTML = "<p>Oh no, an error occurred! Some technical details are below.</p>\n<pre>{{message}}</pre>\n\n<p><button role=\"action-restart\">Try again</button></p>\n";
 /*!
  * jQuery JavaScript Library v2.1.1
@@ -12631,6 +12631,10 @@ var Cache = {
 var GEO_CACHE_MS = 1000 * 60 * 10;
 var FORECAST_CACHE_MS = 1000 * 60 * 60;
 
+function kelvinToCelsius(k) {
+  return k - 273.15;
+}
+
 function kelvinToFarenheit(k) {
   return k * (9/5) - 459.67;
 }
@@ -12654,7 +12658,11 @@ function simplifyForecast(res) {
       city: res.city.name,
       date: new Date(item.dt * 1000),
       humidity: item.main.humidity,
-      temp: kelvinToFarenheit(item.main.temp),
+      temp: {
+        k: item.main.temp,
+        c: kelvinToCelsius(item.main.temp),
+        f: kelvinToFarenheit(item.main.temp)
+      },
       weather: iconToWeather(item.weather[0].icon)
     };
   }
@@ -12691,6 +12699,8 @@ function getForecast(where, cb) {
   };
   req.onload = function() {
     var res = JSON.parse(req.responseText);
+    if (res.cod == 404 && typeof(where) == 'string')
+      return cb(new Error('city "' + where + '" not found'));
     if (res.cod != 200)
       return cb(new Error(res.message));
     Cache.set(cacheKey, res);
@@ -12824,9 +12834,16 @@ var OutfitView = Backbone.View.extend({
 
       Template.render(this.$el, 'outfit-template', {
         city: forecast.city,
-        forecastWords: forecastWords,
-        forecastOutfit: forecastOutfit
+        forecastWords: typeof(forecastWords) == 'string' && forecastWords,
+        outfitURL: typeof(forecastOutfit) == 'string' && forecastOutfit
       });
+
+      if (forecastWords instanceof Node || forecastWords instanceof $)
+        this.$el.find('.forecastWords').empty().append(forecastWords);
+
+      if (forecastOutfit instanceof Node || forecastOutfit instanceof $)
+        this.$el.find('.forecastOutfit').empty().append(forecastOutfit);
+
       console.log(forecast);
     }.bind(this));
   }
