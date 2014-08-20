@@ -1,10 +1,11 @@
 html, input, button {
-  font-family: 'Comic Sans MS';
+  font-family: 'Comic Sans MS', 'Marker Felt';
 }
 
 body {
   max-width: 320px;
   margin: 0 auto;
+  padding: 0 8px;
 }
 
 img {
