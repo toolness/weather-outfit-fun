@@ -61,6 +61,8 @@ function getForecast(where, cb) {
   };
   req.onload = function() {
     var res = JSON.parse(req.responseText);
+    if (res.cod == 404 && typeof(where) == 'string')
+      return cb(new Error('city "' + where + '" not found'));
     if (res.cod != 200)
       return cb(new Error(res.message));
     Cache.set(cacheKey, res);
