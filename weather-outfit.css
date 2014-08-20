@@ -1,0 +1,49 @@
+html, input, button {
+  font-family: 'Comic Sans MS';
+}
+
+body {
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+img {
+  max-width: 100%;
+}
+
+button, input {
+  -moz-box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid gray;
+  padding: 4px;
+  margin: 0;
+  display: block;
+  width: 100%;
+}
+
+.input-btn-combo {
+  width: 100%;
+}
+
+.input-btn-combo input {
+  display: inline;
+  width: 75%;
+  border-radius: 4px 0 0 4px;
+  border-right: none;
+}
+
+.input-btn-combo button {
+  display: inline;
+  width: 25%;
+  border-radius: 0 4px 4px 0;
+}
+
+button {
+  cursor: pointer;
+  background: #f0f0f0;
+}
+
+button:hover {
+  background: black;
+  color: white;
+}
