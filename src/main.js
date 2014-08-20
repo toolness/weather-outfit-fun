@@ -61,6 +61,12 @@ var OutfitView = Backbone.View.extend({
   restart: function(event) {
     router.navigate('', {trigger: true});
   },
+  renderException: function(error) {
+    var message = '"' + error.message + '"';
+    if (error.stack) message += '\n\n' + error.stack;
+    Template.render(this.$el, 'error-template', {message: message});
+    console.log(error);
+  },
   start: function(city) {
     this.$el.html(LOADING_HTML);
     var find = city ? getForecast.bind(null, city)
@@ -68,12 +74,28 @@ var OutfitView = Backbone.View.extend({
     find(function(err, forecast) {
       if (err)
         return Template.render(this.$el, 'error-template', err);
+
+      var forecastWords = '???';
+      var forecastOutfit = null;
+
+      if (typeof(window.getForecastWords) == 'function')
+        try {
+          forecastWords = getForecastWords(forecast);
+        } catch (e) {
+          return this.renderException(e);
+        }
+
+      if (typeof(window.getForecastOutfit) == 'function')
+        try {
+          forecastOutfit = getForecastOutfit(forecast);
+        } catch (e) {
+          return this.renderException(e);
+        }
+
       Template.render(this.$el, 'outfit-template', {
         city: forecast.city,
-        forecast: typeof(window.getForecastWords) == 'function'
-                  ? getForecastWords(forecast) : '???',
-        outfit: typeof(window.getForecastOutfit) == 'function'
-                ? getForecastOutfit(forecast) : null
+        forecastWords: forecastWords,
+        forecastOutfit: forecastOutfit
       });
       console.log(forecast);
     }.bind(this));
