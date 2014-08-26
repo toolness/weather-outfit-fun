@@ -16579,6 +16579,7 @@ window.enableDebugGUI = function() {
       forecast.close();
       temp.close();
     }
+    reload();
   });
   gui.width = 300;
 
