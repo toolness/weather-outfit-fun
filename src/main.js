@@ -126,6 +126,13 @@ window.addEventListener('error', function(err) {
     .prependTo('body');
 });
 
+window.getForecastWords = function getForecastWords(forecast) {
+  var tempWords = navigator.language == 'en-US'
+                  ? Math.round(forecast.temp.f) + '\u00b0F'
+                  : Math.round(forecast.temp.c) + '\u00b0C';
+  return tempWords + ' and ' + forecast.weather;
+};
+
 $(function() {
   Template.setDefault('outfit-template', OUTFIT_HTML);
   Template.setDefault('error-template', ERROR_HTML);

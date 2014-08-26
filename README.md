@@ -37,21 +37,21 @@ properties:
 
 ### Functions
 
-Learners are expected to implement two global JavaScript functions that
-comprise the core "business logic" of the app:
-
-**getForecastWords**(*forecast*)
-
-This function returns a string describing the forecasted weather
-conditions, e.g. `"37F and cloudy"`. Alternatively, it can return a
-jQuery instance or DOM node.
+Learners are expected to implement at least one global JavaScript
+function that comprises the core "business logic" of the app:
 
 **getForecastOutfit**(*forecast*)
 
-This function returns a URL string that points to an image of a
+Required. This function returns a URL string that points to an image of a
 suggested outfit to wear based on the given forecast, e.g. 
 `"http://example.org/summer-outfit.jpg"`. Alternatively, it can return
 a jQuery instance or DOM node.
+
+**getForecastWords**(*forecast*)
+
+Optional. This function returns a string describing the forecasted weather
+conditions, e.g. `"37F and cloudy"`. Alternatively, it can return a
+jQuery instance or DOM node.
 
 ## Limitations
 

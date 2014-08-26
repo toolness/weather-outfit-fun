@@ -6,10 +6,6 @@
 <h1>Weather Outfit Fun</h1>
 <script src="weather-outfit.js"></script>
 <script>
-function getForecastWords(forecast) {
-  return Math.round(forecast.temp.f) + '\u00b0F and ' + forecast.weather;
-}
-
 function getForecastOutfit(forecast) {
   if (forecast.temp.f > 60)
     return 'http://upload.wikimedia.org/wikipedia/commons/thumb/4/48/BEYONCE_CONCERT_IN_CENTRAL_PARK_2011_Good_Morning_America%27s_Summer_Concert_Series_-_Central_Park%2C_Manhattan_NYC_-_070111_cropped.jpg/483px-BEYONCE_CONCERT_IN_CENTRAL_PARK_2011_Good_Morning_America%27s_Summer_Concert_Series_-_Central_Park%2C_Manhattan_NYC_-_070111_cropped.jpg';
