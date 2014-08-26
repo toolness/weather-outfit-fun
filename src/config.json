@@ -10,6 +10,7 @@
      "vendor/underscore.js",
      "vendor/backbone.js",
      "vendor/mustache.js",
+     "vendor/dat.gui.js",
      "cache.js",
      "weather.js",
      "template.js",
