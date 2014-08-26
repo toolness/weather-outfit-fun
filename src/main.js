@@ -138,10 +138,6 @@ window.enableDebugGUI = function() {
   var reload = function() {
     Backbone.history.stop();
     Backbone.history.start();
-/*    router.navigate(window.location.hash.slice(1), {
-      trigger: true,
-      replace: true
-    });*/
   };
 
   if (typeof(USE_FAKE_FORECAST) == 'undefined')
