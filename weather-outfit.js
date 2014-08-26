@@ -12761,7 +12761,7 @@ var Router = Backbone.Router.extend({
     if (this.mainView)
       this.mainView.remove();
     this.mainView = view;
-    view.$el.appendTo('body');
+    view.$el.appendTo('#app');
     return view;
   },
   start: function() {
@@ -12869,6 +12869,9 @@ window.addEventListener('error', function(err) {
 $(function() {
   Template.setDefault('outfit-template', OUTFIT_HTML);
   Template.setDefault('error-template', ERROR_HTML);
+
+  if (!$('#app').length)
+    $('<div id="app"></div>').appendTo('body');
 
   Backbone.history.start();
   router.loadLastFragment();
