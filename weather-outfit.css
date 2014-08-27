@@ -10,6 +10,12 @@ body {
   color: #f7f7f8;
 }
 
+@media (max-width: 930px) {
+  html.debug > body {
+    margin: 0 0;
+  }
+}
+
 img {
   max-width: 100%;
 }

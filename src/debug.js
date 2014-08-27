@@ -59,8 +59,11 @@ Debug.enableGUI = function() {
       reload();
     });
 
-  gui.open();
+  if ($('html').width() < 640)
+    gui.close();
+
   Debug.gui = gui;
+  $('html').addClass('debug');
 };
 
 window.addEventListener('error', function(event) {
