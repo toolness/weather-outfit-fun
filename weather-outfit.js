@@ -16413,6 +16413,9 @@ var Template = {
 var Debug = {};
 
 Debug.enableGUI = function() {
+  dat.GUI.TEXT_OPEN = 'Open Debug Panel';
+  dat.GUI.TEXT_CLOSED = 'Close Debug Panel';
+
   var gui = new dat.GUI();
   var reload = function() {
     Backbone.history.stop();
