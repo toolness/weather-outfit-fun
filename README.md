@@ -53,6 +53,13 @@ Optional. This function returns a string describing the forecasted weather
 conditions, e.g. `"37F and cloudy"`. Alternatively, it can return a
 jQuery instance or DOM node.
 
+## Debugging
+
+If `window.DEBUG` is truthy, a [dat.gui][]-powered debug panel will be
+shown that allows the developer to provide a "fake" forecast to the
+app and manipulate it in real-time. This can also be useful for offline
+development.
+
 ## Limitations
 
 The current implementation is only localized to English and there's no easy
@@ -101,3 +108,4 @@ can supply it as an argument to the export script, e.g.
   [teeny-quiz-fun]: https://github.com/toolness/teeny-quiz-fun
   [Thimble]: https://thimble.webmaker.org/
   [JS Bin]: http://jsbin.com/
+  [dat.gui]: http://workshop.chromeexperiments.com/examples/gui/
