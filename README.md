@@ -60,6 +60,9 @@ shown that allows the developer to provide a "fake" forecast to the
 app and manipulate it in real-time. This can also be useful for offline
 development.
 
+To override the value of `window.DEBUG` through the URL, put
+`debug=on` or `debug=off` in the querystring.
+
 ## Limitations
 
 The current implementation is only localized to English and there's no easy

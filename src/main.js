@@ -123,9 +123,7 @@ $(function() {
   if (!$('#app').length)
     $('<div id="app"></div>').appendTo('body');
 
-  if (window.DEBUG)
-    Debug.enableGUI();
-
+  Debug.init();
   Backbone.history.start();
   router.loadLastFragment();
 });
