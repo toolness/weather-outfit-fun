@@ -16565,6 +16565,7 @@ var StartView = Backbone.View.extend({
 });
 
 var OutfitView = Backbone.View.extend({
+  FIND_TIMEOUT_MS: 10000,
   events: {
     'click button[role=action-restart]': 'restart'
   },
@@ -16581,15 +16582,22 @@ var OutfitView = Backbone.View.extend({
     this.$el.html(LOADING_HTML);
     var find = city ? getForecast.bind(null, city)
                     : getCurrentPositionForecast;
+    var timedOut = false;
+    var timeout = setTimeout(function() {
+      Template.render(this.$el, 'error-template', new Error('Timed out'));
+      timedOut = true;
+    }.bind(this), this.FIND_TIMEOUT_MS);
     if (window.DEBUG && window.USE_FAKE_FORECAST)
       find = function(cb) { cb(null, window.FAKE_FORECAST); };
     find(function(err, forecast) {
+      if (timedOut) return;
       if (err)
         return Template.render(this.$el, 'error-template', err);
 
       var forecastWords = '???';
       var forecastOutfit = null;
 
+      clearTimeout(timeout);
       if (typeof(window.getForecastWords) == 'function')
         try {
           forecastWords = getForecastWords(forecast);
@@ -16620,7 +16628,7 @@ var OutfitView = Backbone.View.extend({
 });
 
 window.getForecastWords = function getForecastWords(forecast) {
-  var tempWords = navigator.language == 'en-US'
+  var tempWords = navigator.language.toLowerCase() == 'en-us'
                   ? Math.round(forecast.temp.f) + '\u00b0F'
                   : Math.round(forecast.temp.c) + '\u00b0C';
   return tempWords + ' and ' + forecast.weather;
