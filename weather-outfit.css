@@ -54,6 +54,7 @@ button, input {
 
 button.primary {
   background-color: #5bc6fa;
+  box-shadow: 2px 2px 0 #348d74;
 }
 
 button {
@@ -83,4 +84,8 @@ h1 {
   font-weight: 600;
   margin-top: -5px;
   margin-bottom: 10px;
+}
+
+.forecastOutfit img {
+  box-shadow: 2px 2px 0 #348d74;  
 }
