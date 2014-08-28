@@ -1,5 +1,7 @@
+@import url(//fonts.googleapis.com/css?family=Open+Sans:300,600,300italic);
+
 html, input, button {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -8,6 +10,7 @@ body {
   padding: 0 8px;
   background-color: #4bc0a0;
   color: #f7f7f8;
+  font-weight: 300;
 }
 
 @media (max-width: 930px) {
@@ -31,6 +34,7 @@ button, input {
   display: block;
   width: 100%;
   font-size: 14px;
+  font-weight: 300;
 }
 
 .input-btn-combo {
@@ -56,6 +60,7 @@ button {
   background-color: #348d74;
   color: white;
   cursor: pointer;
+  font-weight: 600;
 }
 
 button:hover {
@@ -69,12 +74,13 @@ a {
 
 h1 {
   margin-bottom: 0;
+  font-weight: 600;
 }
 
 .subtitle {
   display: block;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 600;
   margin-top: -5px;
   margin-bottom: 10px;
 }
