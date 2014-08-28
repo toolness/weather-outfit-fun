@@ -12,8 +12,10 @@ var DEBUG = true;
 
 function getForecastOutfit(forecast) {
   if (forecast.temp.f > 60)
+    // It's warm!
     return 'http://upload.wikimedia.org/wikipedia/commons/thumb/4/48/BEYONCE_CONCERT_IN_CENTRAL_PARK_2011_Good_Morning_America%27s_Summer_Concert_Series_-_Central_Park%2C_Manhattan_NYC_-_070111_cropped.jpg/483px-BEYONCE_CONCERT_IN_CENTRAL_PARK_2011_Good_Morning_America%27s_Summer_Concert_Series_-_Central_Park%2C_Manhattan_NYC_-_070111_cropped.jpg';
   else
+    // Brrr, it's cold outside.
     return 'http://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Eskimo_woman_by_Lomen_Brothers%2C_ca._1915.jpg/444px-Eskimo_woman_by_Lomen_Brothers%2C_ca._1915.jpg';
 }
 </script>
