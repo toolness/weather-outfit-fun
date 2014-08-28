@@ -89,3 +89,26 @@ h1 {
 .forecastOutfit img {
   box-shadow: 2px 2px 0 #348d74;  
 }
+
+#app {
+  width: 320px;
+  overflow: hidden;
+}
+
+#app-views {
+  width: 640px;
+  position: relative;
+  left: 0;
+}
+
+#app-views.ready {
+  transition: left 0.5s;
+  -webkit-transition: left 0.5s;
+}
+
+#app-views > div {
+  vertical-align: top;
+  display: inline-block;
+  width: 312px;
+  margin: 0 4px;
+}
