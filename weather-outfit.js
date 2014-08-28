@@ -16412,6 +16412,16 @@ var Template = {
 
 var Debug = {};
 
+Debug.init = function() {
+  var match = window.location.search.match(/debug=(on|off)/);
+
+  if (match)
+    window.DEBUG = (match[1] == 'on');
+
+  if (window.DEBUG)
+    Debug.enableGUI();
+};
+
 Debug.enableGUI = function() {
   dat.GUI.TEXT_OPEN = 'Open Debug Panel';
   dat.GUI.TEXT_CLOSED = 'Close Debug Panel';
@@ -16623,9 +16633,7 @@ $(function() {
   if (!$('#app').length)
     $('<div id="app"></div>').appendTo('body');
 
-  if (window.DEBUG)
-    Debug.enableGUI();
-
+  Debug.init();
   Backbone.history.start();
   router.loadLastFragment();
 });
