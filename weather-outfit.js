@@ -16527,18 +16527,19 @@ var Router = Backbone.Router.extend({
       Cache.get('weather_lastfragment'))
     router.navigate(Cache.get('weather_lastfragment'), {trigger: true});
   },
-  setMainView: function(view) {
-    if (this.mainView)
-      this.mainView.remove();
-    this.mainView = view;
-    view.$el.appendTo('#app');
+  setView: function(sel, view) {
+    var oldView = $(sel).data('view');
+    if (oldView) oldView.remove();
+    $(sel).data('view', view);
+    view.$el.appendTo(sel);
+    $('#app-views').css({left: -view.$el.position().left + 'px'});
     return view;
   },
   start: function() {
-    this.setMainView(new StartView()).render();
+    this.setView('#app-start', new StartView()).render();
   },
   outfit: function(city) {
-    this.setMainView(new OutfitView()).start(city);
+    this.setView('#app-outfit', new OutfitView()).start(city);
   }
 });
 
@@ -16641,7 +16642,12 @@ $(function() {
   if (!$('#app').length)
     $('<div id="app"></div>').appendTo('body');
 
+  $('<div id="app-views"><div id="app-start"></div>' +
+    '<div id="app-outfit"></div></div>').appendTo('#app');
+
   Debug.init();
   Backbone.history.start();
   router.loadLastFragment();
+
+  setTimeout(function() { $('#app-views').addClass('ready') }, 100);
 });
