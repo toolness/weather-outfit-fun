@@ -118,7 +118,7 @@ var OutfitView = Backbone.View.extend({
 });
 
 window.getForecastWords = function getForecastWords(forecast) {
-  var tempWords = navigator.language == 'en-US'
+  var tempWords = navigator.language.toLowerCase() == 'en-us'
                   ? Math.round(forecast.temp.f) + '\u00b0F'
                   : Math.round(forecast.temp.c) + '\u00b0C';
   return tempWords + ' and ' + forecast.weather;
