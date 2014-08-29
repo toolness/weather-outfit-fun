@@ -1,5 +1,11 @@
 @import url(//fonts.googleapis.com/css?family=Open+Sans:300,600,300italic);
 
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 html, input, button {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -24,9 +30,6 @@ img {
 }
 
 button, input {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
   border: none;
   border-radius: 0;
   padding: 4px;
@@ -91,24 +94,23 @@ h1 {
 }
 
 #app {
-  width: 320px;
+  width: 304px;
   overflow: hidden;
 }
 
 #app-views {
-  width: 640px;
+  width: 1000px;
   position: relative;
   left: 0;
 }
 
 #app-views.ready {
   transition: left 0.5s;
-  -webkit-transition: left 0.5s;
 }
 
 #app-views > div {
   vertical-align: top;
   display: inline-block;
-  width: 312px;
-  margin: 0 4px;
+  width: 304px;
+  padding-right: 4px;
 }

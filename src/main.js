@@ -18,11 +18,12 @@ var Router = Backbone.Router.extend({
     router.navigate(Cache.get('weather_lastfragment'), {trigger: true});
   },
   setView: function(sel, view) {
-    var oldView = $(sel).data('view');
-    if (oldView) oldView.remove();
-    $(sel).data('view', view);
-    view.$el.appendTo(sel);
-    $('#app-views').css({left: -view.$el.position().left + 'px'});
+    var oldView = this.currentView;
+    this.currentView = view;
+    $(sel).empty().append(view.el);
+    $('#app-views')
+      .css({left: -view.$el.position().left + 'px'})
+      .one('transitionend', function() { if (oldView) oldView.remove(); });
     return view;
   },
   start: function() {
