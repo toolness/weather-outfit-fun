@@ -103,10 +103,13 @@ var OutfitView = Backbone.View.extend({
           return this.renderException(e);
         }
 
+      if (typeof(forecastOutfit) == 'string')
+        forecastOutfit = [forecastOutfit];
+
       Template.render(this.$el, 'outfit-template', {
         city: forecast.city,
         forecastWords: typeof(forecastWords) == 'string' && forecastWords,
-        outfitURL: typeof(forecastOutfit) == 'string' && forecastOutfit
+        outfitURLs: $.isArray(forecastOutfit) ? forecastOutfit : []
       });
 
       if (forecastWords instanceof Node || forecastWords instanceof $)

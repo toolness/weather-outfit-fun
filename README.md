@@ -42,10 +42,15 @@ function that comprises the core "business logic" of the app:
 
 **getForecastOutfit**(*forecast*)
 
-Required. This function returns a URL string that points to an image of a
-suggested outfit to wear based on the given forecast, e.g. 
-`"http://example.org/summer-outfit.jpg"`. Alternatively, it can return
-a jQuery instance or DOM node.
+Required. This function should determine a suggested outfit for the
+user to wear based on the given outfit. It must return one of the 
+following:
+
+* A URL string that points to an image of a suggested outfit to wear
+  based on the given forecast, e.g. `"http://example.org/summer.jpg"`.
+* An array of URL strings, each pointing to an image of part of an
+  outfit's ensemble.
+* A jQuery instance or DOM node.
 
 **getForecastWords**(*forecast*)
 
