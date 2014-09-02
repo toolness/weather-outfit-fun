@@ -104,6 +104,11 @@ var OutfitView = Backbone.View.extend({
           return this.renderException(e);
         }
 
+      if (forecastOutfit === undefined)
+        return Template.render(this.$el, 'error-template',
+                               new Error('getForecastOutfit() returned ' +
+                                         'undefined'));
+
       if (typeof(forecastOutfit) == 'string')
         forecastOutfit = [forecastOutfit];
 
