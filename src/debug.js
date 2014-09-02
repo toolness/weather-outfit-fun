@@ -20,8 +20,6 @@ Debug.enableGUI = function() {
     Backbone.history.start();
   };
 
-  if (typeof(USE_FAKE_FORECAST) == 'undefined')
-    window.USE_FAKE_FORECAST = false;
   if (typeof(FAKE_FORECAST) == 'undefined') {
     window.FAKE_FORECAST = {
       city: 'Fakeville',
@@ -35,19 +33,9 @@ Debug.enableGUI = function() {
     };
   }
 
-  gui.add(window, 'USE_FAKE_FORECAST').onChange(function(value) {
-    if (value) {
-      forecast.open();
-      temp.open();
-    } else {
-      forecast.close();
-      temp.close();
-    }
-    reload();
-  });
   gui.width = 300;
 
-  var forecast = gui.addFolder('FAKE_FORECAST');
+  var forecast = gui;
   var temp = forecast.addFolder('temp');
 
   forecast.add(FAKE_FORECAST, 'city').onChange(reload);
@@ -72,6 +60,7 @@ Debug.enableGUI = function() {
       reload();
     });
 
+  temp.open();
   if ($('html').width() < 640)
     gui.close();
 

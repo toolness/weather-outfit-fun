@@ -79,7 +79,7 @@ var OutfitView = Backbone.View.extend({
       Template.render(this.$el, 'error-template', new Error('Timed out'));
       timedOut = true;
     }.bind(this), this.FIND_TIMEOUT_MS);
-    if (window.DEBUG && window.USE_FAKE_FORECAST)
+    if (window.DEBUG)
       find = function(cb) { cb(null, window.FAKE_FORECAST); };
     find(function(err, forecast) {
       if (timedOut) return;
