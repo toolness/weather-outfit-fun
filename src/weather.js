@@ -62,6 +62,9 @@ function getForecast(where, cb) {
   if (forecast)
     return cb(null, simplifyForecast(forecast));
 
+  if (window.location.protocol == 'https:')
+    url = url.replace('http://', 'https://httpsify.herokuapp.com/');
+
   var req = new XMLHttpRequest();
   req.open('GET', url);
   req.onerror = function() {
