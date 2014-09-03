@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="vendor/codemirror.css">
+<style>
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  align-items: stretch;
+  margin: 0;
+  font-size: 0;
+}
+
+.CodeMirror {
+  height: 100%;
+  font-size: 12px;
+}
+
+iframe {
+  border: none;
+}
+
+#tutorial {
+  width: 33%;
+}
+
+#rendering {
+  width: 33%;
+}
+
+#rendering iframe {
+  width: 100%;
+  height: 100%;
+}
+
+#code {
+  width: 34%;
+}
+</style>
+<title>Tutorial Simulator</title>
+<body>
+<iframe id="tutorial" src="tutorial.html"></iframe>
+<div id="code"></div>
+<div id="rendering"></div>
+<script src="vendor/codemirror.js"></script>
+<script src="vendor/xml.js"></script>
+<script src="vendor/css.js"></script>
+<script src="vendor/javascript.js"></script>
+<script src="vendor/htmlmixed.js"></script>
+<script src="../src/vendor/jquery.js"></script>
+<script>
+var editor;
+var tutorial = $('#tutorial');
+var code = $('#code');
+var rendering = $('#rendering');
+
+function render() {
+  var html = editor.getValue();
+  var iframe = document.createElement('iframe');
+  rendering.empty().append(iframe);
+  iframe.contentDocument.write(html);
+}
+
+$(function() {
+  $.get('../index.html', function(html) {
+    editor = CodeMirror(code[0], {
+      mode: 'htmlmixed',
+      lineNumbers: true,
+      lineWrapping: true,
+      value: html.replace(/weather-outfit/g, '../weather-outfit')
+    });
+    editor.on('change', render);
+    render();
+  });
+});
+</script>
+</body>
