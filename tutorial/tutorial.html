@@ -3,14 +3,31 @@
 <link href="vendor/tutorial.css" rel="stylesheet">
 <script src="../src/vendor/jquery.js"></script>
 <script src="vendor/tutorial.js"></script>
+<style>
+section {
+  display: none;
+}
+</style>
 <script>
   jQuery(document).ready(function($){
     $('body').tutorial({
       paginate: false
     });
+    $(window).on('hashchange', function() {
+      var loc = window.location.hash.slice(1) || 'start';
+      var el = document.getElementById(loc);
+      if (el) {
+        $('section').hide();
+        $(el).show();
+      }
+    }).trigger('hashchange');
   });
 </script>
-<section>
+<section id="start">
   <h1>Sup.</h1>
-  <p>How's it goin at line 5 buddy ole pal.</p>
+  <p>How's it goin at line 5 buddy ole <a href="#end">pal</a>.</p>
+</section>
+<section id="end">
+  <h1>End.</h1>
+  <p>How's it goin at line 3 <a href="#start">start</a>.</p>
 </section>
