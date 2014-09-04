@@ -17,19 +17,21 @@ section {
       paginate: false
     });
 
-    var hashHistory = $('body')
-      .asEventStream('click', 'a[href^="#"]', getCurrHash)
-      .merge($('#back').asEventStream('click').map('back'))
-      .scan([], function(history, item) {
-        return item == 'back' ? history.slice(0, -1) : history.concat(item);
-      });
+    var hashHistory = Bacon.update(
+      [],
+
+      [$('#back').asEventStream('click')],
+      function(history) { return history.slice(0, -1); },
+
+      [$('body').asEventStream('click', 'a[href^="#"]', getCurrHash)],
+      function(history, hash) { return history.concat(hash); }
+    );
 
     hashHistory
       .diff([], function(prev, curr) {
-        if (prev.length > curr.length)
-          return prev[prev.length-1];
+        return prev.length > curr.length ? prev[prev.length-1] : null;
       })
-      .filter(function(h) { return typeof(h) == 'string'; })
+      .filter(function(hash) { return hash !== null; })
       .onValue(function(hash) { window.location.hash = hash; });
 
     hashHistory
