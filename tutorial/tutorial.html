@@ -3,38 +3,50 @@
 <link href="vendor/tutorial.css" rel="stylesheet">
 <script src="../src/vendor/jquery.js"></script>
 <script src="vendor/tutorial.js"></script>
+<script src="vendor/bacon.js"></script>
 <style>
 section {
   display: none;
 }
 </style>
 <script>
-  $(function() {
-    var oldHash = null;
-    var ourHistory = [];
+  function getCurrHash() { return window.location.hash; }
 
+  $(function() {
     $('body').tutorial({
       paginate: false
     });
-    $(window).on('hashchange', function() {
-      var loc = window.location.hash.slice(1) || 'start';
-      var el = document.getElementById(loc);
-      if (el) {
-        $('section').hide();
-        $(el).show();
-      }
-      if (oldHash !== null) {
-        ourHistory.push(oldHash);
-        oldHash = null;
-      }
-    }).trigger('hashchange');
-    $('body').on('click', 'a[href^="#"]', function(event) {
-      oldHash = window.location.hash;
-    });
-    $('#back').on('click', function() {
-      if (ourHistory.length)
-        window.location.hash = ourHistory.pop();
-    });
+
+    var hashHistory = $('body')
+      .asEventStream('click', 'a[href^="#"]', getCurrHash)
+      .merge($('#back').asEventStream('click').map('back'))
+      .scan([], function(history, item) {
+        return item == 'back' ? history.slice(0, -1) : history.concat(item);
+      });
+
+    hashHistory
+      .diff([], function(prev, curr) {
+        if (prev.length > curr.length)
+          return prev[prev.length-1];
+      })
+      .filter(function(h) { return typeof(h) == 'string'; })
+      .onValue(function(hash) { window.location.hash = hash; });
+
+    hashHistory
+      .map(function(history) { return history.length == 0; })
+      .assign($('#back'), 'attr', 'disabled');
+
+    $(window)
+      .asEventStream('hashchange', getCurrHash)
+      .toProperty(window.location.hash)
+      .onValue(function(hash) {
+        var loc = hash.slice(1) || 'start';
+        var el = document.getElementById(loc);
+        if (el) {
+          $('section').hide();
+          $(el).show();
+        }
+      });
   });
 </script>
 <button id="back">Back</button>
