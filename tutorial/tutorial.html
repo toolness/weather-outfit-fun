@@ -9,7 +9,10 @@ section {
 }
 </style>
 <script>
-  jQuery(document).ready(function($){
+  $(function() {
+    var oldHash = null;
+    var ourHistory = [];
+
     $('body').tutorial({
       paginate: false
     });
@@ -20,9 +23,21 @@ section {
         $('section').hide();
         $(el).show();
       }
+      if (oldHash !== null) {
+        ourHistory.push(oldHash);
+        oldHash = null;
+      }
     }).trigger('hashchange');
+    $('body').on('click', 'a[href^="#"]', function(event) {
+      oldHash = window.location.hash;
+    });
+    $('#back').on('click', function() {
+      if (ourHistory.length)
+        window.location.hash = ourHistory.pop();
+    });
   });
 </script>
+<button id="back">Back</button>
 <section id="start">
   <h1>Sup.</h1>
   <p>How's it goin at line 5 buddy ole <a href="#end">pal</a>.</p>
