@@ -37,7 +37,7 @@ iframe {
   width: 33%;
 }
 
-#rendering iframe {
+#rendering iframe, #tutorial iframe {
   width: 100%;
   height: 100%;
 }
@@ -52,10 +52,14 @@ iframe {
 #code {
   width: 34%;
 }
+
+.tutorial-highlight {
+  background-color: pink;
+}
 </style>
 <title>Tutorial Simulator</title>
 <body>
-<iframe id="tutorial" src="tutorial.html"></iframe>
+<div id="tutorial"></div>
 <div id="code"></div>
 <div id="rendering"></div>
 <script src="../src/vendor/jquery.js"></script>
@@ -90,6 +94,44 @@ function renderInvisibleFrame(parent) {
   };
 }
 
+function forEachLine(lines, cb) {
+  var from = lines.from - 1;
+  var to = lines.to === null ? from : lines.to - 1;
+  for (var i = from; i <= to; i++)
+    cb(i);
+}
+
+function startTutorial(editor, parent) {
+  var iframe = document.createElement('iframe');
+  iframe.setAttribute('src', 'tutorial.html');
+  parent.append(iframe);
+  window.addEventListener('message', function(event) {
+    if (event.source !== iframe.contentWindow) return;
+    var data = JSON.parse(event.data);
+    if (data.type != 'tutorial') return;
+    if (data.action == 'highlight') {
+      forEachLine(data.lines, function(line) {
+        editor.addLineClass(line, 'background', 'tutorial-highlight');
+      });
+    } else if (data.action == 'unhighlight') {
+      forEachLine(data.lines, function(line) {
+        editor.removeLineClass(line, 'background', 'tutorial-highlight');
+      });
+    } else if (data.action == 'scroll') {
+      editor.scrollIntoView({line: data.lines.from-1, ch: 0}, 50);
+    }
+  }, false);
+  editor.on('change', function(instance, changeObj) {
+    iframe.contentWindow.postMessage(JSON.stringify({
+      type: 'tutorial',
+       // This doesn't seem to be used by vendor/tutorial.js, just needs
+       // to be truthy.
+      action: '???',
+      obj: changeObj
+    }), '*');
+  });
+}
+
 function startEditor(code, rendering, initialHTML) {
   var htmlStream = new Bacon.Bus();
   var editor = CodeMirror(code[0], {
@@ -108,6 +150,8 @@ function startEditor(code, rendering, initialHTML) {
       rendering.find('iframe:not(.invisible)').remove();
       $(iframe).removeClass('invisible');
     });
+
+  return editor;
 }
 
 $(function() {
@@ -116,8 +160,9 @@ $(function() {
   baseURL = baseURL.match(/^(.+\/)tutorial\/.*$/)[1];
 
   $.get('skeleton.html', function(html) {
-    startEditor($('#code'), $('#rendering'),
-                html.replace(/\.\.\//g, baseURL));
+    var editor = startEditor($('#code'), $('#rendering'),
+                             html.replace(/\.\.\//g, baseURL));
+    startTutorial(editor, $('#tutorial'));
   });
 });
 </script>
