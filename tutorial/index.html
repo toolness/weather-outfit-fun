@@ -69,6 +69,7 @@ iframe {
 <script src="vendor/javascript.js"></script>
 <script src="vendor/htmlmixed.js"></script>
 <script src="vendor/bacon.js"></script>
+<script src="common.js"></script>
 <script>
 function renderInvisibleFrame(parent) {
   return function(html) {
@@ -155,10 +156,6 @@ function startEditor(code, rendering, initialHTML) {
 }
 
 $(function() {
-  var baseURL = window.location.protocol + '//' + window.location.host +
-                window.location.pathname;
-  baseURL = baseURL.match(/^(.+\/)tutorial\/.*$/)[1];
-
   $.get('skeleton.html', function(html) {
     var editor = startEditor($('#code'), $('#rendering'),
                              html.replace(/\.\.\//g, baseURL));

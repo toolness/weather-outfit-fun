@@ -3,8 +3,10 @@
 <link href="vendor/tutorial.css" rel="stylesheet">
 <link href="vendor/font-awesome/css/font-awesome.css" rel="stylesheet">
 <script src="../src/vendor/jquery.js"></script>
+<script src="../src/vendor/mustache.js"></script>
 <script src="vendor/tutorial.js"></script>
 <script src="vendor/bacon.js"></script>
+<script src="common.js"></script>
 <style>
 section {
   display: none;
@@ -26,6 +28,13 @@ aside {
 body .tutorial-nav button {
   width: auto;
   padding: 0 2px;
+}
+
+pre {
+  white-space: pre-wrap;
+  background: black;
+  color: white;
+  padding: 8px;
 }
 </style>
 <script>
@@ -55,6 +64,10 @@ body .tutorial-nav button {
     window.location.replace('#' + LAST_HASH);
 
   $(function() {
+    $('pre').each(function() {
+      $(this).text(Mustache.render($(this).text(), {baseURL: baseURL}));
+    });
+
     $('body').tutorial({
       paginate: false
     });
@@ -139,11 +152,26 @@ body .tutorial-nav button {
     <p>If you'd like to learn more about tags, try playing <a href="https://mousemeredith.makes.org/thimble/LTE2Mjc5Nzk3NzY=/tag-tag-revolution-activity" target="_blank">Tag Tag Revolution</a> with some friends.</p>
   </aside>
 
-  <p><i class="fa fa-trophy"></i> <a href="#challenge-h1">I'd like to make my own tag.</a></p>
-  <p><a href="#about-head">What's this about a "head" on line 2?</a></p>
-  <p><a href="#about-css">What's this about a "stylesheet" on line 3?</a></p>
-  <p><a href="#about-js">What's this about a "script" on line 4?</a></p>
-  <p><a href="#about-body">What's this about a "body" on line 10?</a></p>
+  <p><a href="#about-css">What's this "stylesheet" thing at line 3?</a></p>
+  <p><a href="#hack">Okay, let's start writing some code.</a></p>
+</section>
+
+<section id="about-css">
+  <h1>CSS is awesome.</h1>
+  <p>Line 3 tells your browser to load a <em>stylesheet</em>.</p>
+  <p>Stylesheets are written using a language called CSS, and are like the skin or clothing of a webpage. They're like rules draped over HTML to make it look pretty (or, in some cases, grotesque). In this case, it's making the background of our page greenish.</p>
+  <aside>
+    <p>Want to deep-dive? You can <a href="https://github.com/toolness/weather-outfit-fun/blob/gh-pages/weather-outfit.css" target="_blank">view the source</a> of the CSS file at line 3, and learn more about CSS at <a href="http://www.htmldog.com/guides/css/" target="_blank">HTML Dog</a>.</p>
+  </aside>
+  <p><a href="#hack">Okay, let's start writing some code.</a></p>
+</section>
+
+<section id="hack">
+  <h1>Let's start coding.</h1>
+  <p>The first thing we'll do is add a <em>script</em> to this webpage.</p>
+  <p>Scripts are like the brain, muscles, and central nervous system of a webpage: they allow a page to respond to user input, talk to the internet, and change itself in ways that can transform it from an inert page into a full-fledged application.</p>
+  <p>To add our script, type the following at line 4:</p>
+  <pre>&lt;script src="{{{baseURL}}}weather-outfit.js"&gt;&lt;/script&gt;</pre>
 </section>
 
 <section id="404">
