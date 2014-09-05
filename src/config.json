@@ -15,6 +15,7 @@
      "weather.js",
      "template.js",
      "debug.js",
+     "challenges.js",
      "main.js"
   ]
 }

@@ -45,6 +45,16 @@ pre {
 
   padding: 8px;
 }
+
+[data-show-when-challenge-done] {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.done[data-show-when-challenge-done] {
+  opacity: 1;
+  color: green;
+}
 </style>
 <script>
   function getCurrHash() {
@@ -53,7 +63,7 @@ pre {
 
   function getStorage(key, defaultValue) {
     try {
-      return JSON.parse(sessionStorage[key]);
+      return JSON.parse(sessionStorage[PREFIX + key]);
     } catch (e) {
       return defaultValue;
     }
@@ -61,8 +71,12 @@ pre {
 
   function setStorage(key, value) {
     try {
-      sessionStorage[key] = JSON.stringify(value);
+      sessionStorage[PREFIX + key] = JSON.stringify(value);
     } catch (e) {}
+  }
+
+  function propAsBool(prop) {
+    return function(obj) { return !!obj[prop]; };
   }
 
   var HISTORY_START = getStorage('hashHistory', []);
@@ -82,6 +96,17 @@ pre {
     $('body').tutorial({
       paginate: false
     });
+
+    var challenges = Bacon.fromPoll(1000, function() {
+      var challenges = getStorage('challenges', {});
+      if (!(challenges.date > Date.now() - 5000))
+        return new Bacon.Next({});
+      return new Bacon.Next(challenges.data || {});
+    });
+
+    challenges.map(propAsBool('loaded'))
+      .assign($('[data-show-when-challenge-done="loaded"]'),
+              'toggleClass', 'done');
 
     var hashHistory = Bacon.update(
       HISTORY_START,
@@ -186,6 +211,12 @@ pre {
   <pre data-lang="htmlmixed">&lt;script src="{{{baseURL}}}weather-outfit.js"&gt;&lt;/script&gt;</pre>
 
   <aside><p>Please do try to <em>type</em> the above code instead of copying and pasting it (copy-pasting just the URL is okay though). You'll learn better that way!</p></aside>
+
+  <div data-show-when-challenge-done="loaded">
+    <h2>Hooray!</h2>
+    <p>The page is now loading the script, which is injecting an app into it.</p>
+    <p><a href="#onwards">Onwards!</a></p>
+  </div>
 </section>
 
 <section id="404">
