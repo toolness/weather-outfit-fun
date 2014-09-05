@@ -67,7 +67,7 @@ pre {
 
   var START_DATE = Date.now();
   var HISTORY_START = getStorage('hashHistory', []);
-  var LAST_HASH = getStorage('lastHash');
+  var LAST_HASH = getStorage('lastHash', 'start');
   var IN_IFRAME = (window.parent !== window);
 
   if (IN_IFRAME)
