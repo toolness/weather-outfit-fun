@@ -65,6 +65,7 @@ pre {
     return function(obj) { return !!obj[prop]; };
   }
 
+  var START_DATE = Date.now();
   var HISTORY_START = getStorage('hashHistory', []);
   var LAST_HASH = getStorage('lastHash');
   var IN_IFRAME = (window.parent !== window);
@@ -85,7 +86,8 @@ pre {
 
     var challenges = Bacon.fromPoll(1000, function() {
       var challenges = getStorage('challenges', {});
-      if (!(challenges.date > Date.now() - 5000))
+      if (!(challenges.date > START_DATE &&
+            challenges.date > Date.now() - 5000))
         return new Bacon.Next({});
       return new Bacon.Next(challenges.data || {});
     });
