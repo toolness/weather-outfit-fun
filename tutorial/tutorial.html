@@ -7,6 +7,14 @@
 <style>
 section {
   display: none;
+  line-height: 20px;
+}
+
+code {
+  border: 1px solid gray;
+  border-radius: 2px;
+  background-color: #f0f0f0;
+  padding: 1px;
 }
 </style>
 <script>
@@ -78,11 +86,32 @@ section {
   });
 </script>
 <button id="back">Back</button> <button id="restart">Restart</button>
+
 <section id="start">
-  <h1>Sup.</h1>
-  <p>How's it goin at line 5 buddy ole <a href="#end">pal</a>.</p>
+  <h1>Welcome!</h1>
+
+  <p><a href="#wtf">What's all this stuff between lines 1-14? Is my computer being hacked?!</a></p>
+  <p><a href="#hack">Hey, I've seen this stuff before. Show me how to build an app!</a></p>
 </section>
-<section id="end">
-  <h1>End.</h1>
-  <p>How's it goin at line 3 <a href="#start">start</a>.</p>
+
+<section id="wtf">
+  <h1>Nope, it's code.</h1>
+  <p>That is HTML, the language that all pages on the Web are made of.</p>
+  <p><a href="#about-html">Oh neat, tell me more.</a></p>
+  <p><a href="#hack">Ok, let's get started coding then!</a></p>
+</section>
+
+<section id="about-html">
+  <h1>HTML is cool.</h1>
+  <p>If a Web page were an organism, HTML would be like its bones,
+    providing structure.</p>
+  <p>HTML is made up of <em>tags</em>, which often come in pairs. For
+    example, line 1 is an <em>opening</em> HTML tag, while line 14 is
+    a <em>closing</em> HTML tag. You can identify tags by the
+    <code>&lt;</code> and <code>&gt;</code> at either end.</p>
+</section>
+
+<section id="hack">
+  <h1>Let's get started.</h1>
+  <p>TODO: Finish this.</p>
 </section>
