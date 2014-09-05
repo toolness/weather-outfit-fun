@@ -56,20 +56,28 @@ section {
       .map(function(history) { return history.length == 0; })
       .assign($('#back'), 'attr', 'disabled');
 
-    $(window)
+    var loc = $(window)
       .asEventStream('hashchange', getCurrHash)
       .toProperty(window.location.hash)
-      .onValue(function(hash) {
-        var loc = hash.slice(1) || 'start';
+      .map(function(hash) { return hash.slice(1) || 'start'; });
+
+    loc.map(function(loc) { return loc == 'start'; })
+      .assign($('#restart'), 'attr', 'disabled');
+
+    loc.onValue(function(loc) {
         var el = document.getElementById(loc);
         if (el) {
           $('section').hide();
           $(el).show();
         }
       });
+
+    $('#restart').asEventStream('click').onValue(function() {
+      window.location.hash = '';
+    });
   });
 </script>
-<button id="back">Back</button>
+<button id="back">Back</button> <button id="restart">Restart</button>
 <section id="start">
   <h1>Sup.</h1>
   <p>How's it goin at line 5 buddy ole <a href="#end">pal</a>.</p>
