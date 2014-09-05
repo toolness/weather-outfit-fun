@@ -18,7 +18,9 @@ code {
 }
 </style>
 <script>
-  function getCurrHash() { return window.location.hash; }
+  function getCurrHash() {
+    return window.location.hash.slice(1) || 'start';
+  }
 
   function getStorage(key, defaultValue) {
     try {
@@ -35,6 +37,11 @@ code {
   }
 
   var HISTORY_START = getStorage('hashHistory', []);
+  var LAST_HASH = getStorage('lastHash');
+  var IN_IFRAME = (window.parent !== window);
+
+  if (IN_IFRAME)
+    window.location.replace('#' + LAST_HASH);
 
   $(function() {
     $('body').tutorial({
@@ -56,7 +63,7 @@ code {
         return prev.length > curr.length ? prev[prev.length-1] : null;
       })
       .filter(function(hash) { return hash !== null; })
-      .onValue(function(hash) { window.location.hash = hash; });
+      .onValue(function(hash) { window.location.hash = '#' + hash; });
 
     hashHistory.onValue(setStorage.bind(null, 'hashHistory'));
 
@@ -64,16 +71,18 @@ code {
       .map(function(history) { return history.length == 0; })
       .assign($('#back'), 'attr', 'disabled');
 
-    var loc = $(window)
+    var currHash = $(window)
       .asEventStream('hashchange', getCurrHash)
-      .toProperty(window.location.hash)
-      .map(function(hash) { return hash.slice(1) || 'start'; });
+      .toProperty(getCurrHash());
 
-    loc.map(function(loc) { return loc == 'start'; })
+    currHash.map(function(hash) { return hash == 'start'; })
       .assign($('#restart'), 'attr', 'disabled');
 
-    loc.onValue(function(loc) {
-        var el = document.getElementById(loc);
+    if (IN_IFRAME)
+      currHash.onValue(setStorage.bind(null, 'lastHash'));
+
+    currHash.onValue(function(hash) {
+        var el = document.getElementById(hash);
         if (el) {
           $('section').hide();
           $(el).show();
