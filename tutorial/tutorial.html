@@ -12,13 +12,29 @@ section {
 <script>
   function getCurrHash() { return window.location.hash; }
 
+  function getStorage(key, defaultValue) {
+    try {
+      return JSON.parse(sessionStorage[key]);
+    } catch (e) {
+      return defaultValue;
+    }
+  }
+
+  function setStorage(key, value) {
+    try {
+      sessionStorage[key] = JSON.stringify(value);
+    } catch (e) {}
+  }
+
+  var HISTORY_START = getStorage('hashHistory', []);
+
   $(function() {
     $('body').tutorial({
       paginate: false
     });
 
     var hashHistory = Bacon.update(
-      [],
+      HISTORY_START,
 
       [$('#back').asEventStream('click')],
       function(history) { return history.slice(0, -1); },
@@ -28,11 +44,13 @@ section {
     );
 
     hashHistory
-      .diff([], function(prev, curr) {
+      .diff(HISTORY_START, function(prev, curr) {
         return prev.length > curr.length ? prev[prev.length-1] : null;
       })
       .filter(function(hash) { return hash !== null; })
       .onValue(function(hash) { window.location.hash = hash; });
+
+    hashHistory.onValue(setStorage.bind(null, 'hashHistory'));
 
     hashHistory
       .map(function(history) { return history.length == 0; })
