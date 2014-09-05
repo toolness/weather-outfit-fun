@@ -61,20 +61,6 @@ pre {
     return window.location.hash.slice(1) || 'start';
   }
 
-  function getStorage(key, defaultValue) {
-    try {
-      return JSON.parse(sessionStorage[PREFIX + key]);
-    } catch (e) {
-      return defaultValue;
-    }
-  }
-
-  function setStorage(key, value) {
-    try {
-      sessionStorage[PREFIX + key] = JSON.stringify(value);
-    } catch (e) {}
-  }
-
   function propAsBool(prop) {
     return function(obj) { return !!obj[prop]; };
   }

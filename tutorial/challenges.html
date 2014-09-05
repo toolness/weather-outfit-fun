@@ -7,7 +7,7 @@
 window.addEventListener('message', function(event) {
   var data = JSON.parse(event.data);
 
-  window.sessionStorage[PREFIX + 'challenges'] = JSON.stringify({
+  setStorage('challenges', {
     origin: event.origin,
     date: Date.now(),
     data: data
