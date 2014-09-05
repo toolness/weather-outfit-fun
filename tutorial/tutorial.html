@@ -82,11 +82,10 @@ code {
       currHash.onValue(setStorage.bind(null, 'lastHash'));
 
     currHash.onValue(function(hash) {
-        var el = document.getElementById(hash);
-        if (el) {
-          $('section').hide();
-          $(el).show();
-        }
+        var el = document.getElementById(hash) || 
+                 document.getElementById('start');
+        $('section').hide();
+        $(el).show();
       });
 
     $('#restart').asEventStream('click').onValue(function() {
