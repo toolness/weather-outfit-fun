@@ -61,28 +61,76 @@ pre {
     return window.location.hash.slice(1) || 'start';
   }
 
-  function propAsBool(prop) {
-    return function(obj) { return !!obj[prop]; };
+  function setupHistory() {
+    var HISTORY_START = getStorage('hashHistory', []);
+
+    var hashHistory = Bacon.update(
+      HISTORY_START,
+
+      [$('#back').asEventStream('click')],
+      function(history) { return history.slice(0, -1); },
+
+      [$('body').asEventStream('click', 'a[href^="#"]', getCurrHash)],
+      function(history, hash) { return history.concat(hash); }
+    );
+
+    var poppedHashes = hashHistory
+      .diff(HISTORY_START, function(prev, curr) {
+        return prev.length > curr.length ? prev[prev.length-1] : null;
+      })
+      .filter(function(hash) { return hash !== null; });
+
+    var isHistoryEmpty = hashHistory.map(function(history) {
+      return history.length == 0;
+    });
+
+    hashHistory.onValue(setStorage.bind(null, 'hashHistory'));
+
+    poppedHashes.onValue(function(hash) {
+      window.location.hash = '#' + hash;
+    });
+
+    isHistoryEmpty.assign($('#back'), 'attr', 'disabled');
   }
 
-  var START_DATE = Date.now();
-  var HISTORY_START = getStorage('hashHistory', []);
-  var LAST_HASH = getStorage('lastHash', 'start');
-  var IN_IFRAME = (window.parent !== window);
+  function setupNavigation() {
+    var LAST_HASH = getStorage('lastHash', 'start');
+    var IN_IFRAME = (window.parent !== window);
 
-  if (IN_IFRAME)
-    window.location.replace('#' + LAST_HASH);
+    if (IN_IFRAME) window.location.replace('#' + LAST_HASH);
 
-  $(function() {
-    $('pre').each(function() {
-      $(this).text(Mustache.render($(this).text(), {baseURL: baseURL}));
+    var currHash = $(window)
+      .asEventStream('hashchange', getCurrHash)
+      .toProperty(getCurrHash());
+
+    var isAtBeginning = currHash.map(function(hash) {
+      return hash == 'start';
     });
 
-    CodeMirror.colorize();
+    setupHistory();
+    isAtBeginning.assign($('#restart'), 'attr', 'disabled');
 
-    $('body').tutorial({
-      paginate: false
+    if (IN_IFRAME)
+      currHash.onValue(setStorage.bind(null, 'lastHash'));
+
+    currHash.onValue(function(hash) {
+      var el = document.getElementById(hash) || 
+               document.getElementById('404');
+      $('section').hide();
+      $(el).show();
     });
+
+    $('#restart').asEventStream('click').onValue(function() {
+      window.location.hash = '';
+    });
+  }
+
+  function setupChallenges() {
+    var START_DATE = Date.now();
+
+    function propAsBool(prop) {
+      return function(obj) { return !!obj[prop]; };
+    }
 
     var challenges = Bacon.fromPoll(1000, function() {
       var challenges = getStorage('challenges', {});
@@ -95,50 +143,21 @@ pre {
     challenges.map(propAsBool('loaded'))
       .assign($('[data-show-when-challenge-done="loaded"]'),
               'toggleClass', 'done');
+  }
 
-    var hashHistory = Bacon.update(
-      HISTORY_START,
-
-      [$('#back').asEventStream('click')],
-      function(history) { return history.slice(0, -1); },
-
-      [$('body').asEventStream('click', 'a[href^="#"]', getCurrHash)],
-      function(history, hash) { return history.concat(hash); }
-    );
-
-    hashHistory
-      .diff(HISTORY_START, function(prev, curr) {
-        return prev.length > curr.length ? prev[prev.length-1] : null;
-      })
-      .filter(function(hash) { return hash !== null; })
-      .onValue(function(hash) { window.location.hash = '#' + hash; });
-
-    hashHistory.onValue(setStorage.bind(null, 'hashHistory'));
-
-    hashHistory
-      .map(function(history) { return history.length == 0; })
-      .assign($('#back'), 'attr', 'disabled');
-
-    var currHash = $(window)
-      .asEventStream('hashchange', getCurrHash)
-      .toProperty(getCurrHash());
-
-    currHash.map(function(hash) { return hash == 'start'; })
-      .assign($('#restart'), 'attr', 'disabled');
-
-    if (IN_IFRAME)
-      currHash.onValue(setStorage.bind(null, 'lastHash'));
-
-    currHash.onValue(function(hash) {
-        var el = document.getElementById(hash) || 
-                 document.getElementById('404');
-        $('section').hide();
-        $(el).show();
-      });
-
-    $('#restart').asEventStream('click').onValue(function() {
-      window.location.hash = '';
+  $(function() {
+    $('pre').each(function() {
+      $(this).text(Mustache.render($(this).text(), {baseURL: baseURL}));
     });
+
+    CodeMirror.colorize();
+
+    $('body').tutorial({
+      paginate: false
+    });
+
+    setupNavigation();
+    setupChallenges();
   });
 </script>
 <div class="tutorial-nav">
