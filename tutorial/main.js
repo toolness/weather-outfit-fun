@@ -69,10 +69,6 @@ function setupNavigation() {
 function setupChallenges() {
   var START_DATE = Date.now();
 
-  function propAsBool(prop) {
-    return function(obj) { return !!obj[prop]; };
-  }
-
   var challenges = Bacon.fromPoll(1000, function() {
     var challenges = getStorage('challenges', {});
     if (!(challenges.date > START_DATE &&
@@ -81,9 +77,15 @@ function setupChallenges() {
     return new Bacon.Next(challenges.data || {});
   });
 
-  challenges.map(propAsBool('loaded'))
-    .assign($('[data-show-when-challenge-done="loaded"]'),
-            'toggleClass', 'done');
+  $('section[role=challenge]').each(function() {
+    var section = $(this);
+    var id = section.attr('data-challenge-id') || section.attr('id');
+    var isComplete = challenges.map(function(info) { return !!info[id]; });
+
+    console.log('boom', id);
+    isComplete.log();
+    isComplete.assign(section, 'toggleClass', 'challenge-completed');
+  });
 }
 
 $(function() {

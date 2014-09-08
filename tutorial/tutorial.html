@@ -46,14 +46,9 @@ pre {
   padding: 8px;
 }
 
-[data-show-when-challenge-done] {
-  opacity: 0;
-  transition: opacity 0.5s;
-}
-
-.done[data-show-when-challenge-done] {
-  opacity: 1;
-  color: green;
+section[role=challenge]:not(.challenge-completed) .challenge-complete, 
+section[role=challenge].challenge-completed .challenge-incomplete {
+  display: none;
 }
 </style>
 <script src="main.js"></script>
@@ -106,7 +101,7 @@ pre {
   <p><a href="#hack">Okay, let's start writing some code.</a></p>
 </section>
 
-<section id="hack">
+<section id="hack" role="challenge" data-challenge-id="loaded">
   <h1>Let's start coding.</h1>
   <p>The first thing we'll do is add a <em>script</em> to this webpage.</p>
   <p>Scripts are like the brain, muscles, and central nervous system of a webpage: they allow a page to respond to user input, talk to the internet, and change itself in ways that can transform it from an inert page into a full-fledged application.</p>
@@ -116,7 +111,10 @@ pre {
 
   <aside><p>Please do try to <em>type</em> the above code instead of copying and pasting it (copy-pasting just the URL is okay though). You'll learn better that way!</p></aside>
 
-  <div data-show-when-challenge-done="loaded">
+  <div class="challenge-incomplete">
+    <p>Waiting for you to complete this challenge&hellip; <i class="fa fa-circle-o-notch fa-spin"></i></p>
+  </div>
+  <div class="challenge-complete">
     <h2>Hooray!</h2>
     <p>The page is now loading the script, which is injecting an app into it.</p>
     <p><a href="#onwards">Onwards!</a></p>
