@@ -51,13 +51,13 @@ function setupNavigation() {
     .asEventStream('hashchange', getCurrHash)
     .toProperty(getCurrHash());
 
-  var isAtBeginning = currHash.map(function(hash) {
-    return hash == 'start';
-  });
-
   setupHistory();
-  isAtBeginning.assign($('[role=restart]'), 'attr', 'disabled');
-  $('[role=restart]').attr('data-navigate-to', 'start');
+
+  $('[data-navigate-to]').each(function() {
+    var id = $(this).attr('data-navigate-to');
+    currHash.map(function(hash) { return hash == id; })
+      .assign($(this), 'attr', 'disabled');
+  });
 
   if (IN_IFRAME)
     currHash.onValue(setStorage.bind(null, 'lastHash'));
