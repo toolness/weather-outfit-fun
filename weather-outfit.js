@@ -16501,6 +16501,13 @@ window.addEventListener('error', function(event) {
 });
 
 (function() {
+  function isCssLoaded() {
+    var $el = $('<div class="i-should-be-tall"></div>').appendTo('body');
+    var isTall = $el.height() > 0;
+    $el.remove();
+    return isTall;
+  }
+
   var me = document.scripts[document.scripts.length-1].src;
 
   $(function() {
@@ -16515,7 +16522,8 @@ window.addEventListener('error', function(event) {
 
     setInterval(function() {
       iframe.contentWindow.postMessage(JSON.stringify({
-        loaded: true
+        load: true,
+        style: isCssLoaded()
       }), '*');
     }, CHALLENGE_POLL_INTERVAL);
   });
