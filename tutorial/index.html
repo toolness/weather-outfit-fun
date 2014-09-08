@@ -151,13 +151,14 @@ function startTutorial(editor, parent) {
   });
 }
 
-function startEditor(code, rendering, initialHTML) {
+function startEditor(code, rendering, skeletonHTML) {
+  var initialHTML = getStorage('editorValue', skeletonHTML);
   var htmlStream = new Bacon.Bus();
   var editor = CodeMirror(code[0], {
     mode: 'htmlmixed',
     lineNumbers: true,
     lineWrapping: true,
-    value: getStorage('editorValue', initialHTML)
+    value: initialHTML
   });
 
   editor.on('change', function() {
@@ -175,7 +176,7 @@ function startEditor(code, rendering, initialHTML) {
     });
 
   $('[role=revert]', code).on('click', function() {
-    editor.setValue(initialHTML);
+    editor.setValue(skeletonHTML);
   });
 
   return editor;
