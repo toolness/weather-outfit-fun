@@ -20,7 +20,7 @@
 
     setInterval(function() {
       iframe.contentWindow.postMessage(JSON.stringify({
-        loaded: true,
+        load: true,
         style: isCssLoaded()
       }), '*');
     }, CHALLENGE_POLL_INTERVAL);
