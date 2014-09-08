@@ -8,7 +8,7 @@ function setupHistory() {
   var hashHistory = Bacon.update(
     HISTORY_START,
 
-    [$('#back').asEventStream('click')],
+    [$('[role=back]').asEventStream('click')],
     function(history) { return history.slice(0, -1); },
 
     [$('body').asEventStream('click', 'a[href^="#"]', getCurrHash)],
@@ -38,7 +38,7 @@ function setupHistory() {
     window.location.hash = '#' + hash;
   });
 
-  isHistoryEmpty.assign($('#back'), 'attr', 'disabled');
+  isHistoryEmpty.assign($('[role=back]'), 'attr', 'disabled');
 }
 
 function setupNavigation() {
@@ -56,7 +56,8 @@ function setupNavigation() {
   });
 
   setupHistory();
-  isAtBeginning.assign($('#restart'), 'attr', 'disabled');
+  isAtBeginning.assign($('[role=restart]'), 'attr', 'disabled');
+  $('[role=restart]').attr('data-navigate-to', 'start');
 
   if (IN_IFRAME)
     currHash.onValue(setStorage.bind(null, 'lastHash'));
