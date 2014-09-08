@@ -82,8 +82,6 @@ function setupChallenges() {
     var id = section.attr('data-challenge-id') || section.attr('id');
     var isComplete = challenges.map(function(info) { return !!info[id]; });
 
-    console.log('boom', id);
-    isComplete.log();
     isComplete.assign(section, 'toggleClass', 'challenge-completed');
   });
 }
