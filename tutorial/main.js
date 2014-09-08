@@ -12,7 +12,14 @@ function setupHistory() {
     function(history) { return history.slice(0, -1); },
 
     [$('body').asEventStream('click', 'a[href^="#"]', getCurrHash)],
-    function(history, hash) { return history.concat(hash); }
+    function(history, hash) { return history.concat(hash); },
+
+    [$('body').asEventStream('click', '[data-navigate-to]')],
+    function(history, event) {
+      history = history.concat(getCurrHash());
+      window.location.hash = '#' + $(event.target).attr('data-navigate-to');
+      return history;
+    }
   );
 
   var poppedHashes = hashHistory
@@ -59,10 +66,6 @@ function setupNavigation() {
              document.getElementById('404');
     $('section').hide();
     $(el).show();
-  });
-
-  $('#restart').asEventStream('click').onValue(function() {
-    window.location.hash = '';
   });
 }
 

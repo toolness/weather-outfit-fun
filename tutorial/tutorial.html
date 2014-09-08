@@ -46,6 +46,11 @@ pre {
   padding: 8px;
 }
 
+button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 section[role=challenge]:not(.challenge-completed) .challenge-complete, 
 section[role=challenge].challenge-completed .challenge-incomplete {
   display: none;
@@ -53,7 +58,8 @@ section[role=challenge].challenge-completed .challenge-incomplete {
 </style>
 <script src="main.js"></script>
 <div class="tutorial-nav">
-<button id="back"><i class="fa fa-arrow-left"></i> Back</button> <button id="restart"><i class="fa fa-home"></i> Restart</button>
+<button id="back"><i class="fa fa-arrow-left"></i> Back</button>
+<button id="restart" data-navigate-to="start"><i class="fa fa-home"></i> Restart</button>
 </div>
 
 <section id="start">
