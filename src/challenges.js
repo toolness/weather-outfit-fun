@@ -6,6 +6,13 @@
     return isTall;
   }
 
+  function isPageTitleNotDefault() {
+    var DEFAULT_TITLE = "outfit of the day";
+
+    return $('title').text().toLowerCase() != DEFAULT_TITLE &&
+           $('h1').text().toLowerCase() != DEFAULT_TITLE;
+  }
+
   var me = document.scripts[document.scripts.length-1].src;
 
   $(function() {
@@ -21,7 +28,8 @@
     setInterval(function() {
       iframe.contentWindow.postMessage(JSON.stringify({
         load: true,
-        style: isCssLoaded()
+        style: isCssLoaded(),
+        title: isPageTitleNotDefault()
       }), '*');
     }, CHALLENGE_POLL_INTERVAL);
   });
