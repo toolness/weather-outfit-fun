@@ -55,11 +55,20 @@ section[role=challenge]:not(.challenge-completed) .challenge-complete,
 section[role=challenge].challenge-completed .challenge-incomplete {
   display: none;
 }
+
+[role=challenges] > li a {
+  color: red;
+}
+
+[role=challenges] > li.challenge-completed a {
+  color: green;
+}
 </style>
 <script src="main.js"></script>
 <div class="tutorial-nav">
 <button role="back"><i class="fa fa-arrow-left"></i> Back</button>
 <button data-navigate-to="start"><i class="fa fa-home"></i> Restart</button>
+<button data-navigate-to="challenges"><i class="fa fa-trophy"></i> Challenges</button>
 </div>
 
 <section id="start">
@@ -125,6 +134,11 @@ section[role=challenge].challenge-completed .challenge-incomplete {
     <p>The page is now loading the script, which is injecting an app into it.</p>
     <p><a href="#onwards">Onwards!</a></p>
   </div>
+</section>
+
+<section id="challenges">
+  <h1>Challenges</h1>
+  <ul role="challenges"></ul>
 </section>
 
 <section id="404">

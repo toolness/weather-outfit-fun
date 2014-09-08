@@ -84,9 +84,14 @@ function setupChallenges() {
   $('section[role=challenge]').each(function() {
     var section = $(this);
     var id = section.attr('data-challenge-id') || section.attr('id');
+    var li = $('<li><a></a></li>').appendTo('[role=challenges]');
     var isComplete = challenges.map(function(info) { return !!info[id]; });
 
-    isComplete.assign(section, 'toggleClass', 'challenge-completed');
+    $('a', li)
+      .attr('href', '#' + section.attr('id'))
+      .text($('h1', section).text());
+
+    isComplete.assign(section.add(li), 'toggleClass', 'challenge-completed');
   });
 }
 
