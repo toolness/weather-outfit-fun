@@ -111,9 +111,31 @@ the default of `http://toolness.github.io/weather-outfit-fun/`, you
 can supply it as an argument to the export script, e.g.
 `node bin/export.js http://example.org/weather-outfit/`.
 
+## Tutorial
+
+An interactive tutorial is being worked on that guides learners through
+personalizing the app by learning a bit of HTML and JavaScript.
+
+To view this tutorial, start the development server and visit
+http://localhost:3000/tutorial/.
+
+The tutorial can be deployed to Thimble as follows:
+
+1. Push the repository's gh-pages branch to GitHub.
+2. [Visit the tutorial on GitHub Pages][tutorial].
+3. Copy-paste the HTML skeleton in the middle pane to a new
+   Thimble make.
+4. Tag the new Thimble make with 
+   `tutorial-https://toolness.github.io/weather-outfit-fun/tutorial/tutorial.html`.
+5. Save the Thimble make, ensuring that "Searchable on webmaker.org" is
+   checked.
+
+<!-- Links -->
+
   [OpenWeatherMap]: http://openweathermap.org/
   [hour of code]: http://csedweek.org/
   [teeny-quiz-fun]: https://github.com/toolness/teeny-quiz-fun
   [Thimble]: https://thimble.webmaker.org/
   [JS Bin]: http://jsbin.com/
   [dat.gui]: http://workshop.chromeexperiments.com/examples/gui/
+  [tutorial]: https://toolness.github.io/weather-outfit-fun/tutorial/
