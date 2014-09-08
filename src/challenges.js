@@ -1,17 +1,19 @@
 (function() {
-  function isCssLoaded() {
-    var $el = $('<div class="i-should-be-tall"></div>').appendTo('body');
-    var isTall = $el.height() > 0;
-    $el.remove();
-    return isTall;
-  }
+  var challenges = {
+    'load': true,
+    'style': function isCssLoaded() {
+      var $el = $('<div class="i-should-be-tall"></div>').appendTo('body');
+      var isTall = $el.height() > 0;
+      $el.remove();
+      return isTall;
+    },
+    'title': function isPageTitleNotDefault() {
+      var DEFAULT_TITLE = "outfit of the day";
 
-  function isPageTitleNotDefault() {
-    var DEFAULT_TITLE = "outfit of the day";
-
-    return $('title').text().toLowerCase() != DEFAULT_TITLE &&
-           $('h1').text().toLowerCase() != DEFAULT_TITLE;
-  }
+      return $('title').text().toLowerCase() != DEFAULT_TITLE &&
+             $('h1').text().toLowerCase() != DEFAULT_TITLE;
+    }
+  };
 
   var me = document.scripts[document.scripts.length-1].src;
 
@@ -26,11 +28,12 @@
     $(iframe).hide();
 
     setInterval(function() {
-      iframe.contentWindow.postMessage(JSON.stringify({
-        load: true,
-        style: isCssLoaded(),
-        title: isPageTitleNotDefault()
-      }), '*');
+      var state = {};
+      Object.keys(challenges).forEach(function(name) {
+        var val = challenges[name];
+        state[name] = typeof(val) == 'function' ? val() : val;
+      });
+      iframe.contentWindow.postMessage(JSON.stringify(state), '*');
     }, CHALLENGE_POLL_INTERVAL);
   });
 })();
