@@ -114,3 +114,7 @@ h1 {
   width: 304px;
   padding-right: 4px;
 }
+
+.i-should-be-tall {
+  height: 50px; /* Used to tell if this stylesheet has been loaded yet. */
+}

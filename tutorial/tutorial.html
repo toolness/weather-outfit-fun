@@ -112,17 +112,6 @@ section[role=challenge].challenge-completed .challenge-incomplete {
     <p>If you'd like to learn more about tags, try playing <a href="https://mousemeredith.makes.org/thimble/LTE2Mjc5Nzk3NzY=/tag-tag-revolution-activity" target="_blank">Tag Tag Revolution</a> with some friends.</p>
   </aside>
 
-  <p><a href="#about-css">What's this "stylesheet" thing at line 3?</a></p>
-  <p><a href="#hack">Okay, let's start writing some code.</a></p>
-</section>
-
-<section id="about-css">
-  <h1>CSS is awesome.</h1>
-  <p>Line 3 tells your browser to load a <em>stylesheet</em>.</p>
-  <p>Stylesheets are written using a language called CSS, and are like the skin or clothing of a webpage: a set of rules draped over HTML to make it look pretty (or, in some cases, grotesque). In this case, it's making the background of our page greenish.</p>
-  <aside>
-    <p>Want to deep-dive? You can <a href="https://github.com/toolness/weather-outfit-fun/blob/gh-pages/weather-outfit.css" target="_blank">view the source</a> of the CSS file at line 3, and learn more about CSS at <a href="http://www.htmldog.com/guides/css/" target="_blank">HTML Dog</a>.</p>
-  </aside>
   <p><a href="#hack">Okay, let's start writing some code.</a></p>
 </section>
 
@@ -142,7 +131,26 @@ section[role=challenge].challenge-completed .challenge-incomplete {
   <div class="challenge-complete">
     <h2>Hooray!</h2>
     <p>The page is now loading the script, which is injecting an app into it.</p>
-    <p><a href="#onwards">Onwards!</a></p>
+    <p><a href="#style">Onwards!</a></p>
+  </div>
+</section>
+
+<section id="style" role="challenge">
+  <h1>Put some clothes on that webpage!</h1>
+  <p>The webpage now has a somewhat broken app in it, which you'll be fixing. The first thing you'll want to do is add a <em>stylesheet</em> to the page so it doesn't look gross.</p>
+  <p>Stylesheets are written using a language called CSS, and are like the skin or clothing of a webpage: a set of rules draped over HTML to make it look pretty (or, in some cases, grotesque).</p>
+  <p>To add our stylesheet, type the following at line 3:</p>
+  <pre data-lang="htmlmixed">&lt;link rel="stylesheet" href="{{{baseURL}}}weather-outfit.css"&gt;</pre>
+  <div class="challenge-incomplete">
+    <p>Waiting for you to add the stylesheet&hellip; <i class="fa fa-circle-o-notch fa-spin"></i></p>
+  </div>
+  <div class="challenge-complete">
+    <h2>Yay!</h2>
+    <p>The page is no longer naked and looks more presentable.</p>
+    <aside>
+      <p>Want to deep-dive? You can <a href="https://github.com/toolness/weather-outfit-fun/blob/gh-pages/weather-outfit.css" target="_blank">view the source</a> of the CSS file at line 3, and learn more about CSS at <a href="http://www.htmldog.com/guides/css/" target="_blank">HTML Dog</a>.</p>
+    </aside>
+    <p><a href="#onwards">Okay, let's fix the rest of the app.</a></p>
   </div>
 </section>
 
