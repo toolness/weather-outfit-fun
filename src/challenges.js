@@ -7,6 +7,9 @@
       $el.remove();
       return isTall;
     },
+    'js': function isGetForecastOutfitDefined() {
+      return typeof(window.getForecastOutfit) == 'function';
+    },
     'title': function isPageTitleNotDefault() {
       var DEFAULT_TITLE = "outfit of the day";
 
