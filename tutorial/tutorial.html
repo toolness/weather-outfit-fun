@@ -150,7 +150,31 @@ section[role=challenge].challenge-completed .challenge-incomplete {
     <aside>
       <p>Want to deep-dive? You can <a href="https://github.com/toolness/weather-outfit-fun/blob/gh-pages/weather-outfit.css" target="_blank">view the source</a> of the CSS file at line 3, and learn more about CSS at <a href="http://www.htmldog.com/guides/css/" target="_blank">HTML Dog</a>.</p>
     </aside>
-    <p><a href="#onwards">Okay, let's fix the rest of the app.</a></p>
+    <p><a href="#cookbook">Okay, let's fix the rest of the app.</a></p>
+  </div>
+</section>
+
+<section id="cookbook">
+  <h1>Recipes and cookbooks</h1>
+  <p>Try using the app now.</p>
+  <p>While it's prettier, it's also still broken: after you either enter the name of a place or use geolocation, there's a red box at the top of the page mentioning something about <code>ReferenceError: getForecastOutfit is not defined</code>.</p>
+  <p>Computers run JavaScript much the same way cooks follow recipes. Just as building a meal requires cooking and combining different recipes from cookbooks, so too does JavaScript often follow its own kind of recipes, called <em>functions</em>, to accomplish simple tasks.</p>
+  <p>In this case, the JavaScript brought into the page in line 4 is trying to call a function called <code>getForecastOutfit</code>, but it's not in any of the page's "cookbooks", so to speak.</p>
+  <p>It's time to <a href="#js">write that recipe</a>.</p>
+</section>
+
+<section id="js" role="challenge">
+  <h1>Adding our own recipe</h1>
+  <p>The opening <code>&lt;script&gt;</code> tag at line 5 tells the browser to start processing the text until the closing <code>&lt;/script&gt;</code> tag at line 8 as JavaScript code. This is where we'll define our <code>getForecastOutfit</code> function.</p>
+  <p>Type the following at line 6:</p>
+  <pre data-lang="javascript">function getForecastOutfit(forecast) {
+  return "http://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Eskimo_woman_by_Lomen_Brothers%2C_ca._1915.jpg/444px-Eskimo_woman_by_Lomen_Brothers%2C_ca._1915.jpg";
+}</pre>
+  <div class="challenge-incomplete">
+    <p>Waiting for you to define the function&hellip; <i class="fa fa-circle-o-notch fa-spin"></i></p>
+  </div>
+  <div class="challenge-complete">
+    <p>Awesome. Now that the function is defined, the app can find it and use it to show the user an outfit to wear.</p>
   </div>
 </section>
 
