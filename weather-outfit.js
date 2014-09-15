@@ -16657,7 +16657,11 @@ var OutfitView = Backbone.View.extend({
           return this.renderException(e);
         }
 
-      forecastOutfit = getForecastOutfit(forecast);
+      try {
+        forecastOutfit = getForecastOutfit(forecast);
+      } catch (e) {
+        return this.renderException(e);
+      }
 
       if (forecastOutfit === undefined)
         return Template.render(this.$el, 'error-template',
