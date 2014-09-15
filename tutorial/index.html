@@ -61,19 +61,23 @@ iframe {
   position: relative;
 }
 
-#code > [role=revert] {
+#code > .actions {
   display: block;
   z-index: 5000;
   font-size: 14px;
   position: absolute;
-  opacity: 0.33;
   padding: 4px;
-  cursor: pointer;
   top: 0;
   right: 20px;
 }
 
-#code > [role=revert]:hover {
+#code > .actions > span[role] {
+  cursor: pointer;
+  opacity: 0.33;
+  margin-left: 10px;
+}
+
+#code > .actions > span[role]:hover {
   opacity: 1;
 }
 
@@ -84,7 +88,10 @@ iframe {
 <title>Tutorial Simulator</title>
 <body>
 <div id="tutorial"></div>
-<div id="code"><span role="revert"><i class="fa fa-eraser"></i></span></div>
+<div id="code"><span class="actions">
+  <span role="solution" title="Set to solution HTML"><i class="fa fa-key"></i></span>
+  <span role="revert" title="Revert to original HTML"><i class="fa fa-eraser"></i></span>
+</span></div>
 <div id="rendering"></div>
 <script src="../src/vendor/jquery.js"></script>
 <script src="vendor/codemirror/codemirror.js"></script>
@@ -157,7 +164,7 @@ function startTutorial(editor, parent) {
   });
 }
 
-function startEditor(code, rendering, skeletonHTML) {
+function startEditor(code, rendering, skeletonHTML, solutionHTML) {
   var initialHTML = getStorage('editorValue', skeletonHTML);
   var htmlStream = new Bacon.Bus();
   var editor = CodeMirror(code[0], {
@@ -185,14 +192,22 @@ function startEditor(code, rendering, skeletonHTML) {
     editor.setValue(skeletonHTML);
   });
 
+  $('[role=solution]', code).on('click', function() {
+    editor.setValue(solutionHTML);
+  });
+
   return editor;
 }
 
 $(function() {
+  function rebase(html) { return html.replace(/\.\.\//g, baseURL); }
+
   $.get('skeleton.html', function(html) {
-    var editor = startEditor($('#code'), $('#rendering'),
-                             html.replace(/\.\.\//g, baseURL));
-    startTutorial(editor, $('#tutorial'));
+    $.get('solution.html', function(solutionHTML) {
+      var editor = startEditor($('#code'), $('#rendering'),
+                               rebase(html), rebase(solutionHTML));
+      startTutorial(editor, $('#tutorial'));
+    });
   });
 });
 </script>
