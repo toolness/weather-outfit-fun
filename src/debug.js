@@ -69,11 +69,12 @@ Debug.enableGUI = function() {
 };
 
 window.addEventListener('error', function(event) {
+  var MAX_ERRORS = 5;
   var extra = (/\.js$/i.test(event.filename))
               ? ' of <code>' + _.escape(event.filename) + '</code>'
               : '';
 
-  $('<div></div>')
+  var div = $('<div></div>')
     .html('<strong>Alas, a JavaScript error occurred.</strong><br>' +
           '<code>' + _.escape(event.message) + '</code> at line ' +
           event.lineno + extra)
@@ -81,6 +82,20 @@ window.addEventListener('error', function(event) {
       color: 'white',
       backgroundColor: 'salmon',
       padding: '4px'
-    })
-    .prependTo('body');
+    });
+
+  var attach = function() {
+    var log = $('#js-error-log');
+
+    if (log.length == 0)
+      log = $('<div id="js-error-log"></div>').prependTo('body');
+
+    if (log.children().length < MAX_ERRORS)
+      div.appendTo(log);
+  };
+
+  if (document.readyState == 'complete')
+    attach();
+  else
+    $(window).one('load', attach);
 });
