@@ -21,6 +21,9 @@ body {
 }
 
 .CodeMirror {
+  /* Absolute shouldn't be required, but Chrome has quirks:
+   * http://stackoverflow.com/a/15389545 */
+  position: absolute;
   height: 100%;
   font-size: 12px;
 }
@@ -40,7 +43,9 @@ iframe {
 
 #rendering iframe, #tutorial iframe {
   width: 100%;
-  height: 100%;
+  /* Setting min-height (instead of just height) so things
+   * work on Chrome. Weird. */
+  min-height: 100%;
 }
 
 #rendering iframe.invisible {
