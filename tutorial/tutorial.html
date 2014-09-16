@@ -238,6 +238,21 @@ section[role=challenge].challenge-completed .challenge-incomplete {
 }</pre>
       </form>
     </li>
+    <li>
+      <form role="snippet-wizard">
+        If the forecast weather is raining 
+        <select name="operator">
+          <option value="&amp;&amp;">and</option>
+          <option value="||">or</option>
+        </select>
+        the forecast temperature in Celsius is greater than 0
+        then return
+        <input type="url" name="url" placeholder="http://" value="http://some/picture" data-stringify>.
+        <pre role="template">if (forecast.weather == "raining" {{{operator}}} forecast.temp.c > 0) {
+  return {{{url}}};
+}</pre>
+      </form>
+    </li>
   </ul>
 </section>
 
