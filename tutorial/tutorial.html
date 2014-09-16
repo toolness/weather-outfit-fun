@@ -61,6 +61,28 @@ pre[role=template] {
   display: none;
 }
 
+ul.snippet-wizards {
+  list-style-type: none;
+  padding-left: 0.5em;
+}
+
+form[role=snippet-wizard] blockquote {
+  margin: 0;
+  line-height: 2em;
+  font-style: italic;
+  text-indent: -0.5em;
+}
+
+form[role=snippet-wizard] blockquote:before {
+  content: '“';
+  margin-right: -0.2em;
+}
+
+form[role=snippet-wizard] blockquote:after {
+  content: '”';
+  margin-left: -0.2em;
+}
+
 button:disabled {
   opacity: 0.5;
   pointer-events: none;
@@ -189,27 +211,30 @@ section[role=challenge].challenge-completed .challenge-incomplete {
   <p>A function has <em>input</em> and <em>output</em>.</p>
   <p>Recipes have input and output too: a chocolate chip cookie recipe takes raw ingredients&mdash;eggs, flour, chocolate chips&mdash;and produces cookies as its output.</p>
   <p>The function you just wrote takes a <em>weather forecast</em> as its input, and produces an <em>image URL</em> as its output. Can you guess where each of these are in the code you wrote?</p>
+  <p><a href="#jswizards">How can I change the function?</a></p>
 </section>
 
 <section id="jswizards">
   <h1>JavaScript Snippet Wizards</h1>
   <p>Here's some code that might help you build your own custom <code>getForecastOutfit</code> function.</p>
-  <ul>
+  <ul class="snippet-wizards">
     <li>
       <form role="snippet-wizard">
-        If the forecast temperature
-        <select name="unit">
-          <option value="f">in Fahrenheit</option>
-          <option value="c">in Celsius</option>
-        </select>
-        is
-        <select name="operator">
-          <option value=">">greater than</option>
-          <option value="<">less than</option>
-        </select>
-        <input type="number" name="amount" placeholder="amount (in degrees)" value="0">
-        then return
-        <input type="url" name="url" placeholder="http://" value="http://some/picture" data-stringify>.
+        <blockquote>
+          If the forecast temperature
+          <select name="unit">
+            <option value="f">in Fahrenheit</option>
+            <option value="c">in Celsius</option>
+          </select>
+          is
+          <select name="operator">
+            <option value=">">greater than</option>
+            <option value="<">less than</option>
+          </select>
+          <input type="number" name="amount" placeholder="amount (in degrees)" value="0">
+          then return
+          <input type="url" name="url" placeholder="http://" value="http://some/picture" data-stringify>.
+        </blockquote>
         <pre role="template">if (forecast.temp.{{{unit}}} {{{operator}}} {{{amount}}}) {
   return {{{url}}};
 }</pre>
@@ -217,22 +242,24 @@ section[role=challenge].challenge-completed .challenge-incomplete {
     </li>
     <li>
       <form role="snippet-wizard">
-        If the forecast weather
-        <select name="operator">
-          <option value="==">is</option>
-          <option value="!=">is not</option>
-        </select>
-        <select name="weather" data-stringify>
-          <option value="clear">clear</option>
-          <option value="partly cloudy">partly cloudy</option>
-          <option value="mostly cloudy">mostly cloudy</option>
-          <option value="raining">raining</option>
-          <option value="thunderstorming">thunderstorming</option>
-          <option value="snowing">snowing</option>
-          <option value="misty">misty</option>
-        </select>
-        then return
-        <input type="url" name="url" placeholder="http://" value="http://some/picture" data-stringify>.
+        <blockquote>
+          If the forecast weather
+          <select name="operator">
+            <option value="==">is</option>
+            <option value="!=">is not</option>
+          </select>
+          <select name="weather" data-stringify>
+            <option value="clear">clear</option>
+            <option value="partly cloudy">partly cloudy</option>
+            <option value="mostly cloudy">mostly cloudy</option>
+            <option value="raining">raining</option>
+            <option value="thunderstorming">thunderstorming</option>
+            <option value="snowing">snowing</option>
+            <option value="misty">misty</option>
+          </select>
+          then return
+          <input type="url" name="url" placeholder="http://" value="http://some/picture" data-stringify>.
+        </blockquote>
         <pre role="template">if (forecast.weather {{{operator}}} {{{weather}}}) {
   return {{{url}}};
 }</pre>
@@ -240,14 +267,16 @@ section[role=challenge].challenge-completed .challenge-incomplete {
     </li>
     <li>
       <form role="snippet-wizard">
-        If the forecast weather is raining 
-        <select name="operator">
-          <option value="&amp;&amp;">and</option>
-          <option value="||">or</option>
-        </select>
-        the forecast temperature in Celsius is greater than 0
-        then return
-        <input type="url" name="url" placeholder="http://" value="http://some/picture" data-stringify>.
+        <blockquote>
+          If the forecast weather is raining 
+          <select name="operator">
+            <option value="&amp;&amp;">and</option>
+            <option value="||">or</option>
+          </select>
+          the forecast temperature in Celsius is greater than 0
+          then return
+          <input type="url" name="url" placeholder="http://" value="http://some/picture" data-stringify>.
+        </blockquote>
         <pre role="template">if (forecast.weather == "raining" {{{operator}}} forecast.temp.c > 0) {
   return {{{url}}};
 }</pre>
