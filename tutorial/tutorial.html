@@ -57,6 +57,10 @@ pre {
   padding: 8px;
 }
 
+pre[role=template] {
+  display: none;
+}
+
 button:disabled {
   opacity: 0.5;
   pointer-events: none;
@@ -185,6 +189,33 @@ section[role=challenge].challenge-completed .challenge-incomplete {
   <p>A function has <em>input</em> and <em>output</em>.</p>
   <p>Recipes have input and output too: a chocolate chip cookie recipe takes raw ingredients&mdash;eggs, flour, chocolate chips&mdash;and produces cookies as its output.</p>
   <p>The function you just wrote takes a <em>weather forecast</em> as its input, and produces an <em>image URL</em> as its output. Can you guess where each of these are in the code you wrote?</p>
+</section>
+
+<section id="jswizards">
+  <h1>JavaScript Snippet Wizards</h1>
+  <p>Here's some code that might help you build your own custom <code>getForecastOutfit</code> function.</p>
+  <ul>
+    <li>
+      <form role="snippet-wizard">
+        If the forecast temperature
+        <select name="unit">
+          <option value="f">in Fahrenheit</option>
+          <option value="c">in Celsius</option>
+        </select>
+        is
+        <select name="operator">
+          <option value=">">greater than</option>
+          <option value="<">less than</option>
+        </select>
+        <input type="number" name="amount" placeholder="amount (in degrees)" value="0">
+        then return
+        <input type="url" name="url" placeholder="http://" value="http://some/picture" data-stringify>.
+        <pre role="template">if (forecast.temp.{{{unit}}} {{{operator}}} {{{amount}}}) {
+  return {{{url}}};
+}</pre>
+      </form>
+    </li>
+  </ul>
 </section>
 
 <section id="title" role="challenge">

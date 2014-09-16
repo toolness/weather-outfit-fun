@@ -96,7 +96,7 @@ function setupChallenges() {
 }
 
 $(function() {
-  $('pre').each(function() {
+  $('pre[data-lang=htmlmixed]').each(function() {
     $(this).text(Mustache.render($(this).text(), {baseURL: baseURL}));
   });
 
@@ -108,4 +108,20 @@ $(function() {
 
   setupNavigation();
   setupChallenges();
+
+  $('form[role=snippet-wizard]').on('change keyup', function() {
+    var context = {};
+    var template = $('pre[role=template]', this).text();
+    var pre = $('<pre data-lang="javascript"></pre>');
+    [].slice.call(this.elements).forEach(function(control) {
+      var stringify = control.hasAttribute('data-stringify');
+      if (stringify)
+        context[control.name] = JSON.stringify(control.value);
+      else
+        context[control.name] = control.value;
+    });
+    $('pre[data-lang=javascript]', this).remove();
+    pre.text(Mustache.render(template, context)).appendTo(this);
+    CodeMirror.colorize(pre.get());
+  }).trigger('change');
 });
