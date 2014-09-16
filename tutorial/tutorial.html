@@ -215,6 +215,29 @@ section[role=challenge].challenge-completed .challenge-incomplete {
 }</pre>
       </form>
     </li>
+    <li>
+      <form role="snippet-wizard">
+        If the forecast weather
+        <select name="operator">
+          <option value="==">is</option>
+          <option value="!=">is not</option>
+        </select>
+        <select name="weather" data-stringify>
+          <option value="clear">clear</option>
+          <option value="partly cloudy">partly cloudy</option>
+          <option value="mostly cloudy">mostly cloudy</option>
+          <option value="raining">raining</option>
+          <option value="thunderstorming">thunderstorming</option>
+          <option value="snowing">snowing</option>
+          <option value="misty">misty</option>
+        </select>
+        then return
+        <input type="url" name="url" placeholder="http://" value="http://some/picture" data-stringify>.
+        <pre role="template">if (forecast.weather {{{operator}}} {{{weather}}}) {
+  return {{{url}}};
+}</pre>
+      </form>
+    </li>
   </ul>
 </section>
 
