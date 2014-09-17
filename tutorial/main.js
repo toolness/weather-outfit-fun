@@ -95,20 +95,7 @@ function setupChallenges() {
   });
 }
 
-$(function() {
-  $('pre[data-baseurlify]').each(function() {
-    $(this).text(Mustache.render($(this).text(), {baseURL: baseURL}));
-  });
-
-  CodeMirror.colorize();
-
-  $('body').tutorial({
-    paginate: false
-  });
-
-  setupNavigation();
-  setupChallenges();
-
+function setupSnippetWizards() {
   $('form[role=snippet-wizard]').on('change keyup', function() {
     var context = {};
     var template = $('pre[role=template]', this).text();
@@ -124,4 +111,20 @@ $(function() {
     pre.text(Mustache.render(template, context)).appendTo(this);
     CodeMirror.colorize(pre.get());
   }).trigger('change');
+}
+
+$(function() {
+  $('pre[data-baseurlify]').each(function() {
+    $(this).text(Mustache.render($(this).text(), {baseURL: baseURL}));
+  });
+
+  CodeMirror.colorize();
+
+  $('body').tutorial({
+    paginate: false
+  });
+
+  setupNavigation();
+  setupChallenges();
+  setupSnippetWizards();
 });
