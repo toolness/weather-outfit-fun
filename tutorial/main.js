@@ -96,7 +96,7 @@ function setupChallenges() {
 }
 
 $(function() {
-  $('pre[data-lang=htmlmixed]').each(function() {
+  $('pre[data-baseurlify]').each(function() {
     $(this).text(Mustache.render($(this).text(), {baseURL: baseURL}));
   });
 
