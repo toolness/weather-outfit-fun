@@ -34,16 +34,15 @@ function buildJs() {
     write(readFile(filename), filename);
   }
 
-  function define(variable, filename) {
-    write('var ' + variable + ' = ' +
+  function defineRawFile(filename) {
+    write('RAW_FILES[' + JSON.stringify(filename) + '] = ' +
           JSON.stringify(readFile(filename).replace(/\r\n/g, "\n")) + ';');
   }
 
   var config = JSON.parse(readFile('config.json'));
 
-  Object.keys(config.define).forEach(function(varname) {
-    define(varname, config.define[varname]);
-  });
+  write('var RAW_FILES = {};');
+  config.RAW_FILES.forEach(defineRawFile);
   config.include.forEach(include);
 
   fs.writeFileSync(OUTPUT_FILE, lines.join('\n'));

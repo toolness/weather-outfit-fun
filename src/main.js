@@ -52,7 +52,7 @@ var StartView = Backbone.View.extend({
     router.navigate('/outfit/' + encodeURI(city), {trigger: true});
   },
   render: function() {
-    this.$el.html(START_HTML);
+    Template.render(this.$el, 'html/start.html');
   }
 });
 
@@ -67,16 +67,16 @@ var OutfitView = Backbone.View.extend({
   renderException: function(error) {
     var message = '"' + error.message + '"';
     if (error.stack) message += '\n\n' + error.stack;
-    Template.render(this.$el, 'error-template', {message: message});
+    Template.render(this.$el, 'html/error.html', {message: message});
     console.log(error);
   },
   start: function(city) {
-    this.$el.html(LOADING_HTML);
+    Template.render(this.$el, 'html/loading.html');
     var find = city ? getForecast.bind(null, city)
                     : getCurrentPositionForecast;
     var timedOut = false;
     var timeout = setTimeout(function() {
-      Template.render(this.$el, 'error-template', new Error('Timed out'));
+      Template.render(this.$el, 'html/error.html', new Error('Timed out'));
       timedOut = true;
     }.bind(this), this.FIND_TIMEOUT_MS);
     if (window.DEBUG)
@@ -84,7 +84,7 @@ var OutfitView = Backbone.View.extend({
     find(function(err, forecast) {
       if (timedOut) return;
       if (err)
-        return Template.render(this.$el, 'error-template', err);
+        return Template.render(this.$el, 'html/error.html', err);
 
       var forecastWords = '???';
       var forecastOutfit = null;
@@ -104,14 +104,14 @@ var OutfitView = Backbone.View.extend({
       }
 
       if (forecastOutfit === undefined)
-        return Template.render(this.$el, 'error-template',
+        return Template.render(this.$el, 'html/error.html',
                                new Error('getForecastOutfit() returned ' +
                                          'undefined'));
 
       if (typeof(forecastOutfit) == 'string')
         forecastOutfit = [forecastOutfit];
 
-      Template.render(this.$el, 'outfit-template', {
+      Template.render(this.$el, 'html/outfit.html', {
         city: forecast.city,
         forecastWords: typeof(forecastWords) == 'string' && forecastWords,
         outfitURLs: $.isArray(forecastOutfit) ? forecastOutfit : []
@@ -134,9 +134,6 @@ window.getForecastWords = function getForecastWords(forecast) {
 };
 
 $(function() {
-  Template.setDefault('outfit-template', OUTFIT_HTML);
-  Template.setDefault('error-template', ERROR_HTML);
-
   if (!$('#app').length)
     $('<div id="app"></div>').appendTo('body');
 

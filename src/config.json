@@ -1,10 +1,10 @@
 {
-  "define": {
-    "START_HTML": "html/start.html",
-    "LOADING_HTML": "html/loading.html",
-    "OUTFIT_HTML": "html/outfit.html",
-    "ERROR_HTML": "html/error.html"
-  },
+  "RAW_FILES": [
+    "html/start.html",
+    "html/loading.html",
+    "html/outfit.html",
+    "html/error.html"
+  ],
   "include": [
      "vendor/jquery.js",
      "vendor/underscore.js",
