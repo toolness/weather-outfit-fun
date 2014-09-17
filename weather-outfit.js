@@ -16476,8 +16476,6 @@ Debug.enableGUI = function() {
     });
 
   temp.open();
-  if ($('html').width() < 640)
-    gui.close();
 
   Debug.gui = gui;
   $('html').addClass('debug');
