@@ -95,11 +95,27 @@ function setupChallenges() {
   });
 }
 
+function applyColorizedCodeChanges(oldPre, newPre) {
+  var changes = [];
+  if (oldPre.childNodes.length != newPre.childNodes.length) return;
+  for (var i = 0; i < oldPre.childNodes.length; i++) {
+    var oldChild = oldPre.childNodes[i];
+    var newChild = newPre.childNodes[i];
+    if ($(oldChild).text() != $(newChild).text())
+      changes.push([newChild, oldChild]);
+  }
+  changes.forEach(function(change) {
+    var wrapper = $('<span class="changed-code"></span>').append(change[0]);
+    oldPre.replaceChild(wrapper[0], change[1]);
+  });
+}
+
 function setupSnippetWizards() {
   $('form[role=snippet-wizard]').on('change keyup', function() {
     var context = {};
     var template = $('pre[role=template]', this).text();
-    var pre = $('<pre data-lang="javascript"></pre>');
+    var $new = $('<pre data-lang="javascript"></pre>');
+    var $old = $('pre[data-lang=javascript]', this);
     [].slice.call(this.elements).forEach(function(control) {
       var stringify = control.hasAttribute('data-stringify');
       if (stringify)
@@ -107,9 +123,12 @@ function setupSnippetWizards() {
       else
         context[control.name] = control.value;
     });
-    $('pre[data-lang=javascript]', this).remove();
-    pre.text(Mustache.render(template, context)).appendTo(this);
-    CodeMirror.colorize(pre.get());
+    $new.text(Mustache.render(template, context));
+    CodeMirror.colorize($new.get());
+    if ($old.length == 0)
+      $new.appendTo(this);
+    else
+      applyColorizedCodeChanges($old[0], $new[0]);
   }).trigger('change');
 }
 

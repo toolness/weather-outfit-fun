@@ -108,6 +108,21 @@ section[role=challenge].challenge-completed .challenge-incomplete {
 [role=challenges] > li.challenge-completed a {
   color: green;
 }
+
+.changed-code {
+  animation-duration: 1s;
+  animation-name: changed-code-pulse;
+}
+
+@keyframes changed-code-pulse {
+  from {
+    background-color: yellow;
+  }
+
+  to {
+    background-color: inherit;
+  }
+}
 </style>
 <script src="main.js"></script>
 <div class="tutorial-nav">
