@@ -151,6 +151,16 @@ function setupTableOfContents() {
     .append(toc).appendTo('body');
 }
 
+function setupTemplateSource() {
+  $.getJSON('../src/config.json', function(config) {
+    var filenames = Bacon.fromArray(config.RAW_FILES);
+    var html = filenames.flatMap(function(filename) {
+      return Bacon.fromPromise($.get('../src/' + filename));
+    });
+    // TODO: Finish this.
+  });
+}
+
 $(function() {
   $('pre[data-baseurlify]').each(function() {
     $(this).text(Mustache.render($(this).text(), {baseURL: baseURL}));
@@ -166,4 +176,5 @@ $(function() {
   setupNavigation();
   setupChallenges();
   setupSnippetWizards();
+  setupTemplateSource();
 });
