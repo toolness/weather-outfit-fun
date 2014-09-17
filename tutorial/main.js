@@ -113,6 +113,21 @@ function setupSnippetWizards() {
   }).trigger('change');
 }
 
+function setupTableOfContents() {
+  var toc = $('<ul></ul>');
+
+  $('section').each(function() {
+    var section = $(this);
+    var li = $('<li><a></a></li>').appendTo(toc);
+
+    $('a', li)
+      .attr('href', '#' + section.attr('id'))
+      .text($('h1', section).text());
+  });
+
+  $('<section id="toc"></section>').append(toc).appendTo('body');
+}
+
 $(function() {
   $('pre[data-baseurlify]').each(function() {
     $(this).text(Mustache.render($(this).text(), {baseURL: baseURL}));
@@ -124,6 +139,7 @@ $(function() {
     paginate: false
   });
 
+  setupTableOfContents();
   setupNavigation();
   setupChallenges();
   setupSnippetWizards();
