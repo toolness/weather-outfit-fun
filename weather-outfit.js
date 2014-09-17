@@ -1,8 +1,9 @@
 //# sourceMappingURL=weather-outfit.js.map
-var START_HTML = "<p>What's the weather like in your area?</p>\n\n<button class=\"primary\" role=\"action-geolocate\">Use geolocation</button>\n<p><center>or</center></p>\n<div class=\"input-btn-combo\"><input type=\"text\" name=\"city\" placeholder=\"enter a city or place name\"><button role=\"action-city\">Go</button></div>\n";
-var LOADING_HTML = "<!-- http://commons.wikimedia.org/wiki/File:Chromiumthrobber.svg -->\n<svg width=\"16\" height=\"16\" viewBox=\"0 0 300 300\"\nxmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n  <path d=\"M 150,0\n  a 150,150 0 0,1 106.066,256.066\n  l -35.355,-35.355\n  a -100,-100 0 0,0 -70.711,-170.711 z\"\n  fill=\"white\">\n    <animateTransform attributeName=\"transform\" attributeType=\"XML\"\n    type=\"rotate\" from=\"0 150 150\" to=\"360 150 150\"\n    begin=\"0s\" dur=\"1s\" fill=\"freeze\" repeatCount=\"indefinite\" />\n  </path>\n</svg> Loading&hellip;\n";
-var OUTFIT_HTML = "<p>It's going to be <span class=\"forecastWords\">{{forecastWords}}</span> in {{city}} today.</p>\n\n<p><em>Here are some clothes you might wear:</em></p>\n<p class=\"forecastOutfit\">{{#outfitURLs}}<img src=\"{{.}}\">{{/outfitURLs}}</p>\n\n<p><button class=\"primary\" role=\"action-restart\">Pick a different city</button></p>\n\n<p><small>Weather data provided by\n  <a href=\"http://openweathermap.org/\" target=\"_blank\">OpenWeatherMap</a>.</small></p>\n";
-var ERROR_HTML = "<p>Oh no, an error occurred! Some technical details are below.</p>\n<pre>{{message}}</pre>\n\n<p><button role=\"action-restart\">Try again</button></p>\n";
+var RAW_FILES = {};
+RAW_FILES["html/start.html"] = "<p>What's the weather like in your area?</p>\n\n<button class=\"primary\" role=\"action-geolocate\">Use geolocation</button>\n<p><center>or</center></p>\n<div class=\"input-btn-combo\"><input type=\"text\" name=\"city\" placeholder=\"enter a city or place name\"><button role=\"action-city\">Go</button></div>\n";
+RAW_FILES["html/loading.html"] = "<!-- http://commons.wikimedia.org/wiki/File:Chromiumthrobber.svg -->\n<svg width=\"16\" height=\"16\" viewBox=\"0 0 300 300\"\nxmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n  <path d=\"M 150,0\n  a 150,150 0 0,1 106.066,256.066\n  l -35.355,-35.355\n  a -100,-100 0 0,0 -70.711,-170.711 z\"\n  fill=\"white\">\n    <animateTransform attributeName=\"transform\" attributeType=\"XML\"\n    type=\"rotate\" from=\"0 150 150\" to=\"360 150 150\"\n    begin=\"0s\" dur=\"1s\" fill=\"freeze\" repeatCount=\"indefinite\" />\n  </path>\n</svg> Loading&hellip;\n";
+RAW_FILES["html/outfit.html"] = "<p>It's going to be <span class=\"forecastWords\">{{forecastWords}}</span> in {{city}} today.</p>\n\n<p><em>Here are some clothes you might wear:</em></p>\n<p class=\"forecastOutfit\">{{#outfitURLs}}<img src=\"{{.}}\">{{/outfitURLs}}</p>\n\n<p><button class=\"primary\" role=\"action-restart\">Pick a different city</button></p>\n\n<p><small>Weather data provided by\n  <a href=\"http://openweathermap.org/\" target=\"_blank\">OpenWeatherMap</a>.</small></p>\n";
+RAW_FILES["html/error.html"] = "<p>Oh no, an error occurred! Some technical details are below.</p>\n<pre>{{message}}</pre>\n\n<p><button role=\"action-restart\">Try again</button></p>\n";
 /*!
  * jQuery JavaScript Library v2.1.1
  * http://jquery.com/
@@ -16400,16 +16401,10 @@ function getCurrentPositionForecast(cb) {
 }
 
 var Template = {
-  setDefault: function setTemplateDefault(id, defaultValue) {
-    if ($('#' + id).length) return;
-
-    $('<div style="display: none"></div>')
-      .attr('id', id)
-      .text(defaultValue)
-      .appendTo('body');
-  },
-  render: function renderTemplate(target, templateId, ctx) {
-    target.html(Mustache.render($('#' + templateId).text(), ctx));
+  render: function renderTemplate(target, filename, ctx) {
+    var template = $('[data-filename="' + filename + '"]').html() ||
+                   RAW_FILES[filename];
+    target.html(Mustache.render(template, ctx));
   }
 };
 
@@ -16610,7 +16605,7 @@ var StartView = Backbone.View.extend({
     router.navigate('/outfit/' + encodeURI(city), {trigger: true});
   },
   render: function() {
-    this.$el.html(START_HTML);
+    Template.render(this.$el, 'html/start.html');
   }
 });
 
@@ -16625,16 +16620,16 @@ var OutfitView = Backbone.View.extend({
   renderException: function(error) {
     var message = '"' + error.message + '"';
     if (error.stack) message += '\n\n' + error.stack;
-    Template.render(this.$el, 'error-template', {message: message});
+    Template.render(this.$el, 'html/error.html', {message: message});
     console.log(error);
   },
   start: function(city) {
-    this.$el.html(LOADING_HTML);
+    Template.render(this.$el, 'html/loading.html');
     var find = city ? getForecast.bind(null, city)
                     : getCurrentPositionForecast;
     var timedOut = false;
     var timeout = setTimeout(function() {
-      Template.render(this.$el, 'error-template', new Error('Timed out'));
+      Template.render(this.$el, 'html/error.html', new Error('Timed out'));
       timedOut = true;
     }.bind(this), this.FIND_TIMEOUT_MS);
     if (window.DEBUG)
@@ -16642,7 +16637,7 @@ var OutfitView = Backbone.View.extend({
     find(function(err, forecast) {
       if (timedOut) return;
       if (err)
-        return Template.render(this.$el, 'error-template', err);
+        return Template.render(this.$el, 'html/error.html', err);
 
       var forecastWords = '???';
       var forecastOutfit = null;
@@ -16662,14 +16657,14 @@ var OutfitView = Backbone.View.extend({
       }
 
       if (forecastOutfit === undefined)
-        return Template.render(this.$el, 'error-template',
+        return Template.render(this.$el, 'html/error.html',
                                new Error('getForecastOutfit() returned ' +
                                          'undefined'));
 
       if (typeof(forecastOutfit) == 'string')
         forecastOutfit = [forecastOutfit];
 
-      Template.render(this.$el, 'outfit-template', {
+      Template.render(this.$el, 'html/outfit.html', {
         city: forecast.city,
         forecastWords: typeof(forecastWords) == 'string' && forecastWords,
         outfitURLs: $.isArray(forecastOutfit) ? forecastOutfit : []
@@ -16692,9 +16687,6 @@ window.getForecastWords = function getForecastWords(forecast) {
 };
 
 $(function() {
-  Template.setDefault('outfit-template', OUTFIT_HTML);
-  Template.setDefault('error-template', ERROR_HTML);
-
   if (!$('#app').length)
     $('<div id="app"></div>').appendTo('body');
 
