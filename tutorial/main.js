@@ -125,7 +125,11 @@ function setupTableOfContents() {
       .text($('h1', section).text());
   });
 
-  $('<section id="toc"></section>').append(toc).appendTo('body');
+  $('<section id="toc"></section>')
+    .text('This table of contents is for debugging purposes only. ' +
+          'Normal users won\'t see it.')
+    .prepend($('<h1>Table of Contents</h1>'))
+    .append(toc).appendTo('body');
 }
 
 $(function() {
