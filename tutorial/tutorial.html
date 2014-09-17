@@ -202,8 +202,8 @@ section[role=challenge].challenge-completed .challenge-incomplete {
   <h1>Adding our own recipe</h1>
   <p>The opening <code>&lt;script&gt;</code> tag at line 5 tells the browser to start processing the text until the closing <code>&lt;/script&gt;</code> tag at line 8 as JavaScript code. This is where we'll define our <code>getForecastOutfit</code> function.</p>
   <p>Type the following at line 6:</p>
-  <pre data-lang="javascript">function getForecastOutfit(forecast) {
-  return "http://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Eskimo_woman_by_Lomen_Brothers%2C_ca._1915.jpg/444px-Eskimo_woman_by_Lomen_Brothers%2C_ca._1915.jpg";
+  <pre data-lang="javascript" data-baseurlify>function getForecastOutfit(forecast) {
+  return "{{{baseURL}}}img/eskimo-lomen-1915.jpg";
 }</pre>
   <div class="challenge-incomplete">
     <p>Waiting for you to define the function&hellip; <i class="fa fa-circle-o-notch fa-spin"></i></p>
