@@ -155,9 +155,20 @@ function setupTemplateSource() {
   $.getJSON('../src/config.json', function(config) {
     var filenames = Bacon.fromArray(config.RAW_FILES);
     var html = filenames.flatMap(function(filename) {
-      return Bacon.fromPromise($.get('../src/' + filename));
+      return Bacon.fromCallback(function(cb) {
+        $.get('../src/' + filename, function(contents) {
+          return cb([
+            '<div style="display: none" data-filename="' + filename + '">',
+            contents,
+            '</div>'
+          ]);
+        });
+      });
+    }).fold([], '.concat').map('.join', '\n').onValue(function(text) {
+      var pre = $('<pre data-lang="htmlmixed"></pre>').text(text);
+      CodeMirror.colorize(pre.get());
+      $('[role="template-source"]').empty().append(pre);
     });
-    // TODO: Finish this.
   });
 }
 
