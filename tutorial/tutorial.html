@@ -366,6 +366,21 @@ section[role=challenge].challenge-completed .challenge-incomplete {
   <p>Note that some of the above code uses the <a href="http://mustache.github.io/" target="_blank">Mustache</a> templating language.</p>
 </section>
 
+<section id="about-weather-outfit-dot-js">
+  <h1>About weather-outfit.js</h1>
+  <p>The script you <a href="#hack">inserted</a> around line 4, <code>weather-outfit.js</code>, is actually a big bundle of different things.</p>
+  <p>Among the bundle are a variety of JavaScript <em>libraries</em>, or "cookbooks", that the browser uses to power the app:</p>
+  <ul>
+    <li><a href="http://jquery.com/" target="_blank">jQuery</a>, which makes it easier to write code that manipulates the contents of web pages.</li>
+    <li><a href="http://documentcloud.github.io/underscore/" target="_blank">underscore.js</a>, which makes it easier to do a variety of common things with JavaScript.</li>
+    <li><a href="http://documentcloud.github.io/backbone/" target="_blank">backbone.js</a>, a toolkit that makes it easier to build web pages that work like full-fledged applications.</li>
+    <li><a href="http://mustache.github.io/" target="_blank">mustache</a>, a very simple <a href="http://en.wikipedia.org/wiki/Template_processor" target="_blank">template processor</a> that makes it easy for the app to insert data (like forecast information or error text) into HTML snippets.</li>
+    <li><a href="http://workshop.chromeexperiments.com/examples/gui/" target="_blank">dat.gui</a>, which powers the app's handy <a href="#debug">debug panel</a>.</li>
+  </ul>
+  <p>The file also contains all the default HTML templates that are used by the app, which <a href="#templates">you can remix</a>.</p>
+  <p>Finally, <code>weather-outfit.js</code> also contains some JavaScript that uses the libraries to create and power the app itself. Explaining how this code works is beyond the scope of this tutorial, but you can always <a href="https://github.com/toolness/weather-outfit-fun/tree/gh-pages/src" target="_blank">browse the source code</a>.</p>
+</section>
+
 <section id="challenges">
   <h1>Challenges</h1>
   <ul role="challenges"></ul>
@@ -377,8 +392,9 @@ section[role=challenge].challenge-completed .challenge-incomplete {
     <li><a href="#about-html">What is HTML?</a></li>
     <li><a href="#style">What is CSS?</a></li>
     <li><a href="#hack">What is JavaScript?</a></li>
+    <li><a href="#about-weather-outfit-dot-js">What's inside this weather-outfit.js file?</a></li>
     <li><a href="#templates">How do I remix all of the app's HTML?</a></li>
-    <li><a href="#debug">Is there a faster way to test my code?</a></li>
+    <li><a href="#debug">Is there a faster way to test my JavaScript code?</a></li>
   </ul>
 </section>
 
