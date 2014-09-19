@@ -387,6 +387,15 @@ section[role=challenge].challenge-completed .challenge-incomplete {
   <p>Finally, <code>weather-outfit.js</code> also contains some JavaScript that uses the libraries to create and power the app itself. Explaining how this code works is beyond the scope of this tutorial, but you can always <a href="https://github.com/toolness/weather-outfit-fun/tree/gh-pages/src" target="_blank">browse the source code</a>.</p>
 </section>
 
+<section id="api">
+  <h1>Where the forecasts come from</h1>
+  <p>This app communicates with the <a href="http://openweathermap.org/" target="_blank">OpenWeatherMap</a> site to obtain the latest forecast for any location.</p>
+  <p>When one piece of software talks to another it is done through an <em>interface</em>, which is a very detailed set of instructions describing how to converse.</p>
+  <p>One example of a simple interface is actually the <code><a href="#js">getForecastOutfit</a></code> function you create in this tutorial. The interface for this function could be described as "if you give me a forecast, I will return to you a URL pointing to a picture of an outfit to wear."</p>
+  <p>When a person or organization has created an interface that allows other software to do something useful, they sometimes call it an <em>application programming interface</em>, or API.</p>
+  <p>OpenWeatherMap offers a <a href="http://openweathermap.org/current" target="_blank">current weather data API</a> which <code><a href="#about-weather-outfit-dot-js">weather-outfit.js</a></code> communicates with after the user gives the app their location information.
+</section>
+
 <section id="challenges">
   <h1>Challenges</h1>
   <ul role="challenges"></ul>
@@ -399,6 +408,7 @@ section[role=challenge].challenge-completed .challenge-incomplete {
     <li><a href="#style">What is CSS?</a></li>
     <li><a href="#hack">What is JavaScript?</a></li>
     <li><a href="#about-weather-outfit-dot-js">What's inside this weather-outfit.js file?</a></li>
+    <li><a href="#api">Where do the weather forecasts come from?</a></li>
     <li><a href="#templates">How do I remix all of the app's HTML?</a></li>
     <li><a href="#debug">Is there an easier way to test my JavaScript code?</a></li>
   </ul>
