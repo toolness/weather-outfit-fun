@@ -132,6 +132,30 @@ function setupSnippetWizards() {
   }).trigger('change');
 }
 
+function setupBlockly() {
+  var section = $('#blockly');
+  var blockly = $('iframe', section);
+  var pre = $('pre', section);
+
+  blockly.load(function() {
+    var Blockly = this.contentWindow.Blockly;
+
+    function renderCode() {
+      var code = Blockly.JavaScript.workspaceToCode();
+      var indentedCode = code.split('\n').map(function(line) {
+        return line.trim() ? '  ' + line : line;
+      }).join('\n');
+
+      pre.empty().text('function getForecastOutfit(forecast) {\n' +
+                       indentedCode + '}');
+      CodeMirror.colorize(pre.get());
+    }
+
+    Blockly.addChangeListener(renderCode);
+    renderCode();
+  });
+}
+
 function setupTableOfContents() {
   var toc = $('<ul></ul>');
 
@@ -188,4 +212,5 @@ $(function() {
   setupChallenges();
   setupSnippetWizards();
   setupTemplateSource();
+  setupBlockly();
 });

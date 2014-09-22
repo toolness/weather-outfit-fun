@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+html, body {
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+.blocklySvg {
+  height: 100%;
+  width: 100%;
+}
+</style>
+<body>
+  <xml id="toolbox" style="display: none">
+    <block type="controls_if"></block>
+    <block type="logic_compare"></block>
+    <block type="logic_operation"></block>
+    <block type="math_number"></block>
+    <block type="temperature"></block>
+    <block type="weather"></block>
+    <block type="return_url"></block>
+  </xml>
+  <script src="common.js"></script>
+  <script src="vendor/blockly/blockly_compressed.js"></script>
+  <script src="vendor/blockly/blocks_compressed.js"></script>
+  <script src="vendor/blockly/javascript_compressed.js"></script>
+  <script src="vendor/blockly/en.js"></script>
+  <script>
+  // Blocks.
+
+  Blockly.Blocks['temperature'] = {
+    init: function() {
+      this.setOutput(true, 'Number');
+      this.appendDummyInput().appendField('temperature in')
+        .appendField(new Blockly.FieldDropdown([
+          ['Celsius', 'c'],
+          ['Fahrenheit', 'f']
+        ]), 'UNIT');
+      this.setTooltip('A number representing the forecasted temperature.');
+    }
+  };
+
+  Blockly.Blocks['weather'] = {
+    init: function() {
+      this.setOutput(true, 'Boolean');
+      this.appendDummyInput().appendField('weather')
+        .appendField(new Blockly.FieldDropdown([
+          ['is', 'EQ'],
+          ['is not', 'NEQ']
+        ]), 'OPERATOR')
+        .appendField(new Blockly.FieldDropdown([
+          ['clear', 'clear'],
+          ['partly cloudy', 'partly cloudy'],
+          ['mostly cloudy', 'mostly cloudy'],
+          ['raining', 'raining'],
+          ['stormy', 'thunderstorming'],
+          ['snowing', 'snowing'],
+          ['misty', 'misty']
+        ]), 'WEATHER');
+      this.setTooltip('Returns true or false depending on the ' +
+                      'forecasted weather conditions.');
+    }
+  };
+
+  Blockly.Blocks['return_url'] = {
+    init: function() {
+      this.setPreviousStatement(true);
+      this.appendDummyInput().appendField('return')
+        .appendField(new Blockly.FieldTextInput('http://some/image'), 'URL');
+      this.setTooltip('Exits from the function, returning an outfit ' +
+                      'to wear.');
+    }
+  };
+
+  // Code generation.
+
+  Blockly.JavaScript['temperature'] = function(block) {
+    return [
+      "forecast.temp." + block.getFieldValue('UNIT'),
+      Blockly.JavaScript.ORDER_ATOMIC
+    ];
+  };
+
+  Blockly.JavaScript['weather'] = function(block) {
+    return [
+      "forecast.weather " +
+      (block.getFieldValue('OPERATOR') == 'EQ' ? '==' : '!=') + ' ' +
+      Blockly.JavaScript.quote_(block.getFieldValue('WEATHER')),
+      Blockly.JavaScript.ORDER_EQUALITY
+    ];
+  };
+
+  Blockly.JavaScript['return_url'] = function(block) {
+    var url = Blockly.JavaScript.quote_(block.getFieldValue('URL'));
+    return "return " + url + ";\n";
+  };
+
+  // Workspace save/load functionality.
+
+  var KEY_NAME = 'blockly_xml?' + window.location.search.slice(1);
+
+  function loadSavedWorkspace() {
+    var lastXML = getStorage(KEY_NAME);
+    if (lastXML) {
+      var xml = Blockly.Xml.textToDom(lastXML);
+      Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
+    }
+  }
+
+  function saveCurrentWorkspace() {
+    var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
+    setStorage(KEY_NAME, Blockly.Xml.domToPrettyText(xml));
+  }
+
+  // Initialization.
+
+  window.addEventListener('DOMContentLoaded', function() {
+    Blockly.inject(document.body, {
+      path: 'vendor/blockly/',
+      toolbox: document.getElementById('toolbox')
+    });
+
+    Blockly.addChangeListener(saveCurrentWorkspace);
+
+    loadSavedWorkspace();
+  }, false);
+  </script>
+</body>
