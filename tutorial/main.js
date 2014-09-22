@@ -66,7 +66,7 @@ function setupNavigation() {
     var el = document.getElementById(hash) || 
              document.getElementById('404');
     $('section').hide();
-    $(el).show();
+    $(el).show().trigger('show');
   });
 }
 
@@ -134,25 +134,30 @@ function setupSnippetWizards() {
 
 function setupBlockly() {
   var section = $('#blockly');
-  var blockly = $('iframe', section);
   var pre = $('pre', section);
 
-  blockly.load(function() {
-    var Blockly = this.contentWindow.Blockly;
+  section.one('show', function() {
+    var iframe = document.createElement('iframe');
 
-    function renderCode() {
-      var code = Blockly.JavaScript.workspaceToCode();
-      var indentedCode = code.split('\n').map(function(line) {
-        return line.trim() ? '  ' + line : line;
-      }).join('\n');
+    iframe.setAttribute('src', 'blockly.html');
+    iframe.addEventListener('load', function() {
+      var Blockly = this.contentWindow.Blockly;
 
-      pre.empty().text('function getForecastOutfit(forecast) {\n' +
-                       indentedCode + '}');
-      CodeMirror.colorize(pre.get());
-    }
+      function renderCode() {
+        var code = Blockly.JavaScript.workspaceToCode();
+        var indentedCode = code.split('\n').map(function(line) {
+          return line.trim() ? '  ' + line : line;
+        }).join('\n');
 
-    Blockly.addChangeListener(renderCode);
-    renderCode();
+        pre.empty().text('function getForecastOutfit(forecast) {\n' +
+                         indentedCode + '}');
+        CodeMirror.colorize(pre.get());
+      }
+
+      Blockly.addChangeListener(renderCode);
+      renderCode();
+    }, false);
+    $('.iframe-holder').append(iframe);
   });
 }
 
@@ -212,9 +217,9 @@ $(function() {
   });
 
   setupTableOfContents();
+  setupBlockly();
   setupNavigation();
   setupChallenges();
   setupSnippetWizards();
   setupTemplateSource();
-  setupBlockly();
 });

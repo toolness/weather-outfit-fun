@@ -129,6 +129,12 @@ a[target] i {
   padding-left: 2px;
   text-decoration: none;
 }
+
+#blockly iframe {
+  width: 100%;
+  border: none;
+  height: 450px;
+}
 </style>
 <script src="main.js"></script>
 <div class="tutorial-nav">
@@ -435,7 +441,7 @@ The interactive tutorial will help you to learn how to remix JavaScript in order
 <section id="blockly">
   <h1>Visual Programming Editor</h1>
   <p>If you're uncomfortable writing JavaScript "by hand", you can use this editor to create a <code><a href="#js">getForecastOutfit</a></code> function.</p>
-  <iframe src="blockly.html" style="width: 100%; border: none; height: 450px"></iframe>
+  <div class="iframe-holder"></div>
   <p>Here is the JavaScript for the above code:</p>
   <pre data-lang="javascript"></pre>
 </section>
