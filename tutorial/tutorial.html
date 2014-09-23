@@ -135,6 +135,10 @@ a[target] i {
   border: none;
   height: 475px;
 }
+
+input[type=number] {
+  width: 60px;
+}
 </style>
 <script src="main.js"></script>
 <div class="tutorial-nav">
@@ -442,7 +446,29 @@ The interactive tutorial will help you to learn how to remix JavaScript in order
   <h1>Visual Programming Editor</h1>
   <p>If you're uncomfortable writing JavaScript "by hand", you can use this editor to create a <code><a href="#js">getForecastOutfit</a></code> function.</p>
   <div class="iframe-holder"></div>
-  <p>Here is the JavaScript for the above code:</p>
+  <h3>Tiny Debugger</h3>
+  <p>Use the controls below to simulate weather conditions and see how your code responds.</p>
+  <form role="debugger">
+    Temperature:
+    <input type="number" name="amount" value="0" required>
+    <select name="unit">
+      <option value="f">&deg; F</option>
+      <option value="c">&deg; C</option>
+    </select>
+    Weather:
+    <select name="weather">
+      <option value="clear">clear</option>
+      <option value="partly cloudy">partly cloudy</option>
+      <option value="mostly cloudy">mostly cloudy</option>
+      <option value="raining">raining</option>
+      <option value="thunderstorming">thunderstorming</option>
+      <option value="snowing">snowing</option>
+      <option value="misty">misty</option>
+    </select>
+    <button type="submit"><i class="fa fa-play"></i></button>
+  </form>
+  <h3>JavaScript Translation</h3>
+  <p>Below is the JavaScript translation for your code. Paste it <a href="#js">in a <code>&lt;script&gt;</code> element</a> to make your app use it.</p>
   <pre data-lang="javascript"></pre>
 </section>
 

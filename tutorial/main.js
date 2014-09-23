@@ -135,22 +135,28 @@ function setupSnippetWizards() {
 function setupBlockly() {
   var section = $('#blockly');
   var pre = $('pre', section);
+  var Blockly;
+  var getJs = function(statementPrefix) {
+    Blockly.JavaScript.STATEMENT_PREFIX = statementPrefix || null;
+
+    var code = Blockly.JavaScript.workspaceToCode();
+    var indentedCode = code.split('\n').map(function(line) {
+      return line.trim() ? '  ' + line : line;
+    }).join('\n');
+
+    return 'function getForecastOutfit(forecast) {\n' +
+           indentedCode + '}';
+  };
 
   section.one('show', function() {
     var iframe = document.createElement('iframe');
 
     iframe.setAttribute('src', 'blockly.html');
     iframe.addEventListener('load', function() {
-      var Blockly = this.contentWindow.Blockly;
+      Blockly = this.contentWindow.Blockly;
 
       function renderCode() {
-        var code = Blockly.JavaScript.workspaceToCode();
-        var indentedCode = code.split('\n').map(function(line) {
-          return line.trim() ? '  ' + line : line;
-        }).join('\n');
-
-        pre.empty().text('function getForecastOutfit(forecast) {\n' +
-                         indentedCode + '}');
+        pre.empty().text(getJs());
         CodeMirror.colorize(pre.get());
       }
 
@@ -158,6 +164,42 @@ function setupBlockly() {
       renderCode();
     }, false);
     $('.iframe-holder').append(iframe);
+  });
+
+  $('form[role=debugger]', section).on('submit', function(e) {
+    e.preventDefault();
+
+    if (!Blockly) return;
+
+    var HIGHLIGHT_DELAY = 500;
+    var highlights = [];
+    var buttons = $('button', this);
+    var code = getJs('queueHighlight(%1);\n');
+    var queueHighlight = function(id) {
+      if (id) highlights.push(id.toString());
+    };
+    var showNextHighlight = function() {
+      Blockly.mainWorkspace.traceOn(true);
+      Blockly.mainWorkspace.highlightBlock(highlights.shift());
+      if (highlights.length == 0)
+        return buttons.attr('disabled', null);;
+      setTimeout(showNextHighlight, HIGHLIGHT_DELAY);
+      // TODO: Should we set trace back on in the meantime?
+    };
+    var amount = parseInt($('[name=amount]', this).val());
+    var unit = $('[name=unit]', this).val();
+    var forecast = {weather: $('[name=weather]', this).val()};
+
+    if (unit == 'f')
+      forecast.temp = {f: amount, c: Math.round((amount - 32) * 5/9)};
+    else
+      forecast.temp = {c: amount, f: Math.round(amount * 9/5 + 32)};
+
+    eval('(' + code + ')(' + JSON.stringify(forecast) + ');');
+
+    if (highlights.length == 0) return;
+    buttons.attr('disabled', '');
+    showNextHighlight();
   });
 }
 
