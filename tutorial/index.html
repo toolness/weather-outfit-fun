@@ -89,6 +89,7 @@ iframe {
 <body>
 <div id="tutorial"></div>
 <div id="code"><span class="actions">
+  <span role="linkify" title="Share current state as a URL"><i class="fa fa-link"></i></span>
   <span role="solution" title="Set to solution HTML"><i class="fa fa-key"></i></span>
   <span role="revert" title="Revert to original HTML"><i class="fa fa-eraser"></i></span>
 </span></div>
@@ -196,12 +197,18 @@ function startEditor(code, rendering, skeletonHTML, solutionHTML) {
     editor.setValue(solutionHTML);
   });
 
+  $('[role=linkify]', code).on('click', function() {
+    window.prompt('Here is a URL you can share.',
+                  embedStorageInCurrentURL());
+  });
+
   return editor;
 }
 
 $(function() {
   function rebase(html) { return html.replace(/\.\.\//g, baseURL); }
 
+  restoreStorageFromCurrentURL();
   $.get('skeleton.html', function(html) {
     $.get('solution.html', function(solutionHTML) {
       var editor = startEditor($('#code'), $('#rendering'),
