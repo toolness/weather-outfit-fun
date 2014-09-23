@@ -66,8 +66,12 @@ html, body {
           ['snowing', 'snowing'],
           ['misty', 'misty']
         ]), 'WEATHER');
-      this.setTooltip('Returns true or false depending on the ' +
-                      'forecasted weather conditions.');
+      this.setTooltip(function() {
+        return 'Return true if the forecasted weather is ' +
+          (this.getFieldValue('OPERATOR') == 'EQ' ? '' : 'NOT ') +
+          this.getFieldValue('WEATHER') +
+          ', false otherwise.';
+      }.bind(this));
     }
   };
 
