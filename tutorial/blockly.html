@@ -35,12 +35,17 @@ html, body {
   Blockly.Blocks['temperature'] = {
     init: function() {
       this.setOutput(true, 'Number');
-      this.appendDummyInput().appendField('temperature in')
+      this.appendDummyInput().appendField('temp. in \u00b0')
         .appendField(new Blockly.FieldDropdown([
-          ['Celsius', 'c'],
-          ['Fahrenheit', 'f']
+          ['C', 'c'],
+          ['F', 'f']
         ]), 'UNIT');
-      this.setTooltip('A number representing the forecasted temperature.');
+      this.setTooltip(function() {
+        var unit = this.getFieldValue('UNIT') == 'c' ? 'Celsius'
+                                                     : 'Fahrenheit';
+        return 'A number representing the forecasted temperature in ' +
+               unit + '.';
+      }.bind(this));
     }
   };
 
