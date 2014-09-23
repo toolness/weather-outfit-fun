@@ -45,11 +45,20 @@ function stringifyQueryStringParams(urlParams) {
   }).join('&');
 }
 
+// https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64.btoa
+function utf8_to_b64( str ) {
+    return window.btoa(encodeURIComponent( escape( str )));
+}
+
+function b64_to_utf8( str ) {
+    return unescape(decodeURIComponent(window.atob( str )));
+}
+
 function embedStorageInCurrentURL() {
   var urlParams = parseQueryStringParams();
   Object.keys(sessionStorage).filter(isStorageKey)
     .forEach(function(key) {
-      urlParams[key] = btoa(sessionStorage[key]);
+      urlParams[key] = utf8_to_b64(sessionStorage[key]);
     });
 
   return window.location.origin + window.location.pathname + '?' +
@@ -63,7 +72,7 @@ function restoreStorageFromCurrentURL() {
     .forEach(function(key) {
       if (key in sessionStorage) return;
       try {
-        sessionStorage[key] = atob(urlParams[key]);
+        sessionStorage[key] = b64_to_utf8(urlParams[key]);
       } catch (e) { return; }
       delete urlParams[key];
       storageChanged = true;
