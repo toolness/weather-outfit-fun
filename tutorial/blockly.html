@@ -76,12 +76,22 @@ html, body {
   };
 
   Blockly.Blocks['return_url'] = {
+    DEFAULT_URL: baseURL + 'img/eskimo-lomen-1915.jpg',
+    PLACEHOLDER_URL: 'http://\u2026',
     init: function() {
+      this.image = new Blockly.FieldImage(this.DEFAULT_URL, 64, 64);
       this.setPreviousStatement(true);
-      this.appendDummyInput().appendField('return')
-        .appendField(new Blockly.FieldTextInput('http://some/image'), 'URL');
+      this.appendDummyInput().appendField('return').appendField(this.image)
+        .appendField(new Blockly.FieldTextInput(this.PLACEHOLDER_URL), 'URL');
       this.setTooltip('Exits from the function, returning an outfit ' +
-                      'to wear.');
+                      'image URL.');
+    },
+    getOutfitImageURL: function() {
+      var url = this.getFieldValue('URL');
+      return url == this.PLACEHOLDER_URL ? this.DEFAULT_URL : url;
+    },
+    updateOnChange: function() {
+      this.image.setValue(this.getOutfitImageURL());
     }
   };
 
@@ -104,7 +114,7 @@ html, body {
   };
 
   Blockly.JavaScript['return_url'] = function(block) {
-    var url = Blockly.JavaScript.quote_(block.getFieldValue('URL'));
+    var url = Blockly.JavaScript.quote_(block.getOutfitImageURL());
     return "return " + url + ";\n";
   };
 
@@ -133,8 +143,14 @@ html, body {
       toolbox: document.getElementById('toolbox')
     });
 
-    Blockly.addChangeListener(saveCurrentWorkspace);
+    Blockly.addChangeListener(function() {
+      Blockly.mainWorkspace.getAllBlocks().forEach(function(block) {
+        if (typeof(block.updateOnChange) == 'function')
+          block.updateOnChange();
+      });
+    });
 
+    Blockly.addChangeListener(saveCurrentWorkspace);
     loadSavedWorkspace();
   }, false);
   </script>
