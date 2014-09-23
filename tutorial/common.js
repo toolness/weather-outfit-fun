@@ -48,7 +48,9 @@ function stringifyQueryStringParams(urlParams) {
 function embedStorageInCurrentURL() {
   var urlParams = parseQueryStringParams();
   Object.keys(sessionStorage).filter(isStorageKey)
-    .forEach(function(key) { urlParams[key] = sessionStorage[key]; });
+    .forEach(function(key) {
+      urlParams[key] = btoa(sessionStorage[key]);
+    });
 
   return window.location.origin + window.location.pathname + '?' +
          stringifyQueryStringParams(urlParams) + window.location.hash;
@@ -60,7 +62,9 @@ function restoreStorageFromCurrentURL() {
   Object.keys(urlParams).filter(isStorageKey)
     .forEach(function(key) {
       if (key in sessionStorage) return;
-      sessionStorage[key] = urlParams[key];
+      try {
+        sessionStorage[key] = atob(urlParams[key]);
+      } catch (e) { return; }
       delete urlParams[key];
       storageChanged = true;
     });
