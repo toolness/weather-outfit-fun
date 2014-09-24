@@ -125,8 +125,14 @@ a[target] i {
   text-decoration: none;
 }
 
-#blockly iframe {
+#blockly .iframe-holder {
   width: 100%;
+  height: 480px;
+  overflow: scroll;
+}
+
+#blockly .iframe-holder iframe {
+  min-width: 640px;
   border: none;
   height: 475px;
 }
