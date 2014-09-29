@@ -162,6 +162,20 @@ a.btn:hover {
 center img {
   max-width: 80%;
 }
+
+/* http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/ */
+
+.media img {
+  float: left;
+  margin-right: 10px;
+  max-width: 25%;
+}
+
+.media, .bd {
+  overflow: hidden;
+  _overflow: visible;
+  zoom: 1;
+}
 </style>
 <script src="main.js"></script>
 <div class="tutorial-nav">
@@ -207,8 +221,9 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
     while lines 11-14 form the <code>&lt;body&gt;</code>. Both of
     these elements are nested in the <code>&lt;html&gt;</code> element.</p>
 
-  <aside>
-    <p>If you'd like to learn more about tags, try playing <a href="https://mousemeredith.makes.org/thimble/LTE2Mjc5Nzk3NzY=/tag-tag-revolution-activity" target="_blank">Tag Tag Revolution</a> with some friends.</p>
+  <aside class="media">
+    <img src="img/tip.png">
+    <p class="bd">If you'd like to learn more about tags, try playing <a href="https://mousemeredith.makes.org/thimble/LTE2Mjc5Nzk3NzY=/tag-tag-revolution-activity" target="_blank">Tag Tag Revolution</a> with some friends.</p>
   </aside>
 
   <p><a href="#hack" class="btn">Okay, let's start writing some code.</a></p>
@@ -222,7 +237,10 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
 
   <pre data-lang="htmlmixed" data-baseurlify>&lt;script src="{{{baseURL}}}weather-outfit.js"&gt;&lt;/script&gt;</pre>
 
-  <aside><p>Please do try to <em>type</em> the above code instead of copying and pasting it (copy-pasting just the URL is okay though). You'll learn better that way!</p></aside>
+  <aside class="media">
+    <img src="img/tip.png">
+    <p class="bd">Please do try to <em>type</em> the above code instead of copying and pasting it (copy-pasting just the URL is okay though). You'll learn better that way!</p>
+  </aside>
 
   <div class="challenge-incomplete">
     <p>Waiting for you to complete this challenge&hellip; <i class="fa fa-circle-o-notch fa-spin"></i></p>
@@ -246,8 +264,9 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
   <div class="challenge-complete">
     <h2>Yay!</h2>
     <p>The page is no longer naked and looks more presentable.</p>
-    <aside>
-      <p>Want to deep-dive? You can <a href="https://github.com/toolness/weather-outfit-fun/blob/gh-pages/weather-outfit.css" target="_blank">view the source</a> of the CSS file at line 3, and learn more about CSS at <a href="http://www.htmldog.com/guides/css/" target="_blank">HTML Dog</a>.</p>
+    <aside class="media">
+      <img src="img/tip.png">
+      <p class="bd">Want to deep-dive? You can <a href="https://github.com/toolness/weather-outfit-fun/blob/gh-pages/weather-outfit.css" target="_blank">view the source</a> of the CSS file at line 3, and learn more about CSS at <a href="http://www.htmldog.com/guides/css/" target="_blank">HTML Dog</a>.</p>
     </aside>
     <p><a href="#cookbook" class="btn">Okay, let's fix the rest of the app.</a></p>
   </div>
