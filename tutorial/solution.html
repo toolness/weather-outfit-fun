@@ -4,7 +4,14 @@
     <script src="../weather-outfit.js"></script>
     <script>
     function getForecastOutfit(forecast) {
-      return "../img/eskimo-lomen-1915.jpg";
+      if (forecast.temp.c <= 30) {
+        if (forecast.weather == 'clear')
+          return "../img/eskimo-lomen-1915.jpg?1";
+        return "../img/eskimo-lomen-1915.jpg?2";
+      }
+      if (forecast.weather == 'clear')
+        return "../img/eskimo-lomen-1915.jpg?3";
+      return "../img/eskimo-lomen-1915.jpg?4";
     }
 
     </script>
