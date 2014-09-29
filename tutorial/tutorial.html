@@ -140,6 +140,24 @@ a[target] i {
 input[type=number] {
   width: 60px;
 }
+
+.subheading {
+  margin-top: -15px;
+  margin-bottom: 10px;
+}
+
+a.btn {
+  display: inline-block;
+  color: white;
+  background-color: rgb(63, 181, 142);
+  padding: 10px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a.btn:hover {
+  background-color: rgb(43, 124, 97);
+}
 </style>
 <script src="main.js"></script>
 <div class="tutorial-nav">
@@ -162,8 +180,12 @@ The interactive tutorial will help you to learn how to remix JavaScript in order
 </p>
 <p>After following the steps in the tutorial, your app will look something like this:</p>
 </p>So, let's get started. Take a look at the code in the editor to the right and choose one of the buttons below:</p>
-  <p><a href="#wtf">What's all this stuff between lines 1-15? Is my computer being hacked?!</a></p>
-  <p><a href="#hack">I've seen this stuff before. Show me how to build an app!</a></p>
+  <h3>What's all this stuff between lines 1-15?</h3>
+  <div class="subheading"><em>Is my computer being hacked?!</em></div>
+  <a href="#wtf" class="btn">Learn about HTML</a>
+  <h3>I've seen this stuff before.</h3>
+  <div class="subheading">Show me how to build an app!</div>
+  <a href="#hack" class="btn">Get started</a>
 </section>
 
 <section id="wtf">
