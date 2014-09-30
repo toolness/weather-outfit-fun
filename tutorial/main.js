@@ -251,7 +251,7 @@ function setupDebugMode() {
     $('html').addClass('debug');
     $('section[id]').each(function() {
       var id = $(this).attr('id');
-      $('<h1 class="debug"></h1>')
+      $('<h2 class="debug"></h2>')
         .append($('<a></a>').attr('href', '#' + id).text('section#' + id))
         .prependTo(this);
     });
