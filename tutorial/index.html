@@ -14,16 +14,16 @@ html, body {
 }
 
 body {
-  display: flex;
-  align-items: stretch;
   margin: 0;
   font-size: 0;
 }
 
+body > div {
+  display: inline-block;
+  height: 100%;
+}
+
 .CodeMirror {
-  /* Absolute shouldn't be required, but Chrome has quirks:
-   * http://stackoverflow.com/a/15389545 */
-  position: absolute;
   height: 100%;
   width: 100%;
   font-size: 12px;
@@ -47,6 +47,7 @@ iframe {
   /* Setting min-height (instead of just height) so things
    * work on Chrome. Weird. */
   min-height: 100%;
+  display: inline-block;
 }
 
 #rendering iframe.invisible {
