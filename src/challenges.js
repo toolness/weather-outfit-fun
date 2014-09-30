@@ -53,12 +53,23 @@
     }
   };
 
-  var me = document.scripts[document.scripts.length-1].src;
+  var ME_REGEXP = /^(.+\/)weather-outfit\.js$/;
+  var baseURL;
+
+  // On IE9, the latest entry in document.scripts isn't necessarily
+  // our script, as inline scripts after our scripts can actually already
+  // be part of document.scripts, so we'll just find the latest script
+  // that matches what we think our script is called.
+  [].slice.call(document.scripts).forEach(function(script) {
+    var match = script.src.match(ME_REGEXP);
+    if (match) baseURL = match[1];
+  });
 
   $(function() {
     var CHALLENGE_POLL_INTERVAL = 1000;
-    var baseURL = me.match(/^(.+\/)weather-outfit\.js$/)[1];
     var iframe = document.createElement('iframe');
+
+    if (!baseURL) throw new Error('baseURL not found');
 
     iframe.setAttribute('src', baseURL + 'tutorial/challenges.html');
 
