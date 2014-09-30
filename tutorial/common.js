@@ -1,8 +1,10 @@
 var PREFIX = 'weatherOutfit_';
 
-var baseURL = window.location.protocol + '//' + window.location.host +
-              window.location.pathname;
-baseURL = baseURL.match(/^(.+\/)tutorial\/.*$/)[1];
+if (!window.baseURL)
+  window.baseURL = (
+    window.location.protocol + '//' + window.location.host +
+    window.location.pathname
+  ).match(/^(.+\/)tutorial\/.*$/)[1];
 
 function getStorage(key, defaultValue) {
   try {
