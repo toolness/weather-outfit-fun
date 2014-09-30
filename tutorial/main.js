@@ -280,4 +280,9 @@ $(function() {
   setupChallenges();
   setupSnippetWizards();
   setupTemplateSource();
+
+  // If someone is editing the tutorial in Thimble, we want to force all
+  // intra-document links to *not* open in a separate window (it seems
+  // Thimble's preview window sets a base target of _blank).
+  $('a[href^="#"]').attr('target', '_self');
 });
