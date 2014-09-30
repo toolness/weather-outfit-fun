@@ -16420,7 +16420,22 @@ Debug.init = function() {
     Debug.enableGUI();
 };
 
+Debug._monkeypatchDatGuiForIE9 = function() {
+  var isActive = dat.dom.dom.isActive;
+
+  dat.dom.dom.isActive = function(elem) {
+    try {
+      // On IE9 this sometimes throws, particularly in the tutorial
+      // simulator, so we'll catch any exceptions raised.
+      return isActive(elem);
+    } catch (e) {
+      return false;
+    }
+  };
+};
+
 Debug.enableGUI = function() {
+  Debug._monkeypatchDatGuiForIE9();
   dat.GUI.TEXT_OPEN = 'Open Debug Panel';
   dat.GUI.TEXT_CLOSED = 'Close Debug Panel';
 
@@ -16566,6 +16581,10 @@ window.addEventListener('error', function(event) {
   var ME_REGEXP = /^(.+\/)weather-outfit\.js$/;
   var baseURL;
 
+  // On IE9, the latest entry in document.scripts isn't necessarily
+  // our script, as inline scripts after our scripts can actually already
+  // be part of document.scripts, so we'll just find the latest script
+  // that matches what we think our script is called.
   [].slice.call(document.scripts).forEach(function(script) {
     var match = script.src.match(ME_REGEXP);
     if (match) baseURL = match[1];
