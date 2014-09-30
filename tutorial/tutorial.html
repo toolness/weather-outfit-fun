@@ -16,8 +16,38 @@
 <script src="vendor/codemirror/colorize.js"></script>
 <script src="common.js"></script>
 <style>
-section {
+html:not(.debug) section {
   display: none;
+}
+
+html.debug section:first-child {
+  padding-top: 0;
+}
+
+html.debug section {
+  padding-top: 30px;
+  padding-bottom: 5px;
+  border-bottom: 1px dashed gray;
+}
+
+html.debug h1.debug {
+  padding-top: 10px;
+  border-top: 1px dashed gray;
+  font-family: monospace;
+}
+
+html.debug h1.debug a {
+  color: gray;
+  text-decoration: none;
+}
+
+html.debug h1.debug a:hover:after {
+  content: "\00b6";
+  padding-left: 5px;
+  color: lightgray;
+}
+
+section {
   line-height: 20px;
 }
 

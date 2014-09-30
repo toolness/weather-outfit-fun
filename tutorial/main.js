@@ -65,7 +65,7 @@ function setupNavigation() {
   currHash.onValue(function(hash) {
     var el = document.getElementById(hash) || 
              document.getElementById('404');
-    $('section').hide();
+    if (!window.DEBUG) $('section').hide();
     $(el).show().trigger('show');
   });
 }
@@ -219,7 +219,7 @@ function setupTableOfContents() {
     .text('This table of contents is for debugging purposes only. ' +
           'Normal users won\'t see it.')
     .prepend($('<h1>Table of Contents</h1>'))
-    .append(toc).appendTo('body');
+    .append(toc).prependTo('body');
 }
 
 function setupTemplateSource() {
@@ -243,6 +243,21 @@ function setupTemplateSource() {
   });
 }
 
+function setupDebugMode() {
+  if (typeof(window.DEBUG) != 'boolean')
+    window.DEBUG = /debug=on/.test(window.location.search);
+
+  if (window.DEBUG) {
+    $('html').addClass('debug');
+    $('section[id]').each(function() {
+      var id = $(this).attr('id');
+      $('<h1 class="debug"></h1>')
+        .append($('<a></a>').attr('href', '#' + id).text('section#' + id))
+        .prependTo(this);
+    });
+  }
+}
+
 $(function() {
   $('a[target]').each(function() {
     $(this).append($('<i class="fa fa-external-link"></i>'));
@@ -259,6 +274,7 @@ $(function() {
   });
 
   setupTableOfContents();
+  setupDebugMode();
   setupBlockly();
   setupNavigation();
   setupChallenges();
