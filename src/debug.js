@@ -10,7 +10,22 @@ Debug.init = function() {
     Debug.enableGUI();
 };
 
+Debug._monkeypatchDatGuiForIE9 = function() {
+  var isActive = dat.dom.dom.isActive;
+
+  dat.dom.dom.isActive = function(elem) {
+    try {
+      // On IE9 this sometimes throws, particularly in the tutorial
+      // simulator, so we'll catch any exceptions raised.
+      return isActive(elem);
+    } catch (e) {
+      return false;
+    }
+  };
+};
+
 Debug.enableGUI = function() {
+  Debug._monkeypatchDatGuiForIE9();
   dat.GUI.TEXT_OPEN = 'Open Debug Panel';
   dat.GUI.TEXT_CLOSED = 'Close Debug Panel';
 
