@@ -16368,7 +16368,7 @@ function getForecast(where, cb) {
   if (window.location.protocol == 'https:')
     url = url.replace('http://', 'https://httpsify.herokuapp.com/');
 
-  var req = new XMLHttpRequest();
+  var req = new (window.XDomainRequest || window.XMLHttpRequest)();
   req.open('GET', url);
   req.onerror = function() {
     cb(new Error('connection error'));
@@ -16715,7 +16715,8 @@ var OutfitView = Backbone.View.extend({
 });
 
 window.getForecastWords = function getForecastWords(forecast) {
-  var tempWords = navigator.language.toLowerCase() == 'en-us'
+  var lang = navigator.language || navigator.userLanguage || '';
+  var tempWords = lang.toLowerCase() == 'en-us'
                   ? Math.round(forecast.temp.f) + '\u00b0F'
                   : Math.round(forecast.temp.c) + '\u00b0C';
   return tempWords + ' and ' + forecast.weather;
