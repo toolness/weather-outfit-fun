@@ -16563,12 +16563,19 @@ window.addEventListener('error', function(event) {
     }
   };
 
-  var me = document.scripts[document.scripts.length-1].src;
+  var ME_REGEXP = /^(.+\/)weather-outfit\.js$/;
+  var baseURL;
+
+  [].slice.call(document.scripts).forEach(function(script) {
+    var match = script.src.match(ME_REGEXP);
+    if (match) baseURL = match[1];
+  });
 
   $(function() {
     var CHALLENGE_POLL_INTERVAL = 1000;
-    var baseURL = me.match(/^(.+\/)weather-outfit\.js$/)[1];
     var iframe = document.createElement('iframe');
+
+    if (!baseURL) throw new Error('baseURL not found');
 
     iframe.setAttribute('src', baseURL + 'tutorial/challenges.html');
 
