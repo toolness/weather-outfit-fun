@@ -233,6 +233,14 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
   return {{{url}}};
 }</pre>
   </form>
+  <p>It's important to note that <code>return</code> immediately causes the computer to "leave" the function, ignoring any further instructions in the recipe. So we can insert a conditional into the beginning of our <a href="#js">original</a> function like so:</p>
+  <pre data-lang="javascript" data-baseurlify>function getForecastOutfit(forecast) {
+  if (forecast.temp.f > 0) {
+    return "http://some/picture";
+  }
+  return "{{{baseURL}}}img/eskimo-lomen-1915.jpg";
+}</pre>
+  <p>Can you guess what temperature range the Eskimo outfit will be recommended? When would the other one be recommended?</p>
   <h3>Conditionals based on weather</h3>
   <p>Use the translator below to learn how to add conditional logic to your code that returns a particular outfit if certain weather conditions hold true.</p>
   <form role="snippet-wizard">
