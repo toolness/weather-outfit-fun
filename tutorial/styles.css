@@ -240,7 +240,7 @@ center img {
   z-index: 5000;
   position: fixed;
   top: 0;
-  right: 0;
+  right: 30px;
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
   padding: 4px 18px 4px 4px;

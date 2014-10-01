@@ -286,7 +286,5 @@ $(function() {
   // Thimble's preview window sets a base target of _blank).
   $('a[href^="#"]').attr('target', '_self');
 
-  setTimeout(function() {
-    $('#embiggen-tooltip').fadeOut();
-  }, 3000);
+  setTimeout(function() { $('#embiggen-tooltip').fadeOut(); }, 5000);
 });
