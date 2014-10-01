@@ -222,3 +222,16 @@ center img {
   background-size: contain;
   padding: 0.4em 0 0.4em 2em;
 }
+
+.highlight-on-hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.highlight-on-hover:hover {
+  background: yellow;
+}
+
+.highlight {
+  background: yellow;
+}

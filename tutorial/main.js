@@ -263,7 +263,7 @@ $(function() {
     $(this).append($('<i class="fa fa-external-link"></i>'));
   });
 
-  $('pre[data-baseurlify]').each(function() {
+  $('[data-baseurlify]').each(function() {
     $(this).text(Mustache.render($(this).text(), {baseURL: baseURL}));
   });
 

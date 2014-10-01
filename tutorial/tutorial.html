@@ -142,15 +142,40 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
   <h1>Functions explained</h1>
   <p>A function has <em>input</em> and <em>output</em>.</p>
   <p>Recipes have input and output too: a chocolate chip cookie recipe takes raw ingredients&mdash;eggs, flour, chocolate chips&mdash;and produces cookies as its output.</p>
-  <p>The function you just wrote takes a <em>weather forecast</em> as its input, and produces an <em>image URL</em> as its output. Can you guess where each of these are in the code you wrote?</p>
-  <h3>Arguments: the input</h3>
+  <p>The function you just wrote takes a <em>weather forecast</em> as its input, and produces an <em>image URL</em> as its output.</p>
+  <p><i class="fa fa-arrow-down"></i> Click on the input in the text below.</p>
+  <pre>function getForecastOutfit<a class="highlight-on-hover" href="#arguments">(forecast)</a> {
+  <span data-baseurlify>return "{{{baseURL}}}img/eskimo-lomen-1915.jpg"</span>;
+}</pre>
+</section>
+
+<section id="arguments">
+  <h1>Arguments: the input</h1>
+  <pre>function getForecastOutfit<span class="highlight">(forecast)</span> {
+  <span data-baseurlify>return "{{{baseURL}}}img/eskimo-lomen-1915.jpg"</span>;
+}</pre>
   <p>The set of paretheses after the text <code>getForecastOutfit</code> make up the <em>arguments</em> of the function: the inputs that are handed to the function whenever it is <em>called</em>, or followed by the computer like a recipe. Think of the arguments as a sort of box that all the ingredients are put into before a chef starts cooking.</p>
   <p>In our case, <code>getForecastOutfit</code> only takes one argument, called <code>forecast</code>. This is a bundle of information about the weather forecast.</p>
+  <p>When finished, the function returns an <em>image URL</em> as its output.</p>
+  <p><i class="fa fa-arrow-down"></i> Click on the output in the text below.</p>
+  <pre>function getForecastOutfit(forecast) {
+  <a class="highlight-on-hover" href="#returnvalue" data-baseurlify>return "{{{baseURL}}}img/eskimo-lomen-1915.jpg"</a>;
+}</pre>
+</section>
+
+<section id="returnvalue">
   <h3>Return value: the output</h3>
+  <pre>function getForecastOutfit(forecast) {
+  <span class="highlight" data-baseurlify>return "{{{baseURL}}}img/eskimo-lomen-1915.jpg"</span>;
+}</pre>
   <p>A function always has a <em>return value</em>, which is like its output, or a box that a chef puts their cooked item into. The word <code>return</code> in our function tells the computer to stop following the recipe, and produce the URL following it as the function's output.</p>
-  <p><a href="#remixjs" class="btn">How do I change the picture?</a></p>
-  <p><a href="#enhancejs" class="btn">How do I add more pictures?</a></p>
-  <p><a href="#share" class="btn">How do I share my app with friends?</a></p>
+  <p>Now let's personalize the app to make it your own.</p>
+  <h3>How do I change the picture?</h3>
+  <div class="subheading"><em>Eskimos are awesome, but I have something else in mind&hellip;</em></div>
+  <a href="#remixjs" class="btn">Change the picture</a>
+  <h3>How do I show a different picture based on the forecast?</h3>
+  <div class="subheading">You can do this if you learn about <em>conditionals</em>.</div>
+  <p><a href="#enhancejs" class="btn">Write a conditional</a></p>
 </section>
 
 <section id="remixjs">
@@ -248,6 +273,9 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
   <h3>Trees and branches</h3>
   <p>As an algorithm acquires more conditional logic, it starts to look a bit like a tree, where the trunk is its starting point and the branches are different paths a computer can take through it depending on conditions.</p>
   <p>You can see this in action by experimenting with the <a href="#blockly">visual editing environment</a> and visualizing the path a computer takes through your algorithm depending on the forecast.</p>
+  <h2>I'd like to share my app with friends.</h2>
+  <div class="subheading">How do I give it to them?</div>
+  <p><a href="#share" class="btn">Learn about publishing your app</a></p>
   <h2>Typing in the names of cities to get different forecasts is annoying.</h2>
   <div class="subheading">Is there another way to test my code?</div>
   <p><a href="#debug" class="btn">Learn about debugging</a></p>
