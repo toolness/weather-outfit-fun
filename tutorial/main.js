@@ -286,5 +286,6 @@ $(function() {
   // Thimble's preview window sets a base target of _blank).
   $('a[href^="#"]').attr('target', '_self');
 
-  setTimeout(function() { $('#embiggen-tooltip').fadeOut(); }, 5000);
+  if (/^https:\/\/thimble.webmaker.org\//.test(document.referrer))
+    $('#embiggen-tooltip').fadeIn().delay(5000).fadeOut();
 });
