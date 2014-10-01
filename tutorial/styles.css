@@ -235,3 +235,34 @@ center img {
 .highlight {
   background: yellow;
 }
+
+#embiggen-tooltip {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 18px 4px 4px;
+  border-radius: 4px;
+  margin: 2px;
+  font-size: 12px;
+}
+
+#embiggen-tooltip .fa.fa-hand-o-up {
+  position: absolute;
+  right: 4px;
+  animation-duration: 0.5s;
+  animation-name: pokeup;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes pokeup {
+  from {
+    top: 8px;
+  }
+
+  to {
+    top: 4px;
+  }
+}

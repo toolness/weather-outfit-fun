@@ -285,4 +285,8 @@ $(function() {
   // intra-document links to *not* open in a separate window (it seems
   // Thimble's preview window sets a base target of _blank).
   $('a[href^="#"]').attr('target', '_self');
+
+  setTimeout(function() {
+    $('#embiggen-tooltip').fadeOut();
+  }, 3000);
 });
