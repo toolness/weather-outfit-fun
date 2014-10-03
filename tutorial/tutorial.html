@@ -6,6 +6,7 @@
 <link href="vendor/codemirror/codemirror.css" rel="stylesheet">
 <script src="../src/vendor/jquery.js"></script>
 <script src="../src/vendor/mustache.js"></script>
+<script src="../src/vendor/underscore.js"></script>
 <script src="vendor/tutorial.js"></script>
 <script src="vendor/bacon.js"></script>
 <script src="vendor/codemirror/codemirror.js"></script>
@@ -95,15 +96,14 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
   </div>
 </section>
 
-<section id="style" role="challenge">
+<section id="style" role="challenge" data-challenge-prereqs="load">
   <h1>Put some clothes on that webpage!</h1>
   <p>The webpage now has a somewhat broken app in it, which you'll be fixing. Let's add a <em>stylesheet</em> to the page so it doesn't look gross.</p>
   <p>Stylesheets are written using a language called CSS, and are like the skin or clothing of a webpage: a set of rules draped over HTML to make it look pretty (or, in some cases, grotesque).</p>
   <p>To add our stylesheet, type the following at line 3:</p>
   <pre data-lang="htmlmixed" data-baseurlify>&lt;link rel="stylesheet" href="{{{baseURL}}}weather-outfit.css"&gt;</pre>
-  <div class="challenge-incomplete">
-    <p>Waiting for you to add the stylesheet&hellip; <i class="fa fa-circle-o-notch fa-spin"></i></p>
-  </div>
+
+  <div role="challenge-status"></div>
   <div class="challenge-complete">
     <h2>Yay!</h2>
     <p>The page is no longer naked and looks more presentable.</p>
@@ -125,16 +125,14 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
   <p><a href="#js" class="btn">Onwards!</a></p>
 </section>
 
-<section id="js" role="challenge">
+<section id="js" role="challenge" data-challenge-prereqs="load">
   <h1>Adding our own recipe</h1>
   <p>The opening <code>&lt;script&gt;</code> tag at line 5 tells the browser to start processing the text until the closing <code>&lt;/script&gt;</code> tag at line 8 as JavaScript code. This is where we'll define our <code>getForecastOutfit</code> function.</p>
   <p>Type the following at line 6:</p>
   <pre data-lang="javascript" data-baseurlify>function getForecastOutfit(forecast) {
   return "{{{baseURL}}}img/eskimo-lomen-1915.jpg";
 }</pre>
-  <div class="challenge-incomplete">
-    <p>Waiting for you to define the function&hellip; <i class="fa fa-circle-o-notch fa-spin"></i></p>
-  </div>
+  <div role="challenge-status"></div>
   <div class="challenge-complete">
     <h2>Awesome.</h2>
     <p>Now that the function is defined, the app can find it and use it display an outfit to wear.</p>
@@ -209,7 +207,7 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
   <p><a href="#conditionals" class="btn">How can I change the algorithm?</a></p>
 </section>
 
-<section id="conditionals" role="challenge" data-challenge-id="temperature">
+<section id="conditionals" role="challenge" data-challenge-id="temperature" data-challenge-prereqs="load">
   <h1>Conditional Logic</h1>
   <p>To make <code>getForecastOutfit</code> return a different outfit depending on the forecast, you'll want to add a bit of <em>conditional logic</em> to your algorithm.</p>
   <p>When following a recipe, sometimes you need to follow slightly different instructions depending on your ingredients, or the preferences of your customers. For instance, if you want thinner pancakes, then you will want to add more milk to your batter than usual.</p>
@@ -246,8 +244,9 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
 }</pre>
   <p>Can you guess what temperature range the Eskimo outfit will be recommended? When would the other one be recommended?</p>
   <p>Now see if you can change your code to return a different outfit when the weather forecast is 0 degrees Celsius and 100 degrees Celsius.</p>
+
+  <div role="challenge-status"></div>
   <div class="challenge-incomplete">
-    <p>Waiting for you to complete this challenge&hellip; <i class="fa fa-circle-o-notch fa-spin"></i></p>
     <p><small>If this challenge is really hard for you, then you may want to try the <a href="#blockly">visual editor</a>.</small></p>
   </div>
   <div class="challenge-complete">
@@ -281,7 +280,7 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
   <p><a href="#logic" class="btn">Take the ultimate logic challenge</a></p>
 </section>
 
-<section id="weather" role="challenge">
+<section id="weather" role="challenge" data-challenge-prereqs="load">
   <h1>Conditionals based on weather</h1>
   <p>Aside from the <a href="#conditionals">temperature</a>, our code can also look at the forecasted weather conditions to determine what outfit to wear.</p>
   <p>Use the translator below to learn how to add conditional logic to your code that returns a particular outfit if certain weather conditions hold true.</p>
@@ -309,8 +308,8 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
 }</pre>
   </form>
   <p>Now see if you can change your function to return a different outfit when the weather forecast is <code>clear</code> and <code>thunderstorming</code>.</p>
+  <div role="challenge-status"></div>
   <div class="challenge-incomplete">
-    <p>Waiting for you to complete this challenge&hellip; <i class="fa fa-circle-o-notch fa-spin"></i></p>
     <p><small>If this challenge is really hard for you, then you may want to try the <a href="#blockly">visual editor</a>.</small></p>
   </div>
   <div class="challenge-complete">
@@ -339,7 +338,7 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
   </form>
 </section>
 
-<section id="logic" role="challenge">
+<section id="logic" role="challenge" data-challenge-prereqs="load">
   <h1>The ultimate logic challenge</h1>
   <p>As an algorithm acquires more conditional logic, it starts to look a bit like a tree, where the trunk is its starting point and the branches are different paths a computer can take through it depending on conditions.</p>
   <p>To complete this challenge, you'll need to write a <code>getForecastOutfit</code> function that does the following:</p>
@@ -348,8 +347,9 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
     <li>Returns a different outfit when the weather forecast is <code>clear</code> and <code>thunderstorming</code>.</li>
   </ul>
   <p>Remember to read up on <a href="#conditionals">conditional logic</a> if you need help.</p>
+
+  <div role="challenge-status"></div>
   <div class="challenge-incomplete">
-    <p>Waiting for you to complete this challenge&hellip; <i class="fa fa-circle-o-notch fa-spin"></i></p>
     <p><small>If this challenge is really hard for you, then you may want to try the <a href="#blockly">visual editor</a>.</small></p>
   </div>
   <div class="challenge-complete">
@@ -368,7 +368,7 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
   <p>To disable the debug mode, you can change the word <code>true</code> to <code>false</code>.</p>
 </section>
 
-<section id="title" role="challenge">
+<section id="title" role="challenge" data-challenge-prereqs="load">
   <h1>Personalize the page title.</h1>
   <p>See the <code>&lt;title&gt;</code> element at line 9? That tells
     your browser what the name of your page is, so it can display it
@@ -378,9 +378,8 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
   <p>Try changing the text of both elements to something a bit more
     unique. For instance, if your name is Pat, you could change the
     text to <em>What Should Pat Wear Today?</em>.</p>
-  <div class="challenge-incomplete">
-    <p>Waiting for you to complete this challenge&hellip; <i class="fa fa-circle-o-notch fa-spin"></i></p>
-  </div>
+
+  <div role="challenge-status"></div>
   <div class="challenge-complete">
     <h2>Nice.</h2>
     <p>You have completed this challenge.</p>
@@ -482,3 +481,25 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
   <h1>Sorry.</h1>
   <p>This section doesn't exist yet!</p>
 </section>
+
+<script type="text/html" id="challenge-status-template">
+{{#isComplete}}{{/isComplete}}
+{{^isComplete}}
+  {{#hasPrereqs}}
+  <aside class="media">
+    <img src="img/tip.png">
+    <div class="bd">
+    <p>Wait! You can't do this challenge until you've completed the following:</p>
+    <ul>
+      {{#prereqsLeft}}
+      <li><a href="#{{sectionId}}">{{title}}</a></li>
+      {{/prereqsLeft}}
+    </ul>
+    </div>
+  </aside>
+  {{/hasPrereqs}}
+  {{^hasPrereqs}}
+  <p>Waiting for you to complete this challenge&hellip; <i class="fa fa-circle-o-notch fa-spin"></i></p>
+  {{/hasPrereqs}}
+{{/isComplete}}
+</script>

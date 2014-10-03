@@ -73,6 +73,8 @@ function setupNavigation() {
 
 function setupChallenges() {
   var START_DATE = Date.now();
+  var statusTemplate = $('#challenge-status-template').text();
+  var challengeInfo = {};
 
   var challenges = Bacon.fromPoll(1000, function() {
     var challenges = getStorage('challenges', {});
@@ -84,15 +86,35 @@ function setupChallenges() {
 
   $('section[role=challenge]').each(function() {
     var section = $(this);
+    var prereqs = section.attr('data-challenge-prereqs')
+                  ? section.attr('data-challenge-prereqs').split(',')
+                  : [];
     var id = section.attr('data-challenge-id') || section.attr('id');
+    var sectionId = section.attr('id');
+    var title = $('h1', section).text();
     var li = $('<li><a></a></li>').appendTo('[role=challenges]');
-    var isComplete = challenges.map(function(info) { return !!info[id]; });
+    var status = challenges.map(function(info) {
+      var prereqsLeft = prereqs.filter(function(prereq) {
+        return !info[prereq];
+      }).map(function(prereq) { return challengeInfo[prereq]; });
+      return {
+        isComplete: !!info[id],
+        hasPrereqs: prereqsLeft.length > 0,
+        prereqsLeft: prereqsLeft
+      };
+    }).skipDuplicates(_.isEqual);
 
-    $('a', li)
-      .attr('href', '#' + section.attr('id'))
-      .text($('h1', section).text());
-
-    isComplete.assign(section.add(li), 'toggleClass', 'challenge-completed');
+    $('a', li).attr('href', '#' + sectionId).text(title);
+    status.onValue(function(info) {
+      var html = Mustache.render(statusTemplate, info);
+      $('div[role="challenge-status"]', section).html(html);
+    });
+    status.map('.isComplete').assign(section.add(li),
+                                     'toggleClass', 'challenge-completed');
+    challengeInfo[id] = {
+      sectionId: section.attr('id'),
+      title: title
+    };
   });
 }
 
