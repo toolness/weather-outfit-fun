@@ -16524,6 +16524,19 @@ window.addEventListener('error', function(event) {
 });
 
 (function() {
+  var makeForecast = function() {
+    return {
+      city: 'Fakeville',
+      date: new Date(),
+      humidity: 50,
+      weather: 'clear',
+      temp: {
+        f: 32,
+        c: 0
+      }
+    };
+  }
+
   var challenges = {
     'load': true,
     'style': function isCssLoaded() {
@@ -16535,40 +16548,38 @@ window.addEventListener('error', function(event) {
     'js': function isGetForecastOutfitDefined() {
       return typeof(window.getForecastOutfit) == 'function';
     },
-    'logic': function doesGetForecastOutfitWork() {
+    'temperature': function doesGetForecastOutfitUseTemperature() {
       try {
-        var forecast = {
-          city: 'Fakeville',
-          date: new Date(),
-          humidity: 50,
-          weather: 'clear',
-          temp: {
-            f: 32,
-            c: 0
-          }
-        };
-
+        var forecast = makeForecast();
         var cold = window.getForecastOutfit(forecast);
-        var clear = cold;
-
-        var thunderstorming = window.getForecastOutfit($.extend(forecast, {
-          weather: 'thunderstorming'
-        }));
-
         var hot = window.getForecastOutfit($.extend(forecast, {
           temp: {f: 212, c: 100}
         }));
 
         if (!(cold && hot && cold != hot))
           return false;
-
-        if (!(clear && thunderstorming && clear != thunderstorming))
-          return false;
-
         return true;
       } catch (e) {
         return false;
       }
+    },
+    'weather': function doesGetForecastOutfitUseWeather() {
+      try {
+        var forecast = makeForecast();
+        var clear = window.getForecastOutfit(forecast);
+        var thunderstorming = window.getForecastOutfit($.extend(forecast, {
+          weather: 'thunderstorming'
+        }));
+
+        if (!(clear && thunderstorming && clear != thunderstorming))
+          return false;
+        return true;
+      } catch (e) {
+        return false;
+      }
+    },
+    'logic': function doesGetForecastOutfitWorkAmazinglyWell() {
+      return challenges.temperature() && challenges.weather();
     },
     'title': function isPageTitleNotDefault() {
       var DEFAULT_TITLE = "outfit of the day";
