@@ -67,6 +67,7 @@ function setupNavigation() {
              document.getElementById('404');
     if (!window.DEBUG) $('section').hide();
     $(el).show().trigger('show');
+    window.scrollTo(0, 0);
   });
 }
 
