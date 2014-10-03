@@ -72,13 +72,13 @@ iframe {
   right: 20px;
 }
 
-#code > .actions > span[role] {
+#code > .actions > span[role], #code > .actions > a {
   cursor: pointer;
   opacity: 0.33;
   margin-left: 10px;
 }
 
-#code > .actions > span[role]:hover {
+#code > .actions > span[role]:hover, #code > .actions > a:hover {
   opacity: 1;
 }
 
@@ -93,6 +93,7 @@ iframe {
   <span role="linkify" title="Share current state as a URL"><i class="fa fa-link"></i></span>
   <span role="solution" title="Set to solution HTML"><i class="fa fa-key"></i></span>
   <span role="revert" title="Revert to original HTML"><i class="fa fa-eraser"></i></span>
+  <a href="https://github.com/toolness/weather-outfit-fun" title="Visit GitHub repository" target="_blank"><i class="fa fa-github"></i></a>
 </span></div>
 <div id="rendering"></div>
 <script src="../src/vendor/jquery.js"></script>
