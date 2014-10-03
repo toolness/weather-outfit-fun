@@ -209,7 +209,7 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
   <p><a href="#conditionals" class="btn">How can I change the algorithm?</a></p>
 </section>
 
-<section id="conditionals">
+<section id="conditionals" role="challenge" data-challenge-id="temperature">
   <h1>Conditional Logic</h1>
   <p>To make <code>getForecastOutfit</code> return a different outfit depending on the forecast, you'll want to add a bit of <em>conditional logic</em> to your algorithm.</p>
   <p>When following a recipe, sometimes you need to follow slightly different instructions depending on your ingredients, or the preferences of your customers. For instance, if you want thinner pancakes, then you will want to add more milk to your batter than usual.</p>
@@ -245,7 +245,45 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
   return "{{{baseURL}}}img/eskimo-lomen-1915.jpg";
 }</pre>
   <p>Can you guess what temperature range the Eskimo outfit will be recommended? When would the other one be recommended?</p>
-  <h3>Conditionals based on weather</h3>
+  <p>Now see if you can change your code to return a different outfit when the weather forecast is 0&deg;C and 100&deg;C.</p>
+  <div class="challenge-incomplete">
+    <p>Waiting for you to complete this challenge&hellip; <i class="fa fa-circle-o-notch fa-spin"></i></p>
+    <p><small>If this challenge is really hard for you, then you may want to try the <a href="#blockly">visual editor</a>.</small></p>
+  </div>
+  <div class="challenge-complete">
+    <h2>Good work!</h2>
+    <p><a href="#done" class="btn">Onwards!</a></p>
+  </div>
+</section>
+
+<section id="done">
+  <h1>Fin</h1>
+
+  <p>You're now finished with the basic tutorial, and there are a bunch of different things you can do.</p>
+
+  <h2>I want my outfit to be based on weather conditions, too.</h2>
+  <div class="subheading">How do I show a different outfit based on rain or shine?</div>
+  <p><a href="#weather" class="btn">Learn about conditionals based on weather</a></p>
+  <h2>I'd like to share my app with friends.</h2>
+  <div class="subheading">How do I give it to them?</div>
+  <p><a href="#share" class="btn">Learn about publishing your app</a></p>
+  <h2>Typing in the names of cities to get different forecasts is annoying.</h2>
+  <div class="subheading">Is there another way to test my code?</div>
+  <p><a href="#debug" class="btn">Learn about debugging</a></p>
+  <h2>I want to tinker with the UI.</h2>
+  <div class="subheading">Is there a way to change the app's user interface?</div>
+  <p><a href="#templates" class="btn">Learn about templating</a></p>
+  <h2>I want to return outfits based on multiple criteria.</h2>
+  <div class="subheading">How do I do that?</div>  
+  <p><a href="#combining" class="btn">Learn about combining conditionals</a></p>
+  <h2>I'm ready to put my skills to the test!</h2>
+  <div class="subheading">It's time to throw down.</div>
+  <p><a href="#logic" class="btn">Take the ultimate logic challenge</a></p>
+</section>
+
+<section id="weather" role="challenge">
+  <h1>Conditionals based on weather</h1>
+  <p>Aside from the <a href="#conditionals">temperature</a>, our code can also look at the forecasted weather conditions to determine what outfit to wear.</p>
   <p>Use the translator below to learn how to add conditional logic to your code that returns a particular outfit if certain weather conditions hold true.</p>
   <form role="snippet-wizard">
     <blockquote>
@@ -270,7 +308,19 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
   return {{{url}}};
 }</pre>
   </form>
-  <h3>Combining conditions</h3>
+  <p>Now see if you can change your function to return a different outfit when the weather forecast is <code>clear</code> and <code>thunderstorming</code>.</p>
+  <div class="challenge-incomplete">
+    <p>Waiting for you to complete this challenge&hellip; <i class="fa fa-circle-o-notch fa-spin"></i></p>
+    <p><small>If this challenge is really hard for you, then you may want to try the <a href="#blockly">visual editor</a>.</small></p>
+  </div>
+  <div class="challenge-complete">
+    <h2>Woot!</h2>
+    <p>You might be ready for the <a href="#logic">ultimate logic challenge</a> now.</p>
+  </div>
+</section>
+
+<section id="combining">
+  <h1>Combining conditions</h1>
   <p>Sometimes you might want to combine multiple conditions together, doing something only if both or at least one of them hold true. Use the translator below to explore how this is done.</p>
   <form role="snippet-wizard">
     <blockquote>
@@ -287,25 +337,11 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
   return {{{url}}};
 }</pre>
   </form>
-  <h3>Trees and branches</h3>
-  <p>As an algorithm acquires more conditional logic, it starts to look a bit like a tree, where the trunk is its starting point and the branches are different paths a computer can take through it depending on conditions.</p>
-  <p>You can see this in action by experimenting with the <a href="#blockly">visual editing environment</a> and visualizing the path a computer takes through your algorithm depending on the forecast.</p>
-  <h2>I'd like to share my app with friends.</h2>
-  <div class="subheading">How do I give it to them?</div>
-  <p><a href="#share" class="btn">Learn about publishing your app</a></p>
-  <h2>Typing in the names of cities to get different forecasts is annoying.</h2>
-  <div class="subheading">Is there another way to test my code?</div>
-  <p><a href="#debug" class="btn">Learn about debugging</a></p>
-  <h2>I want to tinker with the UI.</h2>
-  <div class="subheading">Is there a way to change the app's user interface?</div>
-  <p><a href="#templates" class="btn">Learn about templating</a></p>
-  <h2>I'm ready to put my skills to the test!</h2>
-  <div class="subheading">It's time to throw down.</div>
-  <p><a href="#logic" class="btn">Take the ultimate logic challenge</a></p>
 </section>
 
 <section id="logic" role="challenge">
   <h1>The ultimate logic challenge</h1>
+  <p>As an algorithm acquires more conditional logic, it starts to look a bit like a tree, where the trunk is its starting point and the branches are different paths a computer can take through it depending on conditions.</p>
   <p>To complete this challenge, you'll need to write a <code>getForecastOutfit</code> function that does the following:</p>
   <ul>
     <li>Returns a different outfit when the weather forecast is 0&deg;C and 100&deg;C.</li>
@@ -314,6 +350,7 @@ The interactive tutorial will help you to learn how to <a href="#challenges">rem
   <p>Remember to read up on <a href="#conditionals">conditional logic</a> if you need help.</p>
   <div class="challenge-incomplete">
     <p>Waiting for you to complete this challenge&hellip; <i class="fa fa-circle-o-notch fa-spin"></i></p>
+    <p><small>If this challenge is really hard for you, then you may want to try the <a href="#blockly">visual editor</a>.</small></p>
   </div>
   <div class="challenge-complete">
     <h2>HOLY COW</h2>
