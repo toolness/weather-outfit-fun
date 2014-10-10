@@ -11,6 +11,7 @@
      "vendor/backbone.js",
      "vendor/mustache.js",
      "vendor/dat.gui.js",
+     "webmaker.js",
      "meta-tag-auto-injector.js",
      "cache.js",
      "weather.js",
