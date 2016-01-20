@@ -52,9 +52,10 @@ function simplifyForecast(res) {
 }
 
 function getForecast(where, cb) {
-  var qs = typeof(where) == 'string'
-           ? '?q=' + encodeURIComponent(where)
-           : '?lat=' + where.latitude + '&lon=' + where.longitude;
+  var qs = (typeof(where) == 'string'
+            ? '?q=' + encodeURIComponent(where)
+            : '?lat=' + where.latitude + '&lon=' + where.longitude) +
+           '&APPID=1b9137c2a18a6a06df9a2c07ab7e019b';
   var cacheKey = 'weather_forecast' + qs;
   var url = 'http://api.openweathermap.org/data/2.5/forecast' + qs;
   var forecast = Cache.get(cacheKey, FORECAST_CACHE_MS);
