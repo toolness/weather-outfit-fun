@@ -52,9 +52,7 @@ var StartView = Backbone.View.extend({
     router.navigate('/outfit/' + encodeURI(city), {trigger: true});
   },
   render: function() {
-    Template.render(this.$el, 'html/start.html', {
-      remixURL: Webmaker.getRemixURL() || 'https://webmaker.org/'
-    });
+    Template.render(this.$el, 'html/start.html', {});
   }
 });
 
