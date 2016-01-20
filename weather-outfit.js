@@ -1,6 +1,6 @@
 //# sourceMappingURL=weather-outfit.js.map
 var RAW_FILES = {};
-RAW_FILES["html/start.html"] = "<p>What's the weather like in your area?</p>\n\n<button class=\"primary\" role=\"action-geolocate\">Use geolocation</button>\n<p><center>or</center></p>\n<div class=\"input-btn-combo\"><input type=\"text\" name=\"city\" placeholder=\"enter a city or place name\"><button role=\"action-city\">Go</button></div>\n\n<p><small>Remix this app on <a href=\"{{ remixURL }}\" target=\"_blank\">webmaker.org</a>.</small></p>";
+RAW_FILES["html/start.html"] = "<p>What's the weather like in your area?</p>\n\n<button class=\"primary\" role=\"action-geolocate\">Use geolocation</button>\n<p><center>or</center></p>\n<div class=\"input-btn-combo\"><input type=\"text\" name=\"city\" placeholder=\"enter a city or place name\"><button role=\"action-city\">Go</button></div>\n";
 RAW_FILES["html/loading.html"] = "<!-- http://commons.wikimedia.org/wiki/File:Chromiumthrobber.svg -->\n<svg width=\"16\" height=\"16\" viewBox=\"0 0 300 300\"\nxmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n  <path d=\"M 150,0\n  a 150,150 0 0,1 106.066,256.066\n  l -35.355,-35.355\n  a -100,-100 0 0,0 -70.711,-170.711 z\"\n  fill=\"white\">\n    <animateTransform attributeName=\"transform\" attributeType=\"XML\"\n    type=\"rotate\" from=\"0 150 150\" to=\"360 150 150\"\n    begin=\"0s\" dur=\"1s\" fill=\"freeze\" repeatCount=\"indefinite\" />\n  </path>\n</svg> Loading&hellip;\n";
 RAW_FILES["html/outfit.html"] = "<p>It's going to be <span class=\"forecastWords\">{{forecastWords}}</span> in {{city}} today.</p>\n\n<p><em>Here are some clothes you might wear:</em></p>\n<p class=\"forecastOutfit\">{{#outfitURLs}}<img src=\"{{.}}\">{{/outfitURLs}}</p>\n\n<p><button class=\"primary\" role=\"action-restart\">Pick a different city</button></p>\n\n<p><small>Weather data provided by\n  <a href=\"http://openweathermap.org/\" target=\"_blank\">OpenWeatherMap</a>.</small></p>\n";
 RAW_FILES["html/error.html"] = "<p>Oh no, an error occurred! Some technical details are below.</p>\n<pre>{{message}}</pre>\n\n<p><button role=\"action-restart\">Try again</button></p>\n";
@@ -16413,9 +16413,10 @@ function simplifyForecast(res) {
 }
 
 function getForecast(where, cb) {
-  var qs = typeof(where) == 'string'
-           ? '?q=' + encodeURIComponent(where)
-           : '?lat=' + where.latitude + '&lon=' + where.longitude;
+  var qs = (typeof(where) == 'string'
+            ? '?q=' + encodeURIComponent(where)
+            : '?lat=' + where.latitude + '&lon=' + where.longitude) +
+           '&APPID=1b9137c2a18a6a06df9a2c07ab7e019b';
   var cacheKey = 'weather_forecast' + qs;
   var url = 'http://api.openweathermap.org/data/2.5/forecast' + qs;
   var forecast = Cache.get(cacheKey, FORECAST_CACHE_MS);
@@ -16735,9 +16736,7 @@ var StartView = Backbone.View.extend({
     router.navigate('/outfit/' + encodeURI(city), {trigger: true});
   },
   render: function() {
-    Template.render(this.$el, 'html/start.html', {
-      remixURL: Webmaker.getRemixURL() || 'https://webmaker.org/'
-    });
+    Template.render(this.$el, 'html/start.html', {});
   }
 });
 
